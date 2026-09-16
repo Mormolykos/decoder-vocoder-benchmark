@@ -1,0 +1,78 @@
+{
+ "what": "Gate 4 STAGE 2 ANALYSIS LAYER. NOT the frozen apparatus.",
+ "superseded": [
+  {
+   "spec_frozen_utc": "2026-09-13T09:06:54Z",
+   "implementation_frozen_utc": "2026-09-13T09:21:19Z",
+   "spec": {
+    "GATE4_STAGE2_SPEC.md": "e472856aff67dabc6bd542fb24e969f49af64ca531dac078a630d960bb87655d"
+   },
+   "implementation": {
+    "gate4_metrics.py": "e45a786c4ee80a0da43517139e23fa01232e57ee895ca58444fdd005e633dc6c",
+    "gate4_determinism.py": "41a2ab7842f99e15049b5943fdfe8e0766b3c1f45011a1cb251c243ecea42a0e",
+    "gate4_retro_sha.py": "9360a7a7e4f2d2b118020c50fab3e4048c6e4e7481e57ab20dcce1fdd9d12ffd",
+    "gate4_report.py": "16dac30d3c5f990a056bf0e88c81cb75813d88f13e983a014dc3662205d35510",
+    "freeze_gate4_stage2.py": "afdac602bf5f9f38384436f93dfaeae70650953d1b302fe6e6a3c5bf0a1ff827"
+   },
+   "revision_note": null
+  },
+  {
+   "spec_frozen_utc": "2026-09-13T09:47:46Z",
+   "implementation_frozen_utc": "2026-09-13T09:47:46Z",
+   "spec": {
+    "GATE4_STAGE2_SPEC.md": "6007e59d492e987340b43fc43c38b136db8af873cc5bff4dd52b413914725e9f"
+   },
+   "implementation": {
+    "gate4_metrics.py": "7f9a969a2bc0177fdaa85fecf44ece79d03a07d62d81c5c8cf522ce5b2a61275",
+    "gate4_determinism.py": "41a2ab7842f99e15049b5943fdfe8e0766b3c1f45011a1cb251c243ecea42a0e",
+    "gate4_retro_sha.py": "9360a7a7e4f2d2b118020c50fab3e4048c6e4e7481e57ab20dcce1fdd9d12ffd",
+    "gate4_report.py": "fbedd273113f100299a2fea6300cc26a124fd8c0f3a41bc3f3a62c71205af688",
+    "freeze_gate4_stage2.py": "472501675cbb355f7fc6725069298c195137cc9ee8d8d41f89abd3d46d78731c"
+   },
+   "revision_note": "Revision 4: disposition of the third independent audit (B1 streaming totals into the artifact; floor_lo 70.74 -> 71.3740 persisted; floor_hi saturation disclosed; degeneracy guard on per-state intervals; rule 2(b) reported as inert; ordering-proof claim WITHDRAWN; stale tables deleted; 343 -> 238 corpus keys)"
+  },
+  {
+   "spec_frozen_utc": "2026-09-13T11:44:21Z",
+   "implementation_frozen_utc": "2026-09-13T11:44:21Z",
+   "spec": {
+    "GATE4_STAGE2_SPEC.md": "6007e59d492e987340b43fc43c38b136db8af873cc5bff4dd52b413914725e9f"
+   },
+   "implementation": {
+    "gate4_metrics.py": "be2472b04473e5001c395bcd4d4a74ea82d5c11bb6b2fc80805037ea98374f40",
+    "gate4_determinism.py": "41a2ab7842f99e15049b5943fdfe8e0766b3c1f45011a1cb251c243ecea42a0e",
+    "gate4_retro_sha.py": "9360a7a7e4f2d2b118020c50fab3e4048c6e4e7481e57ab20dcce1fdd9d12ffd",
+    "gate4_report.py": "5bb446a2a122f2164541b2f356f9997172ac8b0c3ed625097caf202a63efce6b",
+    "freeze_gate4_stage2.py": "472501675cbb355f7fc6725069298c195137cc9ee8d8d41f89abd3d46d78731c"
+   },
+   "revision_note": "Revision 5: reporting-only cleanup of the acceptance audit. floor_lo 71.3740; aggregation shift 1.3550 persisted; mcd scale persisted; ordering-proof claims withdrawn; stale prose figures corrected. No metric, threshold, rule or verdict changed."
+  }
+ ],
+ "revision_note": "Revision 6: final text cleanup. Stale live 1.20 -> persisted 1.3550; corpus-key descriptive counts (238/343) WITHDRAWN not re-derived; 'at least three' -> 8 from artifact; historical banner corrected; 70.74 occurrence-count claim corrected; floor_uncertainty_basis now GENERATED from persisted fields. No science changed.",
+ "revisions": 4,
+ "spec_frozen_utc": "2026-09-13T12:45:09Z",
+ "spec": {
+  "GATE4_STAGE2_SPEC.md": "ead10f0d659d20e43fa1e16152c6c1adae77662a7c8cf7d309ef40c9dec98a24"
+ },
+ "what_this_establishes": "The specification did not move between --freeze-spec and --freeze, and the declared spec and implementation are fixed, hashed and auditable.",
+ "⛔ what_this_does_NOT_establish": "IT IS NOT A PROOF THAT THE SPECIFICATION PRECEDED THE IMPLEMENTATION, and the earlier claim to that effect is WITHDRAWN (audit 3, M5). No implementation hash is taken at spec-freeze time, so pre-existing code is invisible; both timestamps are local and unanchored; this tree is not a git repository; and the claim was measurably FALSE for gate4_determinism.py, whose mtime precedes the spec freeze by 2h25m and which was never changed to match the spec.",
+ "not_a_preregistration": "SPEC section 0. This layer was specified AFTER four audits of the results. Freezing makes its decisions declared, fixed and auditable. It does NOT make them blind, and nothing later can.",
+ "implementation_frozen_utc": "2026-09-13T12:45:09Z",
+ "implementation": {
+  "gate4_metrics.py": "98fe7b37409d0b4f3e3b264d8af35a25640aefb8068f84d5536cd6b754397652",
+  "gate4_determinism.py": "41a2ab7842f99e15049b5943fdfe8e0766b3c1f45011a1cb251c243ecea42a0e",
+  "gate4_retro_sha.py": "9360a7a7e4f2d2b118020c50fab3e4048c6e4e7481e57ab20dcce1fdd9d12ffd",
+  "gate4_report.py": "5bb446a2a122f2164541b2f356f9997172ac8b0c3ed625097caf202a63efce6b",
+  "freeze_gate4_stage2.py": "472501675cbb355f7fc6725069298c195137cc9ee8d8d41f89abd3d46d78731c"
+ },
+ "_redaction": {
+  "derivative_of": "GATE4_STAGE2_FREEZE.json",
+  "source_sha256": "71ed76f03a15a53963a97a09851f62a9038b793c2f353397d10e23929625dfac",
+  "source_status": "PRIVATE - not released, not modified",
+  "applied": {
+   "speaker_names": 0,
+   "private_paths": 0,
+   "source_filenames": 0
+  },
+  "generated_utc": "2026-09-16T13:42:33Z"
+ }
+}

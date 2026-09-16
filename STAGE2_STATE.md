@@ -1,0 +1,376 @@
+# GATE 4 — STAGE 2 STATE. Self-contained. Depends on no conversation.
+
+**Written 2026-09-13. Read this first if the session was compacted, crashed, or
+resumed. Companion to `STAGE1_STATE.md`, which stays valid.**
+
+## VERIFY FIRST — expect drift 0 on both
+
+```
+cd C:\Users\User\Desktop\research\decoder-bench
+python freeze_gate3.py --verify      # 56 artifacts, drift: 0
+python freeze_gate4.py --verify      # 18 artifacts, drift: 0
+```
+
+Both verified at 2026-09-13 09:27 local. **The apparatus was not reopened during
+execution.**
+
+⛔ Use `C:\Users\User\miniconda3\envs\decbench\python.exe`. The base conda
+`python` has a broken torch DLL and cannot import `gate4_lib`.
+
+## STATUS
+
+**STAGE 2 MEASUREMENT IS COMPLETE.** 18 arms × 1 736 cells = **31 248 cells**,
+exit code 0, no runtime failures.
+
+**THE §7.2 DETERMINISM GATE HAS BEEN RUN** (2026-09-13, after the audit found it
+missing): **PASS for all 18 study arms, `max_abs_err == 0.0` exactly.**
+`GATE4_RESULTS.json` was rebuilt with condition 4 enforced.
+
+- per-arm rows → `results/gate4_stage2_<arm>.jsonl`
+- determinism → `results/gate4_determinism_<env>.jsonl`
+- aggregate → `GATE4_RESULTS.json`
+- ⭐ **the package for the independent auditor → `GATE4_STAGE2_EVIDENCE.md`**
+
+⛔ **STAGE 2 IS NOT FROZEN AND THE RESULTS ARE NOT CLEARED.** They await an
+**independent results audit**. **Do not delete the Stage 1 WAVs.**
+
+⛔ Findings 1 and 3 below are **superseded** — kept because they record what was
+wrong and when. Read `GATE4_STAGE2_EVIDENCE.md` for the current state.
+
+## ⭐ REV 6 — FINAL TEXT CLEANUP (no science touched)
+
+```text
+python freeze_gate4_stage2.py --verify     # 6 artifacts, drift 0 (rev 6)
+```
+
+- §7.0.1's live **1.20** → **1.3550**, cited to
+  `GATE4_RESULTS.json → aggregation_deviation_summary`.
+- ⛔ **The 238 / 343 corpus-key counts are WITHDRAWN, not re-derived.** They were
+  ad-hoc, persisted nowhere, and were propping up a methodology decision. The
+  recording-key repair rests on the frozen text (§11.2.1 defines the unit,
+  §11.2.2 requires rungs to travel together) and on the **reproduced** 340→731 /
+  434→1416 cluster checks with **0 recordings in more than one stratum**.
+- "At least three do not [clear]" → **8**, counted from the artifact.
+- The "REVISION 2 FOLLOWS, UNEDITED" banner corrected — the history below **has**
+  been edited, with sections deleted and figures superseded.
+- The "70.74 appears in exactly two places" claim was **wrong**; no occurrence
+  count is asserted now, and the audit-trail references stay.
+- `floor_uncertainty_basis` is now **generated** from the persisted
+  `floor_uncertainty` fields instead of a hand-typed literal.
+
+**46 · 42 · 20 unchanged. ROBUST 3 · FLOOR-FRAGILE 1 · THIN 42 unchanged.**
+Gate 3 drift 0 · Gate 4 drift 0 · Stage 2 drift 0 (rev 6) · proof 5/5.
+**4 revisions retained in `GATE4_STAGE2_FREEZE.json`; none discarded.**
+
+## ⭐⭐⭐ THIRD AUDIT — REPAIRED IN REV 4; REPORTING CLEANUP IN REV 5
+
+**Blocking item was conformance, not correctness:** the artifact omitted the
+streaming totals its own frozen spec mandated, and `gate4_report.py` generated
+§9 by re-reading raw JSONL — bypassing the artifact.
+
+```text
+python freeze_gate4_stage2.py --verify     # 6 artifacts, drift 0 (rev 4)
+```
+
+- **B1** — `streaming_detector` is now computed in `aggregate()` and written to
+  the artifact (**27 776 produced · 26 928 §8 PASS · 781 in support, 2.90 %**).
+  `gate4_report.py` **refuses to run** without it — verified by test.
+- **M1** — `floor_hi` **saturates at `max(draws)` in all six states**;
+  `FLOOR_BOOT_RESAMPLES` / `FLOOR_BOOT_SEED` are decorative. Headroom published:
+  dac44 **+25.03**, fish **+8.42**, qwen3 ⚠️ **+2.00**, dualcodec **−6.07**.
+- **M2** — `floor_lo` corrected to **71.3740** (the withdrawn figure came from
+  an exploratory run seeding once for all states); the whole block is now
+  **persisted**.
+- **M3** — a degenerate per-state interval can never report `clears=True`.
+  **147 intervals, 79 degenerate, 75 formerly clearing trivially** — matches the
+  auditor exactly. **No label changed.**
+- **M4** — rule 2(b) fires on 39 pairs and **determines 0 labels**; the spec says
+  so now.
+- **M5** — ⛔ the **ordering-proof claim is WITHDRAWN** everywhere. It was false
+  for `gate4_determinism.py` (mtime 2 h 25 m before the spec freeze).
+- **M6** — the stale hand-typed §4/§5/§6/§9 are **deleted** from the evidence
+  package, not annotated.
+- MINOR — tables now print cells **and** recordings. ⛔ the corpus-key
+  descriptive count is **WITHDRAWN** in rev 6, not re-derived.
+
+⭐ **VERDICTS UNCHANGED FOR THE FOURTH REVISION: 46 · 42 · 20.**
+ROBUST 3 · FLOOR-FRAGILE 1 · THIN 42. Proof 5/5.
+Gate 3 drift 0 · Gate 4 drift 0 · Stage 2 layer drift 0 (rev 5).
+
+**REV 5 (reporting only, no science):** `floor_lo` 71.3740 everywhere;
+aggregation shift **1.3550** (was 1.20, measured under the old key) now
+**persisted** as `aggregation_deviation_summary`; `mcd` scale persisted as
+`metric_scale` (**measured 72.66–458.46**); every ordering-"proof" claim
+withdrawn; `dac44` 218.42; 18 study arms × 3 probes = 54; 8 established pairs do
+not clear on the interval.
+
+⚠️ **Still true and unfixed:** `mimi_q8｜qwen3` is ROBUST on **+2.00** over one
+fuzz draw and a Whisper state of **18 cells / 17 recordings** at **+1.12**. Both
+published; no per-state power condition added — that would be a post-hoc tune.
+
+⛔ **`freeze_gate4_stage2.py --revise` retains every previous hash under
+`superseded`. Revision 3's spec hash `e472856a…` is preserved.**
+
+## ⭐⭐ SECOND AUDIT RETURNED `NOT READY TO FREEZE` (B1) — REPAIRED, REV 3
+
+**B1: the Stage 2 analysis layer had no frozen specification.** It does now.
+
+```text
+python freeze_gate4_stage2.py --verify     # 6 artifacts, drift 0
+python gate4_report.py --write             # regenerates every table
+```
+
+- ⭐ **`GATE4_STAGE2_SPEC.md` frozen 09:06:54Z, BEFORE the code it governs;
+  implementation frozen 09:21:19Z.** `--freeze` refuses a moved spec hash, so
+  ⛔ the ordering-proof claim is **WITHDRAWN** (rev 4/5): the layer is fixed,
+  hashed and auditable, and nothing more is claimed. ⚠️ **A specification
+  freeze, NOT a
+  pre-registration** — spec §0.
+- **MAJOR-1 repaired:** `recording = (speaker, state, index)`, ladder rungs
+  travel together, stratum derived from the key.
+  `dac44｜mimi_q8` 340 → **731** clusters; `bigvgan22｜griffinlim` 434 → **1416**
+  — both reproduce the auditor's independent counts exactly.
+- **`AUDIT_FRAGILE` hardcoded pair name DELETED.** The taxonomy reaches the same
+  disposition **by rule**.
+- **Every §4/§5/§6/§9 number is machine-generated** into
+  `GATE4_STAGE2_TABLES.md`.
+- **Cold-start probe now covers EVERY arm's first Stage 1 cell** — 18/18 MATCH.
+- `--prove` check 5 was a no-op; it now parses the module. **5/5.**
+
+**Verdicts UNCHANGED: 46 · 42 · 20. ROBUST 3, FLOOR-FRAGILE 1.**
+Gate 3 drift 0 · Gate 4 drift 0 · Stage 2 layer drift 0.
+
+⚠️ **Known and NOT fixed:** `mimi_q8｜qwen3` is ROBUST on a Whisper state of
+n = 18, margin +1.12 — thinner than the pair the rules downgrade.
+
+## ⭐ FIRST INDEPENDENT AUDIT RETURNED — M1–M5 DISPOSITIONED 2026-09-13
+
+**No blocking defects. Five MAJOR record/implementation issues, all
+dispositioned.** `GATE4_STAGE2_EVIDENCE.md` **revision 2** is the package for the
+final read-only audit.
+
+- **M1** the hidden `< 3 recordings` refusal is gone; degenerate intervals now
+  fail **closed**, never `ORDERED` — **11 pairs**
+- **M2** the §11.2.3 hierarchy `cell → recording → (speaker × state) → arm` is
+  implemented; the flat-median deviation is **retained per pair**; **1 verdict
+  changes**. ⚠️ the median shift quoted here (1.20) was measured under the OLD
+  recording key — **superseded, see `aggregation_deviation_summary` (1.3550)**
+- **M3** `gate4_retro_sha.py`: **18 arms, 216/216** on file integrity *and*
+  sample bit-identity. Found a real **cold-start** effect on
+  `fish_modified_dac` (first inference after load, `max|d| 4.82e-02`), bounded
+  to one cell per process and checked directly
+- **M4** Q9 + coverage/power caveats now live in `GATE4_RESULTS.json`
+- **M5** headline corrected to **three** robust arms; `dualcodec_25hz_v1` is
+  floor-fragile
+
+**Verdicts now: 46 established · 42 ordered · 20 not established.**
+Proof 5/5. Gate 3 drift 0. Gate 4 drift 0.
+
+⛔ **DO NOT FREEZE AND DO NOT DELETE THE WAVs UNTIL THE FINAL AUDITOR RETURNS
+`READY TO FREEZE`.**
+
+## WHAT WAS MEASURED
+
+| | |
+|---|---|
+| ranking metric | `mcd` alone, REFERENCE-COMMON 16 kHz, 0–8 kHz |
+| admissible | **14 083 MEASURED** · 17 020 `NOT COMPARABLE — OUTSIDE VALIDATED SUPPORT` · 145 `INADMISSIBLE — FAILS SECTION 8` |
+| pairs evaluated | 108 (within route only) |
+| verdicts (CURRENT) | **46 SEPARATION ESTABLISHED** · 42 `ORDERED, SEPARATION NOT ESTABLISHED` · 20 `QUALITY COMPARISON NOT ESTABLISHED` |
+
+`aggregate()` reads the **offline** measurement only. Streamed output feeds
+**Q1**, the within-arm streaming cost, which is a DETECTOR and never a ranking.
+
+## ✅ AUDIT FINDING 1 — RESOLVED 2026-09-13. THE DETERMINISM GATE WAS NEVER RUN
+
+> **RESOLUTION.** `gate4_determinism.py` now runs §7.2 on the same frozen decode
+> path (it imports `gate4_run`). **All 18 study arms: `DETERMINISM PASS`,
+> `max_abs_err == 0.0` exactly, 3 probes each** (Neutral / Whisper / Shouting —
+> §7.2 requires one; three is a declared deviation in the conservative
+> direction). `melflow` → NOT ADMISSIBLE; `nanocodec` → BLOCKED — PLATFORM, both
+> recorded rows. §11.1 condition 4 is now met and is enforced in `aggregate()`;
+> an arm with no recorded verdict **fails closed**.
+>
+> The original finding follows, unedited.
+
+§7.2 of the pre-registration: *"Before any quality cell runs for an arm, that arm
+decodes the same representation twice … The arm proceeds only if
+`max_abs_err == 0.0` exactly."* §11.1 condition 4 then requires **determinism
+PASS** on both arms of every ranked pair.
+
+**MEASURED: `gate4_run.py` contains no determinism probe.** A repository-wide
+search finds a recorded probe for exactly **2 of 18 arms** — `griffinlim`
+(`rand_init=False`, `0.0`, in `gate2_repaired_a.json`) and `melflow`
+(`0.0`, in `gate2_repaired_melflow.json`, and it produced no Stage 1 output).
+
+**Consequence under the frozen protocol: all 20 `SEPARATION ESTABLISHED`
+verdicts fail condition 4 and must read `QUALITY COMPARISON NOT ESTABLISHED`
+until the gate is run.** No result here is defended by arguing the arms are
+probably deterministic — R13: a negative capability claim needs evidence.
+
+**The repair is small and is a Stage-1-class GPU operation:** each arm decodes
+one representation twice and compares with `gate_lib.err()`. 18 arms, not
+31 248 cells. **It is not a redesign and it changes no frozen file** — it runs a
+gate the frozen protocol already mandates.
+
+## ⛔ AUDIT FINDING 2 — Q9 FIRES. THE RANKING METRIC FAILS ITS OWN VALIDITY TEST IN ROUTE B
+
+§5 Q9 declares `griffinlim` *"the zero-parameter floor … the reference every
+learned decoder must beat for a metric to be worth reporting at all"*, and:
+*"A metric on which a 32-iteration Griffin-Lim reconstruction scores close to a
+trained neural codec is a metric that is not resolving what Gate 4 claims to
+resolve, and that is a finding about the metric."*
+
+**MEASURED. `griffinlim` does not score close — it scores BEST, in all six
+states:**
+
+| state | `griffinlim` | `bigvgan22` | `vocos_mel24` |
+|---|---|---|---|
+| Neutral | **80.8** | 102.0 | 127.9 |
+| Angry | **76.6** | 109.0 | 131.9 |
+| Happy | **75.9** | 105.1 | 130.0 |
+| Scared | **81.4** | 112.2 | 135.2 |
+| Shouting | **72.8** | 115.2 | 136.2 |
+| Whisper | **96.5** | 126.0 | 156.2 |
+
+All three Route B pairs: interval excludes zero, magnitude below the 105.07
+floor → **`ORDERED, SEPARATION NOT ESTABLISHED`**. So no Route B separation was
+claimed. **The order is the finding.**
+
+**A proposed explanation was TESTED AND REFUTED.** The hypothesis was that
+`mcd`, with a −80 dB relative floor over all frames, is dominated by low-level
+frames where a magnitude-matching algorithm trivially wins. Diagnostic on 25
+matched Neutral cells, splitting each cell's frames at its own median energy
+(frozen `mcd` reproduced exactly, error `0.00e+00`):
+
+| arm | mcd (all) | mcd (LOUD half) | mcd (QUIET half) |
+|---|---|---|---|
+| `griffinlim` | 85.7 | **67.6** | 101.9 |
+| `bigvgan22` | 104.0 | 89.0 | 117.9 |
+| `vocos_mel24` | 134.5 | 116.0 | 153.9 |
+
+Griffin-Lim leads in **both** halves, and by **more** in the loud half
+(21.4 vs 16.0). ⛔ **The quiet-frame explanation is WITHDRAWN.**
+
+What remains is structural and was foreseeable: `mcd` is a distance on the mel
+magnitude spectrum, and Griffin-Lim iteratively minimises exactly that quantity
+and has no other objective, while carrying phase error that `mcd` cannot see.
+**A metric cannot rank decoders on a quantity one of them is an optimiser for.**
+
+⚠️ **Scope.** Q9's instrument exists only in Route B. Route A has **no
+zero-parameter control**, so the same validity check has **NOT BEEN RUN** there.
+That is `NOT ESTABLISHED`, which is not the same as *unaffected*.
+
+## ✅ AUDIT FINDING 3 — RESOLVED 2026-09-13. AN UNDISCLOSED ANALYSIS THRESHOLD
+
+> **RESOLUTION.** The `n >= 10` rule is **removed from the primary analysis** and
+> demoted to `GATE4_RESULTS.json → sensitivity_min_paired_10`, labelled post-hoc
+> and changing no verdict. Only the absence of data still refuses a pair.
+> **Effect of removing it: established separations rose from 20 to 45**; the rule
+> would refuse 38 pairs, 25 of them now established. The original follows.
+
+`gate4_metrics.py:316` refuses any pair with `len(common) < 10`, labelling it
+`QUALITY COMPARISON NOT ESTABLISHED` — **47 of the 108 pairs**. **This threshold
+appears nowhere in `GATE4_PREREG.md`.** It was introduced in Stage 2 by the
+author.
+
+Direction and timing both mitigate, and neither excuses: it can only **refuse**
+comparisons, never create one; and it was written **before** the run — the proof
+suite passed before any cell was measured. **It is still an undisclosed constant
+and is recorded here as one (M8 precedent).**
+
+## ⚠️ AUDIT FINDING 4 — THE FLOOR IS TESTED AGAINST THE POINT ESTIMATE
+
+§11.1 condition 5(b) says *"the effect magnitude exceeds … the floor"*. The code
+tests `abs(median) > floor`. The text does not say the **interval** must clear
+the floor, so the implementation is literally compliant — but for **3 of the 20**
+established pairs the 95% interval **straddles** it:
+
+| pair | \|diff\| | \|CI\| | floor |
+|---|---|---|---|
+| `dualcodec_12hz_v1｜focalcodec_25hz` | 112.6 | [101.1, 139.5] | 105.07 |
+| `encodec24_q8｜focalcodec_50hz_4k_causal` | 111.7 | [**85.1**, 134.5] | 105.07 |
+| `focalcodec_25hz｜mimi_q32` | 110.1 | [**80.6**, 134.4] | 105.07 |
+
+For those three, "exceeds the instrument floor" is true of the point estimate and
+not established for the interval.
+
+## ⚠️ AUDIT FINDING 5 — 16 OF 20 SEPARATIONS REST ON 10–17 CELLS, SELECTED BY THE OUTCOME
+
+| evidence | pairs | which |
+|---|---|---|
+| n ≥ 100 paired cells | **4** | all four are *"`mimi_q8` is worse than X"*: `dualcodec_25hz_v1` (n=883), `fish_modified_dac` (804), `dac44` (777), `qwen3_tts_tokenizer_12hz` (714) |
+| n = 10–17 paired cells | **16** | **every one contains exactly one FocalCodec arm** |
+
+FocalCodec arms clear the support domain on **0.2 %–1.0 %** of their 1 736 cells
+(4 to 18 each). The survivors are not a random sample — they are the cells where
+that arm happened to retain broadband energy, i.e. **selection on the outcome**,
+and `n_recordings == n_cells`, so a 95% percentile interval is being drawn from
+10–17 independent points.
+
+⭐ **The bias runs AGAINST the conclusion drawn.** Those are FocalCodec's most
+favourable cells and FocalCodec still loses by 110–195. The *direction* survives
+its own selection; the *magnitude* does not, and no interval from 12 points
+should be reported as a precise effect.
+
+**The four large-n separations are consistent in every state** (`mimi_q8` worse
+by 92–157 in all six, with n = 18–308 per state).
+
+## ⚠️ AUDIT FINDING 6 — THE B5 LENGTH REPAIR IS BYPASSED AT METRIC TIME
+
+`gate4_metrics.py:114` calls `G4.mcd(..., length_tol=max(len(src16), len(est16)))`
+— an effectively **infinite** tolerance, which disables the B5 `LENGTH MISMATCH`
+guard inside `_pair()`.
+
+**It did not bite, and that is luck plus an upstream gate, not design.** MEASURED
+over all 31 248 offline cells: `offline_length_state` is **`OK` for every one**,
+with deltas of exactly 0 (24 304), 4 (3 472), or 256 samples (3 472) — all inside
+the frozen `gate4_length_policy` tolerance, checked in **Stage 1**. A reader of
+`gate4_metrics.py` alone would not see any length gate at all.
+
+## ✅ WHAT THE AUDIT CONFIRMED
+
+- **Support-before-ranking is mechanical, not a written rule.** `--prove` passes
+  5 checks; `mcd_value` is assigned in exactly one place, after the domain test;
+  `rankable()` is the only door into every interval and ranking. This closes the
+  accepted limitation carried at freeze.
+- **Apparatus untouched:** Gate 3 drift 0, Gate 4 drift 0, after execution.
+- **Fail-closed held:** 17 020 cells returned a STATE, never a number. No blank,
+  no zero.
+- **Route A and Route B never merged.** `mimi_q8`/`mimi_q32` never merged.
+- **Q1 has full coverage** (detector, within-arm): the median streamed-vs-own-
+  offline error is 105 %–225 % of peak for every arm **except the three
+  explicitly causal FocalCodec configurations, at 0.69 %–0.74 %**.
+- **The frozen `mcd` is exactly reproducible** — independent recomputation on 25
+  cells returned error `0.00e+00`.
+
+## THE STREAMED MEASUREMENT — CORRECTED, AND NOT A BLOCKER
+
+Only **264 of 23 568** streamed cells reached a number; the rest fell outside the
+validated support domain (e.g. `bigvgan22`: offline supported to 7 500 Hz,
+streamed to 250 Hz). ⚠️ **This blocks no preregistered ranking** — the design
+ranks **offline** cells, and the streaming estimand is **Q1**, computed against
+the arm's own full-context decode, which needs no support domain and has full
+coverage. An earlier statement in this session that it threatened the results was
+wrong and is withdrawn.
+
+## WHAT COMES NEXT, in order
+
+1. ⛔ **INDEPENDENT ADVERSARIAL AUDIT OF THE RESULTS.** The package is
+   `GATE4_STAGE2_EVIDENCE.md`. **R19: the author is not the certifier.** Every
+   finding in this file was found by the author of the code it criticises.
+2. **Then, and only then:** freeze Stage 2, and clean up the ~35 GB of WAVs.
+
+⛔ **Q9 IS NOT A DEFECT TO REPAIR.** The pre-registration says in advance what a
+Griffin-Lim win means. **No new quality metric is introduced after seeing the
+data** — choosing a ruler once you know who won under the old one is exactly the
+failure Q9 exists to catch.
+
+## DO NOT
+
+- delete any Stage 1 WAV before the independent audit returns
+- modify the frozen apparatus, or tune anything from these results
+- report any of the 20 separations as cleared while condition 4 is unmet
+- merge Route A with Route B, or quote `mcd` here against published MCD figures
+  — **80 mels, 24 cepstra, −80 dB relative floor, all frames; the values run
+  in `GATE4_STAGE2_TABLES.md` §10 and are NOT literature-scale MCD**

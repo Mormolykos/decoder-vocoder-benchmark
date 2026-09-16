@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>What a Streaming Decoder Costs</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="paper.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">What a Streaming Decoder Costs</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a
+href="#what-a-streaming-decoder-costs-a-five-gate-benchmark-of-twenty-neural-audio-decoders-and-a-metric-that-failed-its-own-validity-check"
+id="toc-what-a-streaming-decoder-costs-a-five-gate-benchmark-of-twenty-neural-audio-decoders-and-a-metric-that-failed-its-own-validity-check">What
+a Streaming Decoder Costs: A Five-Gate Benchmark of Twenty Neural Audio
+Decoders, and a Metric That Failed Its Own Validity Check</a>
+<ul>
+<li><a href="#abstract" id="toc-abstract">Abstract</a></li>
+<li><a href="#introduction" id="toc-introduction">1.
+Introduction</a></li>
+<li><a href="#candidate-set-and-a-reframing-that-changed-it"
+id="toc-candidate-set-and-a-reframing-that-changed-it">2. Candidate set,
+and a reframing that changed it</a></li>
+<li><a href="#method" id="toc-method">3. Method</a></li>
+<li><a href="#gate-1-functionality" id="toc-gate-1-functionality">4.
+Gate 1 — functionality</a></li>
+<li><a href="#gate-2-true-streaming-versus-stateless-chunking"
+id="toc-gate-2-true-streaming-versus-stateless-chunking">5. Gate 2 —
+true streaming versus stateless chunking</a></li>
+<li><a href="#gate-3-performance" id="toc-gate-3-performance">6. Gate 3
+— performance</a></li>
+<li><a href="#gate-4-reconstruction-quality-and-a-metric-that-failed"
+id="toc-gate-4-reconstruction-quality-and-a-metric-that-failed">7. Gate
+4 — reconstruction quality, and a metric that failed</a></li>
+<li><a href="#q5-speaker-identity" id="toc-q5-speaker-identity">8. Q5 —
+speaker identity</a></li>
+<li><a href="#audit-history-and-why-it-is-in-the-paper"
+id="toc-audit-history-and-why-it-is-in-the-paper">9. Audit history, and
+why it is in the paper</a></li>
+<li><a href="#limitations" id="toc-limitations">10. Limitations</a></li>
+<li><a href="#conclusions" id="toc-conclusions">11. Conclusions</a></li>
+<li><a href="#data-and-code-availability"
+id="toc-data-and-code-availability">Data and code availability</a></li>
+<li><a href="#t1-the-speaker-encoder-panel-q5"
+id="toc-t1-the-speaker-encoder-panel-q5">T1 — The speaker-encoder panel
+(Q5)</a></li>
+<li><a href="#t2-instrument-calibration-on-source-audio-only-q5-3-9"
+id="toc-t2-instrument-calibration-on-source-audio-only-q5-3-9">T2 —
+Instrument calibration on SOURCE audio only (Q5 §3, §9)</a></li>
+<li><a
+href="#t3-human-within-speaker-ceiling-and-between-speaker-floor-source-audio-q5-3"
+id="toc-t3-human-within-speaker-ceiling-and-between-speaker-floor-source-audio-q5-3">T3
+— Human within-speaker ceiling and between-speaker floor, source audio
+(Q5 §3)</a></li>
+<li><a
+href="#t4-speaker-embedding-retention-set-s-all-six-states-pooled"
+id="toc-t4-speaker-embedding-retention-set-s-all-six-states-pooled">T4 —
+Speaker-embedding retention, Set S, all six states pooled</a></li>
+<li><a
+href="#t5-q5-identity-labels-540-strata-18-arms-3-encoders-2-sets-strata"
+id="toc-t5-q5-identity-labels-540-strata-18-arms-3-encoders-2-sets-strata">T5
+— Q5 identity labels, 540 strata (18 arms × 3 encoders × 2 sets ×
+strata)</a></li>
+<li><a
+href="#t6-streaming-identity-detector-q5-7.-within-arm-never-a-ranking"
+id="toc-t6-streaming-identity-detector-q5-7.-within-arm-never-a-ranking">T6
+— Streaming identity detector (Q5 §7). Within-arm; never a
+ranking</a></li>
+<li><a href="#t7-measurement-volume-and-admissibility"
+id="toc-t7-measurement-volume-and-admissibility">T7 — Measurement volume
+and admissibility</a></li>
+<li><a href="#t-q9-the-metric-validity-instrument-gate-4-5-route-b"
+id="toc-t-q9-the-metric-validity-instrument-gate-4-5-route-b">T-Q9 — The
+metric-validity instrument (Gate 4 §5, Route B)</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1
+id="what-a-streaming-decoder-costs-a-five-gate-benchmark-of-twenty-neural-audio-decoders-and-a-metric-that-failed-its-own-validity-check">What
+a Streaming Decoder Costs: A Five-Gate Benchmark of Twenty Neural Audio
+Decoders, and a Metric That Failed Its Own Validity Check</h1>
+<p><strong>Panagiotis Gkilis</strong> · BedVibe Studios, Oslo ORCID
+0009-0007-3805-170X</p>
+<p><strong>Status: review draft.</strong> Publication manifest
+<code>1e93e28b9adb3b1f</code>. Every numeric value is generated from a
+frozen artifact by <code>paper/make_paper_tables.py</code>; the prose
+cites the generated tables and adds no number of its own.</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Choosing a neural audio decoder for a streaming text-to-speech
+product requires four separate answers — does it run, does it truly
+stream, how fast is it, and what does it cost the signal — and the
+literature answers them with figures that are rarely comparable. We
+benchmarked <strong>twenty decoder arms</strong> under one frozen
+protocol on identical audio, with each gate pre-registered before it was
+measured and each instrument attacked before it was trusted.</p>
+<p>Three results stand out, and two of them are negative.</p>
+<p><strong>First, “streaming” is a property almost nothing in the
+candidate set has.</strong> Of twenty arms, only <strong>three</strong>
+reproduce full-context output from partial input while carrying state —
+all three explicitly causal FocalCodec configurations.
+<strong>Fifteen</strong> use stateless chunking rather than load-bearing
+streaming state. One streams its network but never emits audio from
+partial input, and its label says so. Several of the fifteen never
+claimed to stream; the classification is a measurement of what they do,
+not a charge against what they advertised.</p>
+<p><strong>Second, our sole pre-registered cross-arm quality metric
+failed the validity instrument we built to catch exactly that.</strong>
+Griffin-Lim, a zero-parameter phase-retrieval algorithm from 1984, does
+not merely score close to the trained mel decoders under our
+mel-cepstral distance — it scores <strong>best in six states of
+six</strong>. The pre-registration declared in advance what that would
+mean, so the finding is reported as a property of the metric, not as a
+decoder ranking.</p>
+<p><strong>Third, a second measurement with no shared code path reached
+the same verdict on the same three arms.</strong> Measuring
+speaker-embedding retention with three separately calibrated speaker
+encoders, the three causal configurations show <strong>no measured
+loss</strong> under that metric when streamed (offline-vs-streamed
+cosine 0.9999, retention delta −0.0000) while the other thirteen lose
+between −0.078 and −0.742. ⚠️ The two measurements are independent in
+<em>construction</em> — a spectral distance and three speaker encoders,
+sharing no implementation — but <strong>not</strong> in <em>data</em>:
+both run on the same reconstructions of the same corpus, so a
+corpus-level or reconstruction-level artefact would move both. What
+their agreement adds is that two different representations of the signal
+register the same three survivors.</p>
+<p>We also report what we could not establish: perceptual quality was
+never measured, and the identity result is a statement about
+speaker-encoder representations rather than about how the audio sounds.
+The study passed four rounds of independent adversarial audit, which
+found three real defects before publication; those defects and their
+repairs are reported here because the corrections changed
+conclusions.</p>
+<hr />
+<h2 id="introduction">1. Introduction</h2>
+<p>A team building a streaming TTS system has to choose a decoder. The
+published record makes that harder than it should be. Real-time factors
+are quoted without hardware; “streaming” is claimed for architectures
+that require the whole utterance; quality figures come from different
+corpora at different sample rates through different measurement paths.
+None of it composes into a decision.</p>
+<p>This benchmark exists to make one decision inspectable rather than
+asserted. It measures <strong>representation → waveform only</strong>.
+Generator and autoregressive timing are outside its scope, and a
+decode-only number read as end-to-end TTS performance would be a failed
+report.</p>
+<p>The study is organised as five gates, each pre-registered before it
+was run:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>gate</th>
+<th>question</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>0 — candidate</strong></td>
+<td>which decoders are runnable, licensed and comparable at all?</td>
+</tr>
+<tr>
+<td><strong>1 — functionality</strong></td>
+<td>does the arm produce structurally valid audio?</td>
+</tr>
+<tr>
+<td><strong>2 — streaming</strong></td>
+<td>does it <em>truly</em> stream, or is it stateless chunking?</td>
+</tr>
+<tr>
+<td><strong>3 — performance</strong></td>
+<td>latency, real-time factor, first-audio, jitter, memory</td>
+</tr>
+<tr>
+<td><strong>4 — quality</strong></td>
+<td>what does the round trip cost the signal?</td>
+</tr>
+<tr>
+<td><strong>Q5 — identity</strong></td>
+<td>does the speaker survive, and does he stay one person?</td>
+</tr>
+</tbody>
+</table>
+<p>One methodological commitment shapes everything below: <strong>an
+instrument is attacked before it is trusted, and its author does not
+certify it.</strong> Two of the three headline findings are consequences
+of that rule rather than of the decoders.</p>
+<h2 id="candidate-set-and-a-reframing-that-changed-it">2. Candidate set,
+and a reframing that changed it</h2>
+<p>The candidate gate closed with a finding that changed the population:
+<strong>for a TTS build, only the decoder needs to be causal.</strong>
+The encoder runs at training time on complete utterances; at inference
+the generator emits tokens directly and no encoder sits in the serving
+path. NVIDIA’s NanoCodec makes the point concrete — non-causal encoder,
+causal HiFi-GAN decoder. “Is this codec causal?” is therefore the wrong
+question, and asking it nearly excluded several candidates for the wrong
+reason.</p>
+<p>The measured population is twenty arms spanning two routes —
+<strong>Route A</strong>, representation → waveform through a codec’s
+own decoder, and <strong>Route B</strong>, mel → waveform — at three
+sample-rate bands (16 kHz, 22–24 kHz, 48 kHz), because sample rate is an
+architectural variable and was never normalised away.</p>
+<p>Two arms carry declared non-results rather than numbers.
+<code>nanocodec</code> is <strong>BLOCKED — PLATFORM</strong>: it could
+not be loaded here, and no timing figure is manufactured for it.
+<code>melflow</code> is AGPL-3.0 and carries a label on every result it
+produces: research evidence, not a shippable closed-product dependency.
+Its released streaming path also <strong>did not execute as-is</strong>
+and required two structural repairs, which an independent delta audit
+confirmed were inert — touching no weight and no arithmetic
+operation.</p>
+<h2 id="method">3. Method</h2>
+<p><strong>Corpus.</strong> Seven speakers, English, one studio, one
+recording chain, six emotional states — Neutral, Angry, Happy, Scared,
+Shouting, Whisper. <strong>1,512 distinct source recordings</strong>,
+every file hashed with SHA-256 before use: Set S (1,302 recordings, 31
+texts, all six states, 2.54–13.50 s), Set L (210 recordings, 15 long
+texts, Neutral and Whisper, measured on a derived 14 s top rung), and a
+calibration subset (126 recordings) held out by construction. The source
+audio is private, rights-cleared and consented, and is <strong>not
+published</strong>.</p>
+<p><strong>Environment.</strong> NVIDIA GeForce RTX 5080, torch
+2.10.0+cu128, CUDA 12.8, seed 20260911, eager mode throughout — no
+<code>torch.compile</code>, no CUDA graphs. Timing used 30 warm
+repetitions plus 3 cold, 5 warm-ups discarded, block-randomised, one GPU
+process at a time.</p>
+<p><strong>Freeze discipline.</strong> Each gate’s apparatus was frozen
+and hashed before the data it governs existed; <code>--verify</code>
+reports drift, and drift was 0 at every checkpoint. Superseded revisions
+are retained, never discarded. Gate 4’s analysis layer and the Q5 layer
+each carry their own frozen specification.</p>
+<p><strong>Statistics.</strong> The experimental unit is the
+<strong>recording</strong>, never the cell. Intervals are 95% percentile
+intervals from a cluster bootstrap over recordings, 4,000 resamples,
+seed 20260911, aggregated within (speaker × state) before across.
+<strong>No hypothesis tests are performed and no p-value is
+reported</strong> — intervals and effect sizes only.</p>
+<h2 id="gate-1-functionality">4. Gate 1 — functionality</h2>
+<p>Every arm passes a structural gate before any claim: finite samples,
+peak in (0, 1], duration within one frame of that arm’s own rate, energy
+ratio 0.25–4.0, float32, correct channel count. <strong>Nineteen of
+twenty arms PASS.</strong> The twentieth is <code>nanocodec</code>,
+recorded as <code>NOT RUN — arm could not be loaded</code>.</p>
+<p>Gate 1 is deliberately weak. It establishes that a number
+<em>may</em> be computed, not that it means anything.</p>
+<h2 id="gate-2-true-streaming-versus-stateless-chunking">5. Gate 2 —
+true streaming versus stateless chunking</h2>
+<p>This is the gate we expected to be routine, and it was the most
+discriminating of the five.</p>
+<p>An arm is <code>TRUE_INCREMENTAL</code> only if <strong>both</strong>
+conjuncts hold: <strong>C1</strong>, stateful chunked decode reproduces
+full-context output to <code>max|err| ≤ 1e-3</code>; and
+<strong>C2</strong>, state is load-bearing — the stateless error is at
+least 10× the stateful error. C2 exists because C1 alone can be
+satisfied by an arm that ignores state.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>classification</th>
+<th>arms</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>STATELESS_CHUNKING</code></td>
+<td><strong>15</strong></td>
+</tr>
+<tr>
+<td><code>TRUE_INCREMENTAL</code> (representation → PCM)</td>
+<td><strong>3</strong> — <code>focalcodec_50hz_2k_causal</code>,
+<code>focalcodec_50hz_4k_causal</code>,
+<code>focalcodec_50hz_65k_causal</code></td>
+</tr>
+<tr>
+<td><code>TRUE_INCREMENTAL</code> — neural decoder only, iSTFT streaming
+not established</td>
+<td>1 — <code>melflow</code></td>
+</tr>
+<tr>
+<td><code>BLOCKED — PLATFORM</code></td>
+<td>1 — <code>nanocodec</code></td>
+</tr>
+</tbody>
+</table>
+<p>The three causal configurations pass C2 with ratios of <strong>3,530
+to 36,740</strong> against a threshold of 10 — state is not marginally
+load-bearing, it is decisive.</p>
+<p><strong>The negative controls are what make the positives mean
+anything.</strong> The non-causal FocalCodec configurations are driven
+through the <em>identical</em> stateful code path. Their C2 ratio is
+<strong>exactly 1</strong>: carrying state changes nothing. Had a
+negative control passed, the experiment would have been void rather than
+the arm promoted.</p>
+<p><code>melflow</code> is the honest boundary case. Its neural decoder
+is driven frame-synchronously with carried state and passes both
+conjuncts, but the inverse STFT runs once over the assembled
+spectrogram, so <strong>no PCM is emitted from partial input</strong>. A
+control measured that the overlap-add stage is not free — a naive
+split-and-concatenate inverse STFT departs by 134.65% — so streaming the
+neural decoder does not imply streaming the chain. Its label carries the
+qualification and it is never counted with the arms that emit PCM.</p>
+<p>We also measured per-chunk length drift rather than assuming it away:
+four arms accumulate a constant offset per chunk, worst case
+<strong>47,360 samples ≈ 1.97 s</strong> for <code>vocos_mel24</code>
+and <code>griffinlim</code>. Part of the error attributed to boundary
+damage in a naive analysis is misalignment.</p>
+<h2 id="gate-3-performance">6. Gate 3 — performance</h2>
+<p><strong>One environment finding governs how these numbers may be
+read.</strong> A controlled probe — byte-identical tokens, same GPU,
+<code>encodec24_q8</code> as a single arm in every environment — found
+the incumbent’s environment <strong>50.2% faster</strong> than the
+reference (<code>transformers</code> 4.35.2 versus 4.57.3), a
+near-constant 3–4 ms device-side offset at identical torch. Host
+overhead is 0.022 ms versus 0.024 ms while CUDA time is 10.344 ms versus
+6.328 ms: the two library versions launch different GPU work for the
+same decode. Consequently <strong><code>fish_modified_dac</code> may not
+be compared numerically against any arm measured in the reference
+environment.</strong> Its numbers stand within its own environment. This
+says nothing about whether the incumbent is fast or slow; it says the
+comparison does not exist.</p>
+<p>At the ~80 ms chunk anchor, first-audio latency spans <strong>1.37
+ms</strong> (<code>vocos_mel24</code>) to <strong>375.91 ms</strong>
+steady-state p50 (<code>melflow</code>, in eager mode and therefore an
+upper bound, since its upstream recommends CUDA graphs). Real-time
+margin spans <strong>64×</strong> down to <strong>0.2×</strong>.
+Seventeen arms show zero underrun at the anchor;
+<code>qwen3_tts_tokenizer_12hz</code> shows 0.0013 with a p99 of 17.39
+ms against a <strong>max of 208.10 ms</strong> — a tail that a p50 hides
+completely.</p>
+<p><strong>Speed does not imply validity, and Gate 3 refuses to let
+it.</strong> Three arms produce streamed output that fails the study’s
+own §8 validity gate at every chunk size tested:
+<code>vocos_mel24</code> (0/7 conditions), <code>griffinlim</code> (0/6)
+— both on <code>duration_ok</code> — and <code>focalcodec_12_5hz</code>
+at the anchor (2/5, on <code>energy_ok</code>), whose minimum viable
+configuration is therefore <strong>640.8 ms</strong>, not 80 ms. Their
+timing numbers are real; what they timed is not a valid streaming
+configuration. <code>vocos_mel24</code> is the sharpest illustration:
+the <strong>fastest</strong> first-audio in the study, and no achievable
+streaming configuration at all.</p>
+<h2 id="gate-4-reconstruction-quality-and-a-metric-that-failed">7. Gate
+4 — reconstruction quality, and a metric that failed</h2>
+<p>Gate 4 ranked on <strong>one</strong> metric, mel-cepstral distance,
+chosen after nine metric variants were implemented and attacked; the
+other eight were demoted to detectors, permitted to report that two
+signals differ but never that one decoder is better. Ranking required
+three conjuncts: the cell inside a validated support domain, a paired
+95% recording-cluster interval excluding zero, and an effect exceeding a
+state-aware absolute floor.</p>
+<p>Of 108 within-route pairs: <strong>46 SEPARATION ESTABLISHED · 42
+ORDERED, SEPARATION NOT ESTABLISHED · 20 QUALITY COMPARISON NOT
+ESTABLISHED.</strong> Only <strong>three</strong> pairs are ROBUST, all
+of them statements that <code>mimi_q8</code> is worse than another arm,
+and one further pair is floor-fragile. Forty-two of the ordered pairs
+rest on <strong>3 to 17 paired cells</strong> and <strong>all 42 contain
+a FocalCodec arm</strong> — the survivors are that arm’s most favourable
+cells, so the direction survives its own selection but the magnitude
+does not.</p>
+<h3 id="q9-fires">7.1 Q9 fires</h3>
+<p>The pre-registration installed Griffin-Lim as a zero-parameter floor
+and stated in advance what it would mean if a 1984 phase-retrieval
+algorithm scored close to a trained neural codec: <em>a finding about
+the metric</em>.</p>
+<p>It did not score close. It scored <strong>best, in six states of
+six</strong> (see T-Q9 below, generated): 81.6 versus 102.6 and 127.7 at
+Neutral, and the same ordering in every other state.</p>
+<p>A proposed explanation was tested and <strong>refuted</strong>. The
+hypothesis that the metric’s low-level frame floor favours a
+magnitude-matching algorithm failed: splitting each cell at its own
+median energy, Griffin-Lim leads in <strong>both</strong> halves and by
+<em>more</em> in the loud half (21.4 versus 16.0). What remains is
+structural and was foreseeable — mel-cepstral distance is a distance on
+the mel magnitude spectrum, Griffin-Lim iteratively minimises exactly
+that quantity and has no other objective, and it carries phase error the
+metric cannot see.</p>
+<p><strong>A metric cannot rank decoders on a quantity one of them is an
+optimiser for.</strong> Two scope limits travel with this finding: the
+instrument exists only in Route B, so the same check is
+<code>NOT ESTABLISHED</code> — not “passed” — in Route A; and no new
+metric was introduced after seeing the data, because choosing a ruler
+once you know who won under the old one is precisely the failure Q9
+exists to catch.</p>
+<h3 id="what-the-support-domain-removed">7.2 What the support domain
+removed</h3>
+<p>Coverage varies by more than two orders of magnitude:
+<code>griffinlim</code> 99.3% of cells rankable, <code>mimi_q32</code>
+79.4%, and every FocalCodec arm between <strong>1.0% and 0.2%</strong>.
+A FocalCodec quality comparison is therefore drawn from the few percent
+of cells where that arm retained broadband energy. This is stated rather
+than smoothed, and it is why 20 of the 20 refused pairs involve
+FocalCodec.</p>
+<h2 id="q5-speaker-identity">8. Q5 — speaker identity</h2>
+<p>Gate 4 pre-registered speaker-identity retention as
+<strong>Q5</strong> and marked it <em>metric not built, not fuzzed</em>.
+It was built afterwards as a separate layer, consuming the frozen
+reconstructions without reopening any Gate 4 verdict.</p>
+<p>Q5 measures two quantities that a single similarity score conflates,
+and refuses to merge them:</p>
+<ul>
+<li><strong>Retention (R)</strong> — cosine between a source recording
+and its own reconstruction.</li>
+<li><strong>Dispersion (D)</strong> — cosine between <em>different</em>
+reconstructions of the same speaker, so a decoder that moves a voice
+consistently can be told apart from one that makes the speaker
+wander.</li>
+</ul>
+<p>Both are read against two references measured on <strong>source audio
+alone, before any reconstruction was opened</strong>: the human
+within-speaker ceiling (how far apart two genuine recordings of one
+speaker sit) and the between-speaker floor.</p>
+<p><strong>The panel is three independently calibrated encoders</strong>
+(T1), chosen mechanically from a previously frozen fourteen-encoder
+study before any Q5 number existed. Cosine values are
+<strong>encoder-specific and never averaged</strong>; the panel’s role
+is agreement, not a pooled score.</p>
+<p><strong>The instrument was calibrated and gated before use</strong>
+(T2, T3). Each encoder’s usable range G — the distance between “same
+person again” and “a different person” on this corpus — is 0.2663 to
+0.4056, and each encoder’s response to a one-sample shift is 100×
+smaller than the bound that would demote it. All 24 separability gates
+pass.</p>
+<h3 id="retention">8.1 Retention</h3>
+<p>Retention (T4) orders the arms consistently across all three
+encoders, from <strong>0.9952</strong> (<code>griffinlim</code>,
+<code>ecapa</code>) down to <strong>0.4316</strong>
+(<code>focalcodec_12_5hz</code>). Per-encoder spread reaches 0.1193,
+which is why a bare cosine without its encoder name is not a result.</p>
+<p><strong>Griffin-Lim has the highest speaker-embedding retention of
+the eighteen arms.</strong> That sentence is the whole claim. It is not
+a statement that Griffin-Lim is the best decoder, and it is not a
+perceptual claim — it is a measurement of how well one representation
+survives a round trip. Read together with Q9 it says something sharper:
+<strong>two instruments, a spectral distance and three speaker encoders,
+both rank a phase-blind algorithm first.</strong> Both are blind to the
+same thing, and only a listening test can settle what that costs.</p>
+<h3 id="dispersion">8.2 Dispersion</h3>
+<p>Of 540 labelled strata (T5), the dominant outcome is
+<code>NOT ESTABLISHED</code> (314) — which here means dispersion
+<strong>statistically indistinguishable from the human ceiling</strong>,
+not absence of information. <code>INCONSISTENT / DRIFTING</code>
+accounts for 152, concentrated in the FocalCodec family;
+<code>PRESERVED + CONSISTENT</code> for 19; and
+<code>STABLE OFFSET</code> — voice moved but internally coherent — for
+8, almost all of them FocalCodec at 25–65 Hz under
+<code>redimnet_M_vb2_ptn</code>. That last category is the one a single
+retention score cannot express.</p>
+<p><strong>One dispersion result survives its own confound and one does
+not.</strong> <code>mimi_q8</code> disperses <em>inside</em> the
+validated support domain (180 of 217 cells in support, D 0.6237 against
+a ceiling lower bound of 0.6440), so its drift is not a band-limiting
+artefact. Every FocalCodec drift verdict, by contrast, rests on
+out-of-support cells — <strong>0 to 6 in-support cells per stratum, and
+50 strata with zero</strong> — so for that family identity dispersion
+and band-limiting <strong>cannot be separated in this design</strong>,
+and no causal claim is made.</p>
+<p>A caveat measured on human speech alone: for <code>ecapa</code> and
+<code>redimnet_b6_lm</code> the <em>human</em> cross-state ceiling
+already sits near their own impostor floor. Every one of the 69
+<code>APPROACHES IMPOSTOR RANGE</code> markers fell on those two
+encoders and on cross-state strata only. <strong>That is an encoder
+baseline limitation, not decoder drift.</strong></p>
+<h3 id="streaming-identity">8.3 Streaming identity</h3>
+<p>The streaming detector (T6) compares each arm against <strong>its own
+offline decode</strong> on the same recording, so no ceiling or floor
+enters and no cross-arm ranking is implied.</p>
+<p><strong>The three explicitly causal FocalCodec configurations lose
+nothing:</strong> S1 = 0.9999, S2 = −0.0000. Every other arm degrades,
+from <strong>−0.078</strong> (<code>bigvgan22</code>) to
+<strong>−0.742</strong> (<code>dualcodec_25hz_v1</code>), and for
+<code>focalcodec_25hz</code> under <code>redimnet_b6_lm</code> the
+offline-versus-streamed similarity reaches <strong>−0.013</strong> — the
+streamed output bears no relation to that arm’s own offline decode.</p>
+<p>This reproduces Gate 4’s Q1 detector, which found
+streamed-versus-offline error at 105–225% of peak for every arm
+<strong>except</strong> the same three causal configurations at
+<strong>0.69–0.74%</strong>. Two measurements sharing no implementation,
+the same three survivors. ⚠️ They share their input: the same
+reconstructions of the same corpus. The agreement rules out an
+implementation error in either, not an artefact of the material both
+were computed on.</p>
+<p><strong>The claim is about streamed behaviour, not defect.</strong>
+Thirteen of these arms were driven with chunked context they were never
+designed for. What the result establishes is the cost of streaming a
+decoder that was not built to stream.</p>
+<h2 id="audit-history-and-why-it-is-in-the-paper">9. Audit history, and
+why it is in the paper</h2>
+<p>Four rounds of independent adversarial audit ran against this study.
+They are reported because <strong>three of the defects they found
+changed conclusions</strong>, and a methods section that hides them
+would misrepresent how the numbers were obtained.</p>
+<ul>
+<li><strong>The cross-state reference used pairs the measurement
+forbade.</strong> Dispersion compared different texts; its human ceiling
+did not, admitting the <em>same sentence spoken in two emotions</em> —
+in a parallel corpus, the most similar cross-state pair that exists.
+Excess: 3,255 pairs in Set S. <strong>Eight of 108 cross-state labels
+changed</strong> when it was repaired.</li>
+<li><strong>The Set L ceiling was measured on the wrong
+duration.</strong> Calibration used full-length recordings where the
+measurement compares 14-second prefixes, inflating the ceiling by
+0.020–0.055 cosine against interval widths of 0.02–0.03. Counterfactual:
+<strong>73 of 108 Set L strata would have carried a different label, 67
+of them false drift verdicts.</strong></li>
+<li><strong>A pair-grouping convention was order-dependent.</strong>
+Permuting row order moved cross-state estimates by up to 0.089 — enough
+to flip a label. Replaced with a symmetric rule and verified invariant
+to machine precision.</li>
+</ul>
+<p>A fourth class of defect was archival rather than scientific:
+evidence verification hashed the instrument but not the evidence, and
+the archive validated what it listed rather than what it required. Both
+are repaired and negative-tested. One superseded snapshot was
+nonetheless <strong>permanently lost</strong>, and that is recorded as
+unrecoverable rather than described as retained; the 540 labels were
+instead reconstructed independently from the unchanged measurement rows,
+with 0 mismatches.</p>
+<p>The pattern is worth naming because it recurred three times in
+different disguises: <strong>verification that checks what is present
+rather than what is required.</strong> The estimator without its
+reference; the instrument without its evidence; the manifest without its
+inventory.</p>
+<h2 id="limitations">10. Limitations</h2>
+<ol type="1">
+<li><strong>Perceptual quality is not measured.</strong> No listening
+test was run. Which decoder <em>sounds</em> best is not established and
+no sentence here implies it.</li>
+<li><strong>The sole ranking metric failed its own validity instrument
+in Route B</strong> (§7.1), and the check has <strong>not been
+run</strong> in Route A, which is not the same as passing it.</li>
+<li>Mel-cepstral distance is gain-invariant by construction and blind to
+a pure level error; these values are not literature-scale MCD and must
+never be quoted against published figures.</li>
+<li><strong>Q5 measures speaker-encoder representations</strong>, not
+perceptual identity and not cloning quality.</li>
+<li><strong>17,020 of 31,248 offline cells and 26,147 of 27,776 streamed
+cells fall outside the validated support domain</strong> (14,083 and 781
+inside, respectively). Support is carried as a covariate, never as an
+exclusion, and every aggregate is reported both pooled and
+stratified.</li>
+<li>FocalCodec dispersion and band-limiting <strong>cannot be
+separated</strong> in this design (§8.2).</li>
+<li>Cross-state markers on two of three encoders are <strong>encoder
+baseline limitations</strong> (§8.2).</li>
+<li>Seven speakers, one studio, one chain, English. Absolute values are
+not comparable to VoxCeleb-scale benchmarks.</li>
+<li>The incumbent’s environment is <strong>not numerically
+comparable</strong> to the reference environment (§6).</li>
+<li><code>melflow</code> results rest on <strong>locally repaired
+upstream code</strong>, and its latency is an eager-mode upper
+bound.</li>
+<li>One encoder runs on CPU because it failed an exact-zero
+cross-process determinism probe on CUDA. The measured CPU-versus-GPU
+cosine difference is ≤ 2.5e-04, roughly 100× below the smallest decision
+bound.</li>
+</ol>
+<h2 id="conclusions">11. Conclusions</h2>
+<p><strong>For a product decision.</strong> If the requirement is
+genuine streaming, the candidate set is far smaller than the literature
+suggests: three arms in twenty reproduce full-context output from
+partial input with load-bearing state, and the same three are the only
+ones showing <strong>no measured loss under our speaker-embedding
+metric</strong> when streamed. That is a representation-level result
+measured with three encoders, not a claim that those decoders preserve
+identity as a listener would judge it. Everything else is a chunking
+strategy whose cost we have now measured rather than assumed.</p>
+<p><strong>For measurement practice.</strong> Two measurements ranked a
+zero-parameter phase-blind algorithm first. Neither was wrong about what
+it measured — a spectral distance and a speaker-embedding similarity,
+each computed correctly. <strong>Neither establishes perceptual
+quality</strong>, and this study cannot say what either costs a
+listener, because no listening test was run. The pre-registration that
+named this outcome in advance is the only reason it reads as a finding
+rather than an embarrassment — and the reason no metric was swapped in
+afterwards to produce a tidier table.</p>
+<p><strong>What comes next, and is not claimed here.</strong> Human
+listening and adversarial detectability are declared later phases,
+neither started. The reconstructions are retained for exactly that
+reason.</p>
+<h2 id="data-and-code-availability">Data and code availability</h2>
+<p>The analysis code, frozen specifications, machine-readable results,
+generated tables and the publication manifest are released. <strong>The
+source audio is not released</strong>: it is private, rights-cleared
+recordings of seven consented speakers. Derived <strong>speaker
+embeddings are also withheld</strong> — an embedding of a named human is
+biometric data, and publishing it is a different act from the research
+use the consent covers.</p>
+<p>Every published number regenerates from the released artifacts. The
+frozen records carry SHA-256 for each artifact, and a verification tool
+reports instrument, evidence and archive drift separately, failing
+closed on any of them. # GENERATED TABLES — every value read from a
+frozen artifact</p>
+<p>Generated by <code>paper/make_paper_tables.py</code>. Publication
+manifest <code>1e93e28b9adb3b1f</code>.</p>
+<h2 id="t1-the-speaker-encoder-panel-q5">T1 — The speaker-encoder panel
+(Q5)</h2>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>slot</th>
+<th>encoder</th>
+<th>training corpus</th>
+<th>device</th>
+<th>frozen-study EER (pooled expressive)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>E1</td>
+<td><code>redimnet_M_vb2_ptn</code></td>
+<td>VoxBlink2</td>
+<td>cuda</td>
+<td>0.047 [0.024, 0.072]</td>
+</tr>
+<tr>
+<td>E2</td>
+<td><code>ecapa</code></td>
+<td>VoxCeleb2</td>
+<td>cuda</td>
+<td>0.146 [0.092, 0.177]</td>
+</tr>
+<tr>
+<td>E3</td>
+<td><code>redimnet_b6_lm</code></td>
+<td>VoxCeleb2</td>
+<td>cpu</td>
+<td>0.064 [0.034, 0.082]</td>
+</tr>
+</tbody>
+</table>
+<h2 id="t2-instrument-calibration-on-source-audio-only-q5-3-9">T2 —
+Instrument calibration on SOURCE audio only (Q5 §3, §9)</h2>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th>encoder</th>
+<th>G(e) = usable range</th>
+<th>tier bound 0.10·G</th>
+<th>1-sample-shift response</th>
+<th>scale response</th>
+<th>F2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ecapa</code></td>
+<td>0.2663</td>
+<td>0.0266</td>
+<td>0.000561</td>
+<td>1.77e-08</td>
+<td><strong>OK</strong></td>
+</tr>
+<tr>
+<td><code>redimnet_M_vb2_ptn</code></td>
+<td>0.3824</td>
+<td>0.0382</td>
+<td>0.000441</td>
+<td>8.24e-11</td>
+<td><strong>OK</strong></td>
+</tr>
+<tr>
+<td><code>redimnet_b6_lm</code></td>
+<td>0.4056</td>
+<td>0.0406</td>
+<td>0.000317</td>
+<td>0.000726</td>
+<td><strong>OK</strong></td>
+</tr>
+</tbody>
+</table>
+<h2
+id="t3-human-within-speaker-ceiling-and-between-speaker-floor-source-audio-q5-3">T3
+— Human within-speaker ceiling and between-speaker floor, source audio
+(Q5 §3)</h2>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>encoder</th>
+<th>set</th>
+<th>ceiling C̃ range over states</th>
+<th>floor F_hi range</th>
+<th>separability gate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ecapa</code></td>
+<td>S</td>
+<td>0.594 – 0.698</td>
+<td>0.291 – 0.447</td>
+<td>6/6 PASS</td>
+</tr>
+<tr>
+<td><code>ecapa</code></td>
+<td>L</td>
+<td>0.827 – 0.830</td>
+<td>0.371 – 0.483</td>
+<td>2/2 PASS</td>
+</tr>
+<tr>
+<td><code>redimnet_M_vb2_ptn</code></td>
+<td>S</td>
+<td>0.780 – 0.829</td>
+<td>0.306 – 0.452</td>
+<td>6/6 PASS</td>
+</tr>
+<tr>
+<td><code>redimnet_M_vb2_ptn</code></td>
+<td>L</td>
+<td>0.880 – 0.893</td>
+<td>0.326 – 0.413</td>
+<td>2/2 PASS</td>
+</tr>
+<tr>
+<td><code>redimnet_b6_lm</code></td>
+<td>S</td>
+<td>0.724 – 0.746</td>
+<td>0.268 – 0.436</td>
+<td>6/6 PASS</td>
+</tr>
+<tr>
+<td><code>redimnet_b6_lm</code></td>
+<td>L</td>
+<td>0.862 – 0.873</td>
+<td>0.303 – 0.500</td>
+<td>2/2 PASS</td>
+</tr>
+</tbody>
+</table>
+<h2 id="t4-speaker-embedding-retention-set-s-all-six-states-pooled">T4 —
+Speaker-embedding retention, Set S, all six states pooled</h2>
+<p>⛔ Cosine values are ENCODER-SPECIFIC and are never averaged across
+encoders.</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>arm</th>
+<th><code>ecapa</code></th>
+<th><code>redimnet_M_vb2_ptn</code></th>
+<th><code>redimnet_b6_lm</code></th>
+<th>spread</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>griffinlim</code></td>
+<td>0.9952 [0.9950, 0.9954]</td>
+<td>0.9955 [0.9954, 0.9957]</td>
+<td>0.9957 [0.9954, 0.9958]</td>
+<td>0.0004</td>
+</tr>
+<tr>
+<td><code>bigvgan22</code></td>
+<td>0.9936 [0.9934, 0.9938]</td>
+<td>0.9933 [0.9932, 0.9937]</td>
+<td>0.9911 [0.9907, 0.9913]</td>
+<td>0.0024</td>
+</tr>
+<tr>
+<td><code>vocos_mel24</code></td>
+<td>0.9878 [0.9874, 0.9882]</td>
+<td>0.9837 [0.9829, 0.9841]</td>
+<td>0.9821 [0.9816, 0.9829]</td>
+<td>0.0057</td>
+</tr>
+<tr>
+<td><code>qwen3_tts_tokenizer_12hz</code></td>
+<td>0.9417 [0.9391, 0.9427]</td>
+<td>0.9253 [0.9237, 0.9277]</td>
+<td>0.9082 [0.9067, 0.9115]</td>
+<td>0.0335</td>
+</tr>
+<tr>
+<td><code>dac44</code></td>
+<td>0.9324 [0.9283, 0.9342]</td>
+<td>0.9191 [0.9154, 0.9207]</td>
+<td>0.8972 [0.8934, 0.8999]</td>
+<td>0.0352</td>
+</tr>
+<tr>
+<td><code>dualcodec_25hz_v1</code></td>
+<td>0.9242 [0.9214, 0.9269]</td>
+<td>0.9048 [0.9021, 0.9073]</td>
+<td>0.8876 [0.8843, 0.8908]</td>
+<td>0.0366</td>
+</tr>
+<tr>
+<td><code>fish_modified_dac</code></td>
+<td>0.9229 [0.9207, 0.9259]</td>
+<td>0.8941 [0.8912, 0.8970]</td>
+<td>0.8764 [0.8726, 0.8800]</td>
+<td>0.0466</td>
+</tr>
+<tr>
+<td><code>encodec_vocos</code></td>
+<td>0.9146 [0.9121, 0.9180]</td>
+<td>0.8800 [0.8754, 0.8838]</td>
+<td>0.8546 [0.8520, 0.8593]</td>
+<td>0.0601</td>
+</tr>
+<tr>
+<td><code>mimi_q32</code></td>
+<td>0.9073 [0.9027, 0.9093]</td>
+<td>0.8653 [0.8613, 0.8686]</td>
+<td>0.8581 [0.8533, 0.8622]</td>
+<td>0.0492</td>
+</tr>
+<tr>
+<td><code>encodec24_q8</code></td>
+<td>0.8781 [0.8721, 0.8812]</td>
+<td>0.7588 [0.7534, 0.7664]</td>
+<td>0.8003 [0.7927, 0.8106]</td>
+<td>0.1193</td>
+</tr>
+<tr>
+<td><code>dualcodec_12hz_v1</code></td>
+<td>0.8621 [0.8580, 0.8658]</td>
+<td>0.8222 [0.8157, 0.8251]</td>
+<td>0.8033 [0.7932, 0.8048]</td>
+<td>0.0588</td>
+</tr>
+<tr>
+<td><code>mimi_q8</code></td>
+<td>0.7485 [0.7397, 0.7567]</td>
+<td>0.6647 [0.6586, 0.6753]</td>
+<td>0.6576 [0.6401, 0.6641]</td>
+<td>0.0909</td>
+</tr>
+<tr>
+<td><code>focalcodec_50hz</code></td>
+<td>0.6833 [0.6765, 0.6923]</td>
+<td>0.6300 [0.6253, 0.6412]</td>
+<td>0.6361 [0.6284, 0.6447]</td>
+<td>0.0533</td>
+</tr>
+<tr>
+<td><code>focalcodec_50hz_65k_causal</code></td>
+<td>0.6698 [0.6635, 0.6772]</td>
+<td>0.6317 [0.6216, 0.6397]</td>
+<td>0.6009 [0.5902, 0.6082]</td>
+<td>0.0689</td>
+</tr>
+<tr>
+<td><code>focalcodec_50hz_4k_causal</code></td>
+<td>0.5995 [0.5962, 0.6115]</td>
+<td>0.5613 [0.5509, 0.5720]</td>
+<td>0.5236 [0.5181, 0.5362]</td>
+<td>0.0759</td>
+</tr>
+<tr>
+<td><code>focalcodec_50hz_2k_causal</code></td>
+<td>0.5835 [0.5779, 0.6033]</td>
+<td>0.5578 [0.5463, 0.5666]</td>
+<td>0.5322 [0.5154, 0.5393]</td>
+<td>0.0512</td>
+</tr>
+<tr>
+<td><code>focalcodec_25hz</code></td>
+<td>0.5822 [0.5668, 0.5857]</td>
+<td>0.5347 [0.5320, 0.5496]</td>
+<td>0.5358 [0.5205, 0.5458]</td>
+<td>0.0475</td>
+</tr>
+<tr>
+<td><code>focalcodec_12_5hz</code></td>
+<td>0.4316 [0.4141, 0.4379]</td>
+<td>0.4287 [0.4210, 0.4398]</td>
+<td>0.3936 [0.3773, 0.4039]</td>
+<td>0.0380</td>
+</tr>
+</tbody>
+</table>
+<h2
+id="t5-q5-identity-labels-540-strata-18-arms-3-encoders-2-sets-strata">T5
+— Q5 identity labels, 540 strata (18 arms × 3 encoders × 2 sets ×
+strata)</h2>
+<table>
+<thead>
+<tr>
+<th>label</th>
+<th>count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NOT ESTABLISHED</td>
+<td><strong>314</strong></td>
+</tr>
+<tr>
+<td>INCONSISTENT / DRIFTING</td>
+<td><strong>152</strong></td>
+</tr>
+<tr>
+<td>CROSS-STATE DRIFTING</td>
+<td><strong>24</strong></td>
+</tr>
+<tr>
+<td>CROSS-STATE CONSISTENT</td>
+<td><strong>23</strong></td>
+</tr>
+<tr>
+<td>PRESERVED + CONSISTENT</td>
+<td><strong>19</strong></td>
+</tr>
+<tr>
+<td>STABLE OFFSET</td>
+<td><strong>8</strong></td>
+</tr>
+<tr>
+<td><strong>total</strong></td>
+<td><strong>540</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Encoder agreement over 180 (arm × set × stratum)
+comparisons:</strong> 1/3 9 · 2/3 87 · 3/3 84. Dissent counts:
+<code>redimnet_b6_lm</code> 53 · <code>redimnet_M_vb2_ptn</code> 28 ·
+<code>ecapa</code> 24.</p>
+<h2
+id="t6-streaming-identity-detector-q5-7.-within-arm-never-a-ranking">T6
+— Streaming identity detector (Q5 §7). Within-arm; never a ranking</h2>
+<p><code>S1</code> = cos(offline, streamed) on the same recording.
+<code>S2</code> = retention(streamed) − retention(offline), paired.</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th>arm</th>
+<th>S1 <code>ecapa</code></th>
+<th>S2 <code>ecapa</code></th>
+<th>S1 <code>redimnet_M_vb2_ptn</code></th>
+<th>S2 <code>redimnet_M_vb2_ptn</code></th>
+<th>n paired</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>focalcodec_50hz_2k_causal</code></td>
+<td>0.9999</td>
+<td>-0.0000</td>
+<td>0.9999</td>
+<td>-0.0000</td>
+<td>1680</td>
+</tr>
+<tr>
+<td><code>focalcodec_50hz_65k_causal</code></td>
+<td>0.9999</td>
+<td>-0.0000</td>
+<td>0.9999</td>
+<td>-0.0000</td>
+<td>1680</td>
+</tr>
+<tr>
+<td><code>focalcodec_50hz_4k_causal</code></td>
+<td>0.9999</td>
+<td>-0.0000</td>
+<td>0.9999</td>
+<td>-0.0000</td>
+<td>1680</td>
+</tr>
+<tr>
+<td><code>bigvgan22</code></td>
+<td>0.9153</td>
+<td>-0.0778</td>
+<td>0.8861</td>
+<td>-0.1148</td>
+<td>1624</td>
+</tr>
+<tr>
+<td><code>encodec_vocos</code></td>
+<td>0.7961</td>
+<td>-0.1461</td>
+<td>0.7643</td>
+<td>-0.2001</td>
+<td>1680</td>
+</tr>
+<tr>
+<td><code>mimi_q8</code></td>
+<td>0.7432</td>
+<td>-0.1481</td>
+<td>0.7683</td>
+<td>-0.1580</td>
+<td>1680</td>
+</tr>
+<tr>
+<td><code>mimi_q32</code></td>
+<td>0.8154</td>
+<td>-0.1508</td>
+<td>0.8445</td>
+<td>-0.1468</td>
+<td>1680</td>
+</tr>
+<tr>
+<td><code>focalcodec_12_5hz</code></td>
+<td>0.4808</td>
+<td>-0.1859</td>
+<td>0.6099</td>
+<td>-0.1670</td>
+<td>1624</td>
+</tr>
+<tr>
+<td><code>encodec24_q8</code></td>
+<td>0.7051</td>
+<td>-0.2329</td>
+<td>0.7421</td>
+<td>-0.1673</td>
+<td>1680</td>
+</tr>
+<tr>
+<td><code>qwen3_tts_tokenizer_12hz</code></td>
+<td>0.6636</td>
+<td>-0.2707</td>
+<td>0.6625</td>
+<td>-0.2805</td>
+<td>1680</td>
+</tr>
+<tr>
+<td><code>dac44</code></td>
+<td>0.6333</td>
+<td>-0.3379</td>
+<td>0.6037</td>
+<td>-0.3883</td>
+<td>1624</td>
+</tr>
+<tr>
+<td><code>fish_modified_dac</code></td>
+<td>0.5196</td>
+<td>-0.4054</td>
+<td>0.5404</td>
+<td>-0.4321</td>
+<td>1680</td>
+</tr>
+<tr>
+<td><code>focalcodec_25hz</code></td>
+<td>0.0754</td>
+<td>-0.5629</td>
+<td>0.0961</td>
+<td>-0.4975</td>
+<td>1680</td>
+</tr>
+<tr>
+<td><code>dualcodec_12hz_v1</code></td>
+<td>0.3305</td>
+<td>-0.5830</td>
+<td>0.4415</td>
+<td>-0.5283</td>
+<td>1624</td>
+</tr>
+<tr>
+<td><code>focalcodec_50hz</code></td>
+<td>0.0233</td>
+<td>-0.6688</td>
+<td>0.1646</td>
+<td>-0.5444</td>
+<td>1624</td>
+</tr>
+<tr>
+<td><code>dualcodec_25hz_v1</code></td>
+<td>0.2008</td>
+<td>-0.7420</td>
+<td>0.3068</td>
+<td>-0.6804</td>
+<td>1624</td>
+</tr>
+<tr>
+<td><code>vocos_mel24</code></td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td><strong>NOT MEASURED — no streamed output</strong></td>
+</tr>
+<tr>
+<td><code>griffinlim</code></td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td><strong>NOT MEASURED — no streamed output</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="t7-measurement-volume-and-admissibility">T7 — Measurement volume
+and admissibility</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>quantity</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q5 measurement rows</td>
+<td>177072</td>
+</tr>
+<tr>
+<td>speaker embeddings retained</td>
+<td>188958</td>
+</tr>
+<tr>
+<td>offline cells per arm</td>
+<td>1,736 (Set S 1,302 · Set L 210 · ladder 224)</td>
+</tr>
+<tr>
+<td>distinct source recordings</td>
+<td>1512</td>
+</tr>
+<tr>
+<td>speakers</td>
+<td>7 (English, one studio, one chain)</td>
+</tr>
+<tr>
+<td>Q5 labels</td>
+<td>540</td>
+</tr>
+<tr>
+<td>cross-state pair counts, reference = estimator</td>
+<td>Set S 97,650 · Set L 1,470</td>
+</tr>
+</tbody>
+</table>
+<h2 id="t-q9-the-metric-validity-instrument-gate-4-5-route-b">T-Q9 — The
+metric-validity instrument (Gate 4 §5, Route B)</h2>
+<p><strong>Pre-registered consequence, written before any quality number
+existed:</strong> A metric on which a 32-iteration Griffin-Lim
+reconstruction scores close to a trained neural codec is a metric that
+is not resolving what Gate 4 claims to resolve, and that is a finding
+about the metric.</p>
+<p><strong>Verdict:</strong> ⛔ Q9 FIRES. THE SOLE PREREGISTERED
+CROSS-ARM RANKING METRIC FAILED ITS OWN VALIDITY CHECK IN ROUTE B.</p>
+<p><em>Per-state values are in <code>GATE4_STAGE2_TABLES.md</code> §4,
+generated from the same artifact.</em></p>
+<p><strong>Gate 4 pairwise verdicts (108 within-route pairs):</strong>
+{“1_metric_validity”: “The benchmark ran correctly and its sole
+preregistered cross-arm quality ruler FAILED ITS OWN PREREGISTERED
+VALIDITY CHECK in Route B (Q9). See metric_validity.”,
+“2_the_robust_quality_claim”: {“claim”: “mimi_q8 is worse than 3 named
+arms under the strongest evidence class (SPEC S7.3 ROBUST)”, “arms”:
+[“dac44”, “fish_modified_dac”, “qwen3_tts_tokenizer_12hz”], “basis”:
+“n_pa</p>
+</body>
+</html>

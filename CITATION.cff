@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+message: If you use this benchmark, please cite it.
+title: >-
+  What a Streaming Decoder Costs: A Five-Gate Benchmark of Twenty Neural Audio
+  Decoders, and a Metric That Failed Its Own Validity Check
+authors:
+  - family-names: Gkilis
+    given-names: Panagiotis
+    orcid: https://orcid.org/0009-0007-3805-170X
+    affiliation: BedVibe Studios
+abstract: >-
+  Twenty neural audio decoders measured under one frozen five-gate protocol on
+  identical audio. Only three of twenty reproduce full-context output from
+  partial input with load-bearing state. The sole pre-registered cross-arm
+  quality metric failed its own validity instrument: a zero-parameter
+  phase-retrieval algorithm scores best on it in six states of six. A second
+  measurement sharing no implementation, speaker-embedding retention across
+  three separately calibrated encoders, identifies the same three arms as
+  losing nothing to streaming. Perceptual quality was not measured.
+keywords:
+  - neural audio codec
+  - speech synthesis
+  - streaming audio
+  - decoder
+  - vocoder
+  - speaker identity
+  - latency
+  - real-time factor
+  - audio reconstruction
+  - benchmark
+license: CC-BY-4.0
+repository-code: https://github.com/Mormolykos/decoder-vocoder-benchmark
+date-released: 2026-09-16

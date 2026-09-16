@@ -1,0 +1,835 @@
+{
+ "what": "Q5 SECTION 3 calibration: human within-speaker ceiling and between-speaker floor, SOURCE AUDIO ONLY. Plus the SECTION 9.2 separability gate and G(e) for SECTION 9.3.",
+ "spec": {
+  "spec_sha256": "fd429fd1e27dd7f90b86ddae84823dad3da2c8b1af0701a4f3328c8290f42ea4",
+  "spec_frozen_utc": "2026-09-14T21:16:18Z",
+  "revisions": 6
+ },
+ "generated_utc": "2026-09-14T21:49:13Z",
+ "source": "<PRIVATE_SOURCE_ROOT>",
+ "resampler": {
+  "params": {
+   "impl": "torchaudio.functional.resample",
+   "resampling_method": "sinc_interp_kaiser",
+   "lowpass_filter_width": 64,
+   "rolloff": 0.9475937167399596,
+   "beta": 14.769656459379492
+  },
+  "gate4_lib_sha256": "67b45f171d6ae4efd68b89185002251365c77355c3de5215a3b78b8691e87ad1"
+ },
+ "min_duration_s": 2.0,
+ "calibration_signal": {
+  "S": "full source recording (2.54-13.50 s), as Set S cells measure",
+  "L": "the first 14.0 s of each source recording (variant pre14s), because Gate 4's Set L cells are 14 s top-rung decodes. Revision 4 correction; revision 3 used full length and was inflated by +0.020 to +0.055 cosine."
+ },
+ "F_rec": "NOT COMPUTED / UNUSED BY LABELS. SECTION 3 lists it as a descriptor (between-speaker similarity among RECONSTRUCTIONS). It was never implemented, no label or gate depends on it, and it is declared absent here rather than invented to match prose.",
+ "reconstructions_opened": false,
+ "panel": {
+  "redimnet_M_vb2_ptn": {
+   "encoder": "redimnet_M_vb2_ptn",
+   "device": "cuda",
+   "dim": 192,
+   "source": "torch.hub IDRnD/ReDimNet M/ptn/vb2",
+   "training_corpus": "VoxBlink2",
+   "checkpoint": "C:\\Users\\User/.cache\\torch\\hub\\checkpoints\\M-vb2-ptn.pt",
+   "checkpoint_sha256": "42c13ce2bcf1ce466afdbe461c8dbe9471fc23204a1480fb4f306f48152f9af3",
+   "torch": "2.10.0+cu128",
+   "torchaudio": "2.10.0+cu128",
+   "pooling": "model-native-utterance-pooling+l2"
+  },
+  "ecapa": {
+   "encoder": "ecapa",
+   "device": "cuda",
+   "dim": 192,
+   "source": "speechbrain/spkrec-ecapa-voxceleb",
+   "training_corpus": "VoxCeleb2",
+   "checkpoint": "C:\\Users\\User\\Desktop\\greek_tts\\pretrained_spkrec\\embedding_model.ckpt",
+   "checkpoint_sha256": "0575cb64845e6b9a10db9bcb74d5ac32b326b8dc90352671d345e2ee3d0126a2",
+   "torch": "2.10.0+cu128",
+   "torchaudio": "2.10.0+cu128",
+   "pooling": "model-native-utterance-pooling+l2"
+  },
+  "redimnet_b6_lm": {
+   "encoder": "redimnet_b6_lm",
+   "device": "cpu",
+   "dim": 192,
+   "source": "torch.hub IDRnD/ReDimNet b6/ft_lm/vox2",
+   "training_corpus": "VoxCeleb2",
+   "checkpoint": "C:\\Users\\User/.cache\\torch\\hub\\checkpoints\\b6-vox2-ft_lm.pt",
+   "checkpoint_sha256": "e0f3034320c9cceaa8ed7c917a36e0affb501a922631d55c1007660eb1bbedea",
+   "torch": "2.10.0+cu128",
+   "torchaudio": "2.10.0+cu128",
+   "pooling": "model-native-utterance-pooling+l2"
+  }
+ },
+ "source_counts": {
+  "MEASURED": 1512,
+  "INADMISSIBLE - BELOW ENCODER MINIMUM": 0,
+  "UNKNOWN": 0,
+  "NOT MEASURED": 0,
+  "UNKNOWN - SOURCE SHA256 MISMATCH": 0
+ },
+ "calibration": {
+  "redimnet_M_vb2_ptn": {
+   "sets": {
+    "S": {
+     "states": {
+      "Neutral": {
+       "C_within": {
+        "n_recordings": 217,
+        "n_pairs": 3255,
+        "median": 0.7892855106056563,
+        "lo": 0.7742548789269416,
+        "hi": 0.8150954378316594,
+        "n_resamples": 4000,
+        "seed": 20260911,
+        "ci": 95.0
+       },
+       "F_src": {
+        "n_pairs": 19530,
+        "n_speakers": 7,
+        "median": 0.18938257077013088,
+        "p95": 0.30626790233118284,
+        "max": 0.4531493511740422
+       },
+       "gate": {
+        "rule": "C_within.lo > F_hi",
+        "C_within_lo": 0.7742548789269416,
+        "F_hi": 0.30626790233118284,
+        "pass": true
+       }
+      },
+      "Angry": {
+       "C_within": {
+        "n_recordings": 217,
+        "n_pairs": 3255,
+        "median": 0.7797811312457945,
+        "lo": 0.761983481755729,
+        "hi": 0.8009559406854524,
+        "n_resamples": 4000,
+        "seed": 20260911,
+        "ci": 95.0
+       },
+       "F_src": {
+        "n_pairs": 19530,
+        "n_speakers": 7,
+        "median": 0.2560346324141689,
+        "p95": 0.4112229262971326,
+        "max": 0.6053862222062399
+       },
+       "gate": {
+        "rule": "C_within.lo > F_hi",
+        "C_within_lo": 0.761983481755729,
+        "F_hi": 0.4112229262971326,
+        "pass": true
+       }
+      },
+      "Happy": {
+       "C_within": {
+        "n_recordings": 217,
+        "n_pairs": 3255,
+        "median": 0.7875053224582185,
+        "lo": 0.7605393735925994,
+        "hi": 0.8067595560337697,
+        "n_resamples": 4000,
+        "seed": 20260911,
+        "ci": 95.0
+       },
+       "F_src": {
+        "n_pairs": 19530,
+        "n_speakers": 7,
+        "median": 0.20357710854109523,
+        "p95": 0.39964252417730284,
+        "max": 0.5879341460746552
+       },
+       "gate": {
+        "rule": "C_within.lo > F_hi",
+        "C_within_lo": 0.7605393735925994,
+        "F_hi": 0.39964252417730284,
+        "pass": true
+       }
+      },
+      "Scared": {
+       "C_within": {
+        "n_recordings": 217,
+        "n_pairs": 3255,
+        "median": 0.7908353629125328,
+        "lo": 0.763463475697049,
+        "hi": 0.8072147657434587,
+        "n_resamples": 4000,
+        "seed": 20260911,
+        "ci": 95.0
+       },
+       "F_src": {
+        "n_pairs": 19530,
+        "n_speakers": 7,
+        "median": 0.26812224018936426,
+        "p95": 0.40322338172640615,
+        "max": 0.5936065417178115
+       },
+       "gate": {
+        "rule": "C_within.lo > F_hi",
+        "C_within_lo": 0.763463475697049,
+        "F_hi": 0.40322338172640615,
+        "pass": true
+       }
+      },
+      "Shouting": {
+       "C_within": {
+        "n_recordings": 217,
+        "n_pairs": 3255,
+        "median": 0.8286832465362197,
+        "lo": 0.8058172302455552,
+        "hi": 0.8382344971421317,
+        "n_resamples": 4000,
+        "seed": 20260911,
+        "ci": 95.0
+       },
+       "F_src": {
+        "n_pairs": 19530,
+        "n_speakers": 7,
+        "median": 0.2658129736518539,
+        "p95": 0.4515831427080784,
+        "max": 0.6069829347074809
+       },
+       "gate": {
+        "rule": "C_within.lo > F_hi",
+        "C_within_lo": 0.8058172302455552,
+        "F_hi": 0.4515831427080784,
+        "pass": true
+       }
+      },
+      "Whisper": {
+       "C_within": {
+        "n_recordings": 217,
+        "n_pairs": 3255,
+        "median": 0.7849026227153987,
+        "lo": 0.7554352520497554,
+        "hi": 0.8118621708722932,
+        "n_resamples": 4000,
+        "seed": 20260911,
+        "ci": 95.0
+       },
+       "F_src": {
+        "n_pairs": 19530,
+        "n_speakers": 7,
+        "median": 0.28752591402420713,
+        "p95": 0.42558058013208766,
+        "max": 0.654731996966969
+       },
+       "gate": {
+        "rule": "C_within.lo > F_hi",
+        "C_within_lo": 0.7554352520497554,
+        "F_hi": 0.42558058013208766,
+        "pass": true
+       }
+      }
+     },
+     "cross": {
+      "C_cross": {
+       "n_recordings": 1302,
+       "n_pairs": 97650,
+       "median": 0.5216399483454087,
+       "lo": 0.4940292854630461,
+       "hi": 0.5338450969722697,
+       "n_resamples": 4000,
+       "seed": 20260911,
+       "ci": 95.0
+      },
+      "n_pairs_admitted": 97650,
+      "pairing_rule": "same speaker; different state; DIFFERENT TEXT (SECTION 3 rule 4). Must equal the pair count q5_analyze.py forms for D_cross."
+     }
+    },
+    "L": {
+     "states": {
+      "Neutral": {
+       "C_within": {
+        "n_recordings": 105,
+        "n_pairs": 735,
+        "median": 0.8934267607668891,
+        "lo": 0.8713533467804025,
+        "hi": 0.8988090799842418,
+        "n_resamples": 4000,
+        "seed": 20260911,
+        "ci": 95.0
+       },
+       "F_src": {
+        "n_pairs": 4410,
+        "n_speakers": 7,
+        "median": 0.2008801601201444,
+        "p95": 0.3258170733849059,
+        "max": 0.4407477511782067
+       },
+       "gate": {
+        "rule": "C_within.lo > F_hi",
+        "C_within_lo": 0.8713533467804025,
+        "F_hi": 0.3258170733849059,
+        "pass": true
+       }
+      },
+      "Whisper": {
+       "C_within": {
+        "n_recordings": 105,
+        "n_pairs": 735,
+        "median": 0.87952095860561,
+        "lo": 0.8651243132286539,
+        "hi": 0.8932580951228722,
+        "n_resamples": 4000,
+        "seed": 20260911,
+        "ci": 95.0
+       },
+       "F_src": {
+        "n_pairs": 4410,
+        "n_speakers": 7,
+        "median": 0.25553570663224234,
+        "p95": 0.4132488298214988,
+        "max": 0.5132904435480699
+       },
+       "gate": {
+        "rule": "C_within.lo > F_hi",
+        "C_within_lo": 0.8651243132286539,
+        "F_hi": 0.4132488298214988,
+        "pass": true
+       }
+      }
+     },
+     "cross": {
+      "C_cross": {
+       "n_recordings": 210,
+       "n_pairs": 1470,
+       "median": 0.5257536494464111,
+       "lo": 0.5048842786665878,
+       "hi": 0.5499675466323005,
+       "n_resamples": 4000,
+       "seed": 20260911,
+       "ci": 95.0
+      },
+      "n_pairs_admitted": 1470,
+      "pairing_rule": "same speaker; different state; DIFFERENT TEXT (SECTION 3 rule 4). Must equal the pair count q5_analyze.py forms for D_cross."
+     }
+    }
+   },
+   "G": 0.38235604250713395,
+   "G_terms": [
+    0.4830176082744735,
+    0.3685582049486619,
+    0.38786279828091563,
+    0.3876119811861266,
+    0.3771001038281413,
+    0.359322042583311
+   ],
+   "G_definition": "median over Set S states of (C_within.median - F_hi); SECTION 9.3"
+  },
+  "ecapa": {
+   "sets": {
+    "S": {
+     "states": {
+      "Neutral": {
+       "C_within": {
+        "n_recordings": 217,
+        "n_pairs": 3255,
+        "median": 0.6980345877285007,
+        "lo": 0.6439871899455775,
+        "hi": 0.7139326946484591,
+        "n_resamples": 4000,
+        "seed": 20260911,
+        "ci": 95.0
+       },
+       "F_src": {
+        "n_pairs": 19530,
+        "n_speakers": 7,
+        "median": 0.12149740167949619,
+        "p95": 0.2910919803740435,
+        "max": 0.5354160801186106
+       },
+       "gate": {
+        "rule": "C_within.lo > F_hi",
+        "C_within_lo": 0.6439871899455775,
+        "F_hi": 0.2910919803740435,
+        "pass": true
+       }
+      },
+      "Angry": {
+       "C_within": {
+        "n_recordings": 217,
+        "n_pairs": 3255,
+        "median": 0.6315401026716905,
+        "lo": 0.5912430636680182,
+        "hi": 0.6598384514465888,
+        "n_resamples": 4000,
+        "seed": 20260911,
+        "ci": 95.0
+       },
+       "F_src": {
+        "n_pairs": 19530,
+        "n_speakers": 7,
+        "median": 0.1329455713251784,
+        "p95": 0.3280452479066079,
+        "max": 0.5167238879035618
+       },
+       "gate": {
+        "rule": "C_within.lo > F_hi",
+        "C_within_lo": 0.5912430636680182,
+        "F_hi": 0.3280452479066079,
+        "pass": true
+       }
+      },
+      "Happy": {
+       "C_within": {
+        "n_recordings": 217,
+        "n_pairs": 3255,
+        "median": 0.5939285716447215,
+        "lo": 0.567790706458233,
+        "hi": 0.6469638342515859,
+        "n_resamples": 4000,
+        "seed": 20260911,
+        "ci": 95.0
+       },
+       "F_src": {
+        "n_pairs": 19530,
+        "n_speakers": 7,
+        "median": 0.14415551348522976,
+        "p95": 0.34288689316729787,
+        "max": 0.612144446141689
+       },
+       "gate": {
+        "rule": "C_within.lo > F_hi",
+        "C_within_lo": 0.567790706458233,
+        "F_hi": 0.34288689316729787,
+        "pass": true
+       }
+      },
+      "Scared": {
+       "C_within": {
+        "n_recordings": 217,
+        "n_pairs": 3255,
+        "median": 0.6577421022136931,
+        "lo": 0.6301344439460864,
+        "hi": 0.6966393950624933,
+        "n_resamples": 4000,
+        "seed": 20260911,
+        "ci": 95.0
+       },
+       "F_src": {
+        "n_pairs": 19530,
+        "n_speakers": 7,
+        "median": 0.20196990900619174,
+        "p95": 0.39963745571056397,
+        "max": 0.7016830101871192
+       },
+       "gate": {
+        "rule": "C_within.lo > F_hi",
+        "C_within_lo": 0.6301344439460864,
+        "F_hi": 0.39963745571056397,
+        "pass": true
+       }
+      },
+      "Shouting": {
+       "C_within": {
+        "n_recordings": 217,
+        "n_pairs": 3255,
+        "median": 0.6726660254412569,
+        "lo": 0.6536435752585252,
+        "hi": 0.7007689232609174,
+        "n_resamples": 4000,
+        "seed": 20260911,
+        "ci": 95.0
+       },
+       "F_src": {
+        "n_pairs": 19530,
+        "n_speakers": 7,
+        "median": 0.17561598870910938,
+        "p95": 0.3980976256144367,
+        "max": 0.6297952198961158
+       },
+       "gate": {
+        "rule": "C_within.lo > F_hi",
+        "C_within_lo": 0.6536435752585252,
+        "F_hi": 0.3980976256144367,
+        "pass": true
+       }
+      },
+      "Whisper": {
+       "C_within": {
+        "n_recordings": 217,
+        "n_pairs": 3255,
+        "median": 0.6550529350397916,
+        "lo": 0.6203995487201883,
+        "hi": 0.6910307273808829,
+        "n_resamples": 4000,
+        "seed": 20260911,
+        "ci": 95.0
+       },
+       "F_src": {
+        "n_pairs": 19530,
+        "n_speakers": 7,
+        "median": 0.27260924929459407,
+        "p95": 0.4471631500893881,
+        "max": 0.715994840488967
+       },
+       "gate": {
+        "rule": "C_within.lo > F_hi",
+        "C_within_lo": 0.6203995487201883,
+        "F_hi": 0.4471631500893881,
+        "pass": true
+       }
+      }
+     },
+     "cross": {
+      "C_cross": {
+       "n_recordings": 1302,
+       "n_pairs": 97650,
+       "median": 0.33608907754726225,
+       "lo": 0.31784375582961927,
+       "hi": 0.3657158195074896,
+       "n_resamples": 4000,
+       "seed": 20260911,
+       "ci": 95.0
+      },
+      "n_pairs_admitted": 97650,
+      "pairing_rule": "same speaker; different state; DIFFERENT TEXT (SECTION 3 rule 4). Must equal the pair count q5_analyze.py forms for D_cross."
+     }
+    },
+    "L": {
+     "states": {
+      "Neutral": {
+       "C_within": {
+        "n_recordings": 105,
+        "n_pairs": 735,
+        "median": 0.8304650269304893,
+        "lo": 0.8138715036429089,
+        "hi": 0.8496356495011307,
+        "n_resamples": 4000,
+        "seed": 20260911,
+        "ci": 95.0
+       },
+       "F_src": {
+        "n_pairs": 4410,
+        "n_speakers": 7,
+        "median": 0.15285728937491552,
+        "p95": 0.3714656851434916,
+        "max": 0.5220060376918556
+       },
+       "gate": {
+        "rule": "C_within.lo > F_hi",
+        "C_within_lo": 0.8138715036429089,
+        "F_hi": 0.3714656851434916,
+        "pass": true
+       }
+      },
+      "Whisper": {
+       "C_within": {
+        "n_recordings": 105,
+        "n_pairs": 735,
+        "median": 0.8269017328695036,
+        "lo": 0.7995666813631377,
+        "hi": 0.842854111302819,
+        "n_resamples": 4000,
+        "seed": 20260911,
+        "ci": 95.0
+       },
+       "F_src": {
+        "n_pairs": 4410,
+        "n_speakers": 7,
+        "median": 0.3202496092682024,
+        "p95": 0.48285895522858424,
+        "max": 0.6295169451774968
+       },
+       "gate": {
+        "rule": "C_within.lo > F_hi",
+        "C_within_lo": 0.7995666813631377,
+        "F_hi": 0.48285895522858424,
+        "pass": true
+       }
+      }
+     },
+     "cross": {
+      "C_cross": {
+       "n_recordings": 210,
+       "n_pairs": 1470,
+       "median": 0.37967682862463836,
+       "lo": 0.33044903513891144,
+       "hi": 0.4050149534647532,
+       "n_resamples": 4000,
+       "seed": 20260911,
+       "ci": 95.0
+      },
+      "n_pairs_admitted": 1470,
+      "pairing_rule": "same speaker; different state; DIFFERENT TEXT (SECTION 3 rule 4). Must equal the pair count q5_analyze.py forms for D_cross."
+     }
+    }
+   },
+   "G": 0.2663365231649747,
+   "G_terms": [
+    0.4069426073544572,
+    0.3034948547650826,
+    0.2510416784774236,
+    0.25810464650312914,
+    0.2745683998268202,
+    0.20788978495040344
+   ],
+   "G_definition": "median over Set S states of (C_within.median - F_hi); SECTION 9.3"
+  },
+  "redimnet_b6_lm": {
+   "sets": {
+    "S": {
+     "states": {
+      "Neutral": {
+       "C_within": {
+        "n_recordings": 217,
+        "n_pairs": 3255,
+        "median": 0.7416553126760022,
+        "lo": 0.7281790952533174,
+        "hi": 0.7639344047214728,
+        "n_resamples": 4000,
+        "seed": 20260911,
+        "ci": 95.0
+       },
+       "F_src": {
+        "n_pairs": 19530,
+        "n_speakers": 7,
+        "median": 0.10530396697303196,
+        "p95": 0.2681316530287466,
+        "max": 0.47613691425670424
+       },
+       "gate": {
+        "rule": "C_within.lo > F_hi",
+        "C_within_lo": 0.7281790952533174,
+        "F_hi": 0.2681316530287466,
+        "pass": true
+       }
+      },
+      "Angry": {
+       "C_within": {
+        "n_recordings": 217,
+        "n_pairs": 3255,
+        "median": 0.7237525299889123,
+        "lo": 0.6827251917537657,
+        "hi": 0.7391087503341253,
+        "n_resamples": 4000,
+        "seed": 20260911,
+        "ci": 95.0
+       },
+       "F_src": {
+        "n_pairs": 19530,
+        "n_speakers": 7,
+        "median": 0.11294544643546334,
+        "p95": 0.3056156410436373,
+        "max": 0.5410932529079941
+       },
+       "gate": {
+        "rule": "C_within.lo > F_hi",
+        "C_within_lo": 0.6827251917537657,
+        "F_hi": 0.3056156410436373,
+        "pass": true
+       }
+      },
+      "Happy": {
+       "C_within": {
+        "n_recordings": 217,
+        "n_pairs": 3255,
+        "median": 0.7264091579530922,
+        "lo": 0.6849303115198647,
+        "hi": 0.7463412675041661,
+        "n_resamples": 4000,
+        "seed": 20260911,
+        "ci": 95.0
+       },
+       "F_src": {
+        "n_pairs": 19530,
+        "n_speakers": 7,
+        "median": 0.139852265741455,
+        "p95": 0.32049398174124477,
+        "max": 0.511863822947666
+       },
+       "gate": {
+        "rule": "C_within.lo > F_hi",
+        "C_within_lo": 0.6849303115198647,
+        "F_hi": 0.32049398174124477,
+        "pass": true
+       }
+      },
+      "Scared": {
+       "C_within": {
+        "n_recordings": 217,
+        "n_pairs": 3255,
+        "median": 0.7265915911568447,
+        "lo": 0.6917793996610766,
+        "hi": 0.7476997505503044,
+        "n_resamples": 4000,
+        "seed": 20260911,
+        "ci": 95.0
+       },
+       "F_src": {
+        "n_pairs": 19530,
+        "n_speakers": 7,
+        "median": 0.19036904232916793,
+        "p95": 0.36886592905256904,
+        "max": 0.5776779506144836
+       },
+       "gate": {
+        "rule": "C_within.lo > F_hi",
+        "C_within_lo": 0.6917793996610766,
+        "F_hi": 0.36886592905256904,
+        "pass": true
+       }
+      },
+      "Shouting": {
+       "C_within": {
+        "n_recordings": 217,
+        "n_pairs": 3255,
+        "median": 0.7461175295999928,
+        "lo": 0.7236000476309034,
+        "hi": 0.7613669714806599,
+        "n_resamples": 4000,
+        "seed": 20260911,
+        "ci": 95.0
+       },
+       "F_src": {
+        "n_pairs": 19530,
+        "n_speakers": 7,
+        "median": 0.1672403650404805,
+        "p95": 0.34077244314758454,
+        "max": 0.5430075448877348
+       },
+       "gate": {
+        "rule": "C_within.lo > F_hi",
+        "C_within_lo": 0.7236000476309034,
+        "F_hi": 0.34077244314758454,
+        "pass": true
+       }
+      },
+      "Whisper": {
+       "C_within": {
+        "n_recordings": 217,
+        "n_pairs": 3255,
+        "median": 0.7252404724263629,
+        "lo": 0.6643993435377976,
+        "hi": 0.7420547244926808,
+        "n_resamples": 4000,
+        "seed": 20260911,
+        "ci": 95.0
+       },
+       "F_src": {
+        "n_pairs": 19530,
+        "n_speakers": 7,
+        "median": 0.22091809135868298,
+        "p95": 0.4357863980981748,
+        "max": 0.6611260707958423
+       },
+       "gate": {
+        "rule": "C_within.lo > F_hi",
+        "C_within_lo": 0.6643993435377976,
+        "F_hi": 0.4357863980981748,
+        "pass": true
+       }
+      }
+     },
+     "cross": {
+      "C_cross": {
+       "n_recordings": 1302,
+       "n_pairs": 97650,
+       "median": 0.4856201658974026,
+       "lo": 0.46056944029076113,
+       "hi": 0.5084367016393014,
+       "n_resamples": 4000,
+       "seed": 20260911,
+       "ci": 95.0
+      },
+      "n_pairs_admitted": 97650,
+      "pairing_rule": "same speaker; different state; DIFFERENT TEXT (SECTION 3 rule 4). Must equal the pair count q5_analyze.py forms for D_cross."
+     }
+    },
+    "L": {
+     "states": {
+      "Neutral": {
+       "C_within": {
+        "n_recordings": 105,
+        "n_pairs": 735,
+        "median": 0.873481442257061,
+        "lo": 0.8549399811390698,
+        "hi": 0.8817616368723032,
+        "n_resamples": 4000,
+        "seed": 20260911,
+        "ci": 95.0
+       },
+       "F_src": {
+        "n_pairs": 4410,
+        "n_speakers": 7,
+        "median": 0.14289189635140023,
+        "p95": 0.30300438711443695,
+        "max": 0.41619667988221093
+       },
+       "gate": {
+        "rule": "C_within.lo > F_hi",
+        "C_within_lo": 0.8549399811390698,
+        "F_hi": 0.30300438711443695,
+        "pass": true
+       }
+      },
+      "Whisper": {
+       "C_within": {
+        "n_recordings": 105,
+        "n_pairs": 735,
+        "median": 0.8619524323937243,
+        "lo": 0.8390583143636947,
+        "hi": 0.8800679222307646,
+        "n_resamples": 4000,
+        "seed": 20260911,
+        "ci": 95.0
+       },
+       "F_src": {
+        "n_pairs": 4410,
+        "n_speakers": 7,
+        "median": 0.27345276435264654,
+        "p95": 0.4998156845335645,
+        "max": 0.6792523110225104
+       },
+       "gate": {
+        "rule": "C_within.lo > F_hi",
+        "C_within_lo": 0.8390583143636947,
+        "F_hi": 0.4998156845335645,
+        "pass": true
+       }
+      }
+     },
+     "cross": {
+      "C_cross": {
+       "n_recordings": 210,
+       "n_pairs": 1470,
+       "median": 0.48129130003664705,
+       "lo": 0.4664367652876352,
+       "hi": 0.5149053991717181,
+       "n_resamples": 4000,
+       "seed": 20260911,
+       "ci": 95.0
+      },
+      "n_pairs_admitted": 1470,
+      "pairing_rule": "same speaker; different state; DIFFERENT TEXT (SECTION 3 rule 4). Must equal the pair count q5_analyze.py forms for D_cross."
+     }
+    }
+   },
+   "G": 0.4056301313321279,
+   "G_terms": [
+    0.47352365964725557,
+    0.41813688894527495,
+    0.4059151762118475,
+    0.35772566210427564,
+    0.40534508645240824,
+    0.2894540743281881
+   ],
+   "G_definition": "median over Set S states of (C_within.median - F_hi); SECTION 9.3"
+  }
+ },
+ "_redaction": {
+  "derivative_of": "Q5_CALIBRATION.json",
+  "source_sha256": "ee622fa3bc778668fbd815e3adc43a82207112c804ba4debf433f3192acd14d6",
+  "source_status": "PRIVATE - not released, not modified",
+  "applied": {
+   "speaker_names": 0,
+   "private_paths": 1,
+   "source_filenames": 0
+  },
+  "generated_utc": "2026-09-16T13:42:33Z"
+ }
+}

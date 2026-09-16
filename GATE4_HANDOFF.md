@@ -1,0 +1,444 @@
+# GATE 4 HANDOFF — reconstruction / audio quality
+
+**Written 2026-09-11, at the freeze of Gate 3. This file is self-contained: it
+depends on no conversation.**
+
+# ⛔ GATE 3 — COMPLETE / FROZEN / CLEARED
+
+**Gate Zero (validity), Gate 2 (streaming classification) and Gate 3 (GPU
+timing) are FROZEN.** Their measurements are not to be modified again unless a
+later audit finds a **concrete defect**, in which case the defect is named, the
+repair is scoped to it, and `GATE3_FREEZE.json` is regenerated.
+
+**55 authoritative artifacts are hashed in `GATE3_FREEZE.json`.** Verify at any
+time — this is the first thing a new thread should run:
+
+```
+cd C:\Users\User\Desktop\research\decoder-bench
+python freeze_gate3.py --verify        # expect: drift: 0
+```
+
+Cleared by independent adversarial review across **three rounds**: the Gate 2
+audit, the Gate 2 delta audit + spot-check, and the Gate 3 audit + final E1
+spot-check (`GATE 3 FINALLY CLEARED: YES`).
+
+---
+
+## 1. Research objective
+
+Evidence for an **architecture decision** for a from-scratch low-latency
+streaming TTS. The product criterion, unchanged:
+
+> **mono · interactive · streaming · very low TTFA · stable chunking · high
+> reconstruction quality · practical SDK / mobile deployment · a representation a
+> from-scratch generator can predict.**
+
+Production target is **mono 24 kHz output**, but **sample rate is an
+ARCHITECTURAL VARIABLE, not an exclusion criterion** — 16 kHz and 44.1/48 kHz
+candidates are retained deliberately.
+
+⛔ **Competitive framing is internal ambition and must NEVER become an
+experimental conclusion.** No output of this project ranks this work against any
+vendor, and no vendor figure is treated as a comparable measurement.
+
+⛔ **The paper is not guaranteed.** It was never promised in advance: the
+experiment earns it. `PROTOCOL.md` §14 creates `paper/` **only if the result
+earns it**, and Gate 4 plus the later phases have not run.
+
+---
+
+## 2. The frozen estate — 20 arms
+
+**Two routes, NEVER merged into one ranking.**
+
+**Route A — codec tokens → waveform (16 arms incl. the blocked one)**
+`focalcodec_50hz_4k_causal` · `focalcodec_50hz_2k_causal` ·
+`focalcodec_50hz_65k_causal` · `focalcodec_50hz` · `focalcodec_25hz` ·
+`focalcodec_12_5hz` · `mimi_q8` · `mimi_q32` · `encodec24_q8` · `encodec_vocos` ·
+`dac44` · `dualcodec_12hz_v1` · `dualcodec_25hz_v1` ·
+`qwen3_tts_tokenizer_12hz` · `fish_modified_dac` · `nanocodec` *(blocked)*
+
+**Route B — mel / continuous → waveform (4 arms)**
+`melflow` · `vocos_mel24` · `bigvgan22` · `griffinlim`
+
+**19 arms have a COMPUTED Gate Zero record and all 19 PASS.** The gate is finite ·
+peak ∈ (0,1] · duration within one frame **of that arm** · energy ratio 0.25–4.0 ·
+dtype float32 · channel count.
+
+### Roles that constrain interpretation
+
+- ⭐ **`mimi_q8` is the PRIMARY arm.** `mimi_q32` is a **SENSITIVITY ABLATION ONLY** — it never competes for the architecture recommendation, results are **never merged**, `n_q` appears on every row, and n_q=32 is **never** called "Mimi 1.1 kbps" (that figure belongs to n_q=8 alone).
+- ⭐ **`encodec24_q8` + `encodec_vocos` are the CONTROLLED PAIR (E1)** — byte-identical token tensor, codebooks verified bitwise identical (`AUDIT.md` §3.1). The decoder is the only moving variable. This is the only estimand in the study where one variable moves.
+- **`fish_modified_dac` is the INCUMBENT** — the arm a new choice must beat.
+- **`focalcodec_50hz` / `_25hz` / `_12_5hz` are NEGATIVE CONTROLS** for the causal Focal arms (Gate 2 C2 = 1.000000 exactly).
+- **`griffinlim` is an R9 zero-parameter FLOOR** — never a production candidate. Run with `rand_init=False` (`PROTOCOL` amendment 4); the torchaudio default is not a function of its input.
+- ⚠️ **`focalcodec_50hz_65k_causal` is a DECLARED POST-FREEZE ARM** (`PROTOCOL` amendment 3). Where one causal FocalCodec config must be named, it is **`focalcodec_50hz_4k_causal`**.
+
+### NanoCodec — BLOCKED, and the exact wording may not drift
+
+> **The released NanoCodec / NeMo reference tooling is not runnable in our
+> Windows-native benchmark environment.**
+
+⛔ **NOT** evidence that the architecture requires Linux, and **NOT** evidence
+that a standalone Windows decoder could not be written. Nothing tested the
+architecture — only NVIDIA's shipped runtime path. Four NeMo versions failed
+(`pynini`, `nv_one_logger` on no public index, `signal.SIGKILL` which is
+POSIX-only). **Reported as BLOCKED, never as zero, never omitted, and no timing
+or quality number is ever manufactured for it.** WSL would not rescue it for this
+benchmark: a Linux measurement carries a different OS, scheduler and CUDA path.
+
+---
+
+## 3. Final Gate 2 classifications — FROZEN
+
+Authoritative: **`GATE2_MATRIX.md` / `gate2_matrix.json`.**
+
+```
+TRUE_INCREMENTAL (representation → PCM)                       3
+TRUE_INCREMENTAL — NEURAL DECODER; iSTFT STREAMING NOT ESTABLISHED   1
+STATELESS_CHUNKING                                           15
+BLOCKED — PLATFORM                                            1
+                                                            ---
+TOTAL                                                        20
+```
+
+| arm | label |
+|---|---|
+| `focalcodec_50hz_4k_causal` | **TRUE_INCREMENTAL (representation → PCM)** |
+| `focalcodec_50hz_2k_causal` | **TRUE_INCREMENTAL (representation → PCM)** |
+| `focalcodec_50hz_65k_causal` | **TRUE_INCREMENTAL (representation → PCM)** |
+| `melflow` | **TRUE_INCREMENTAL — NEURAL DECODER; iSTFT STREAMING NOT ESTABLISHED** |
+| all 15 others | `STATELESS_CHUNKING` |
+| `nanocodec` | `BLOCKED — PLATFORM` |
+
+**Criteria, both conjuncts:** **C1** stateful chunked decode reproduces full
+context, `max|err| ≤ 1e-3` · **C2** state is load-bearing, `stateless err ≥ 10×
+stateful err`. The three causal Focal arms pass with **C2 = 3 530× – 36 740×**;
+the three non-causal Focal controls sit at **C2 = 1.000000 exactly**, which is
+what makes the positives mean anything.
+
+⛔ **The two TRUE_INCREMENTAL groups are NEVER summed** (`PROTOCOL` amendment 8).
+
+⛔ **The chunking metric is a DETECTOR, not a severity scale** (amendment 6). On
+`encodec24_q8` a **one-sample shift produces 34.07%** — inside the band reported
+for genuine chunking damage — and an all-zero output produces exactly 100.00%.
+**All cross-arm severity rankings are WITHDRAWN**, including "Fish departs more
+than EnCodec".
+
+**Measured chunked-decode length drift** (`L(u) = a·u + b`, residual 0.0 on 18 of
+19): `vocos_mel24` and `griffinlim` **b = −256 samples/chunk**; DualCodec ×2
+**b = −4**; every other arm **b = 0**. This is the cause of their Gate 3 §8
+failures.
+
+---
+
+## 4. Final Gate 3 performance conclusions — FROZEN
+
+Authoritative: **`GATE3_MATRIX.md` / `gate3_matrix.json`** · raw:
+`results/raw_runs.csv` (141 281 rows) · `results/summary.csv` (366 cells).
+
+**RTX 5080 sm_120 · driver 610.47 · torch 2.10.0+cu128 · CUDA 12.8 · seed
+20260911 · N = 30 warm + 3 cold · 5 warm-ups discarded · block-randomised ·
+§7.4 one GPU process at a time · §7.3 complied with (VRAM 7 340 → 1 341 MiB idle
+before the run).**
+
+```
+MEASURED — CELLS COMPLETED AND ADMISSIBLE   19
+BLOCKED — PLATFORM                           1
+FAILED                                       0
+```
+
+⛔ **`MEASURED — CELLS COMPLETED AND ADMISSIBLE` IS NOT A PERFORMANCE VERDICT.**
+It means every cell completed and every timed row passed the structural
+synchronize assertion. It does **not** mean the arm holds real time, does **not**
+mean its streamed output is valid, and implies **no recommendation**.
+
+### Headline, at the ~80 ms anchor (steady-state, first chunk excluded)
+
+| arm | §8 streamed | TTFA ms | steady p50 | p99 | underrun | RT margin | RTF@10s |
+|---|---|---|---|---|---|---|---|
+| `vocos_mel24` | ⛔ **FAIL** | 1.37 | 1.33 | 1.74 | 0 | 64.0× | 0.00023 |
+| `encodec_vocos` | PASS | **1.94** | 1.90 | 2.66 | 0 | 49.0× | 0.00024 |
+| `focalcodec_25hz` | PASS | 2.91 | 2.86 | 3.06 | 0 | 28.0× | 0.00038 |
+| `focalcodec_50hz` | PASS | 2.92 | 2.84 | 3.11 | 0 | 28.1× | 0.00039 |
+| `focalcodec_12_5hz` | ⛔ **FAIL** | 2.99 | 2.93 | 3.22 | 0 | 27.3× | 0.00039 |
+| `focalcodec_50hz_2k_causal` | PASS | 3.10 | 3.04 | 3.32 | 0 | 26.2× | 0.00061 |
+| `focalcodec_50hz_4k_causal` | PASS | **3.11** | 3.07 | 3.40 | 0 | 26.1× | 0.00059 |
+| `focalcodec_50hz_65k_causal` | PASS | 3.11 | 3.06 | 3.31 | 0 | 26.1× | 0.00059 |
+| `dac44` | PASS | 3.13 | 3.09 | 3.52 | 0 | 26.3× | 0.00922 |
+| `dualcodec_25hz_v1` | PASS | 3.56 | 3.48 | 4.02 | 0 | 23.0× | 0.00311 |
+| `dualcodec_12hz_v1` | PASS | 3.88 | 3.82 | 4.05 | 0 | 20.9× | 0.00098 |
+| `encodec24_q8` | PASS | 5.94 | 5.91 | 7.50 | 0 | 15.8× | 0.00264 |
+| `mimi_q8` ⭐ | PASS | **9.85** | 9.84 | 11.27 | 0 | 8.1× | 0.00124 |
+| `mimi_q32` | PASS | 10.33 | 10.33 | 10.88 | 0 | 7.7× | 0.00130 |
+| `griffinlim` | ⛔ **FAIL** | 11.27 | 11.12 | 11.59 | 0 | 7.7× | 0.00122 |
+| `fish_modified_dac` | PASS ⛔ NOT COMP | 11.22 | 11.63 | 16.18 | 0 | 8.0× | 0.00796 |
+| `qwen3_tts_tokenizer_12hz` | PASS | 16.00 | 15.90 | 17.39 | 0.0013 | 5.0× | 0.00558 |
+| `bigvgan22` | PASS | 27.64 | 27.44 | 41.68 | 0 | 3.0× | 0.02109 |
+| `melflow` | n/a | **NOT ESTABLISHED** | 375.91 | 454.96 | **1.0000** | **0.2×** | 0.06961 |
+
+### E6 — the §7.2 environment control, and its consequence
+
+`encodec24_q8`, byte-identical tokens, same GPU, single-arm in each environment:
+
+| environment | transformers | median ratio | effect | consequence |
+|---|---|---|---|---|
+| `decbench` | 4.57.3 | 1.000 | reference | — |
+| `decbench_melflow` | 5.17.0 | 1.005 | **0.53%** | ✅ COMPARABLE, by measurement |
+| `fish` | 4.35.2 | 0.498 | **50.25%** | ⛔ **NOT COMPARABLE** |
+
+**Device-side, not host-side**: at 2 s offline, host overhead is 0.022 vs
+0.024 ms while **CUDA time is 10.344 vs 6.328 ms**. torch identical everywhere.
+The two `transformers` versions launch different GPU work for the same decode.
+
+### E1 — the controlled pair (paired median bootstrap, 4000 resamples, seed 20260911)
+
+| condition | n pairs | difference ms (95% CI) | ratio (95% CI) |
+|---|---|---|---|
+| offline 1 s | 30 | 4.9571 [4.8318, 5.1066] | 3.0478 [2.9707, 3.1169] |
+| offline 5 s | 30 | 12.9417 [12.8568, 13.1343] | 6.2166 [6.1141, 6.2970] |
+| offline 30 s | 30 | 71.2469 [70.7538, 71.4447] | **24.7926** [24.4748, 24.9127] |
+| stream 26.7 ms | 2220 | 3.4569 [3.4471, 3.4669] | 2.8128 [2.8039, 2.8215] |
+| stream 93.3 ms | 600 | 4.0063 [3.9794, 4.0426] | 3.1064 [3.0860, 3.1314] |
+| stream 1013.3 ms | 90 | 5.3484 [5.2539, 5.4204] | 3.6148 [3.5024, 3.6792] |
+
+⭐ **The ratio is NOT constant: 3.05× at 1 s rising to 24.79× at 30 s.**
+`encodec_vocos` is nearly duration-**independent** (2.42 → 3.00 ms across 1→30 s,
+every condition §8 PASS, allocated memory scaling normally); `encodec24_q8` scales
+strongly. On byte-identical tokens with the decoder as the only moving variable,
+**different complexity classes in this range, not different constants.**
+
+**Memory by scope — NEVER quoted across scopes.** anchor allocated **1.2917×** ·
+offline-sweep allocated **2.1646×** · session allocated **2.1646×** · anchor
+reserved 5.2152× · offline-sweep reserved 1.2786× · session reserved 1.2817×.
+⚠️ `reserved` is allocator caching and **not monotonic** (vocos: 162, 646, 164,
+182, 270 MiB) — **`allocated` is the interpretable denominator.**
+
+### E3 — minimum viable streaming configuration (requires §8 PASS)
+
+| arm | min chunk that ran | §8 pass | **E3** |
+|---|---|---|---|
+| `vocos_mel24` | 21.3 ms | 0/7 | ⛔ **NOT ACHIEVABLE** (`duration_ok`) |
+| `griffinlim` | 42.7 ms | 0/6 | ⛔ **NOT ACHIEVABLE** (`duration_ok`) |
+| `melflow` | — | 0/0 | ⚠️ **NOT ESTABLISHED** — untested, NOT failed |
+| `focalcodec_12_5hz` | 80.1 ms | 2/5 | **640.8 ms** (`energy_ok`) |
+| `focalcodec_25hz` | 80.1 ms | 4/5 | 80.1 ms (non-monotonic: 320.4 ms fails) |
+| `dac44` · `bigvgan22` | 23.2 ms | 7/7 | 23.2 ms |
+| `encodec24_q8` · `encodec_vocos` | 26.7 ms | 7/7 | 26.7 ms |
+| `dualcodec_25hz_v1` | 40.1 ms | 6/6 | 40.1 ms |
+| `fish_modified_dac` | 46.4 ms | 6/6 | 46.4 ms |
+| `mimi_q8` · `mimi_q32` | 79.7 ms | 6/6 | 79.7 ms |
+| 3 causal Focal · `focalcodec_50hz` · `dualcodec_12hz_v1` · `qwen` | 80.0–80.1 ms | all | 80.0–80.1 ms |
+
+**`vocos_mel24` and `griffinlim` fail `duration_ok` because of the Gate 2
+`b = −256 samples/chunk` drift** — their streamed output is the wrong length and
+is inadmissible under the study's own frozen gate at every size tested.
+
+### E4 — offline vs streaming ordering
+
+**COMPUTED** over 17 qualifying arms. Spearman ρ(RTF, TTFA) = **0.8627 →
+orderings differ.** Excluded: `melflow` (no TTFA), `fish_modified_dac` (NOT
+COMPARABLE), `nanocodec` (blocked). Largest shifts: `dac44` −7 ranks,
+`griffinlim` +5, `dualcodec_25hz_v1` −4.
+
+### Other Gate 3 facts that constrain Gate 4
+
+- **E2 (fixed vs marginal cost) is NOT INTERPRETABLE for `dac44`, `melflow`, `bigvgan22`** — negative fixed costs and/or residuals comparable to the shortest measurement.
+- **`bigvgan22` underrun transition: 23.2 ms → 1.0000 · 46.4 ms → 0.0008 · 81.3 ms → 0.0000.**
+- **`qwen3_tts_tokenizer_12hz` has one 208.1 ms spike** in 750 chunks (rep 24, index 15), device-side (`cuda_ms` 208.076 vs wall 208.105). ⚠️ Device timing cannot separate model work from GPU preemption.
+- **Longrun drift** within ±2.1% on every arm over a sustained 30 s stream.
+- **Focal delay calibration is NOISE** (r = 0.08–0.19) and is **not used as a fact anywhere**.
+- **§7.2's VRAM re-run rule is SUPERSEDED** by amendment 10.2 with a named replacement check (`reset_peak_memory_stats()` before every cell + the longrun drift cell). 167/366 cells exceeded the 200 MiB threshold — the expected signature of the intended unload/reload under a model-cache-of-one design.
+
+---
+
+## 5. ⛔ THE TWO HARD CONSTRAINTS GATE 4 MUST CARRY
+
+### 5.1 `fish_modified_dac` — CROSS-ENVIRONMENT NOT COMPARABLE
+
+The incumbent ran in `fish` (transformers 4.35.2). **E6 measured a 50.25%
+environment effect.** §7.2 pre-commits the consequence:
+
+> **`fish_modified_dac` may not be compared numerically against any `decbench`
+> arm.** Its own numbers stand within its own environment. It is excluded from
+> the §17 budget table and from E4's ordering.
+
+⚠️ **The direction matters and must not be mis-stated: `fish` is FASTER.** The
+incumbent's environment flatters it by ~3.5 ms per call. **Nothing says Fish
+ModifiedDAC is fast or slow — it says its number and theirs cannot share a
+ranking.**
+
+**For Gate 4 this matters less for quality than for timing** (reconstruction
+quality is far less environment-sensitive than latency), **but the marker travels
+with the arm**, and any Gate 4 output that puts Fish in a ranking with decbench
+arms must say which quantity it is ranking and whether that quantity is
+environment-sensitive. If in doubt, run the E6 control for the Gate 4 metric too.
+
+### 5.2 `melflow` — SCOPE LIMITATION
+
+- **Label:** `TRUE_INCREMENTAL — NEURAL DECODER; iSTFT STREAMING NOT ESTABLISHED`. **Never counted with the three representation→PCM arms.**
+- **Why:** §10.1 requires the decoder to emit **audio from partial input**. MelFlow emits **spectrogram frames** incrementally; the inverse STFT runs **once over the assembled spectrogram**. A control measured naive split-in-two iSTFT at **121.39% on GPU** (134.65% on CPU in the delta audit) — the stage is **not free** and may not be inferred (R13).
+- **TTFA is `NOT ESTABLISHED`** and no number may be reported for it.
+- **Eager mode** (amendment 9.10): its backbone ships `@torch.compile(fullgraph=True, max_autotune=True)` and its upstream recommends CUDA graphs; both disabled, uniformly with every arm. **Its 0.21× real-time margin is an UPPER BOUND on latency, not its best achievable.**
+- **Two DECLARED upstream repairs** to `sp-uhh/streamfm` @ `ab2700c1` — the released streaming path **does not execute as-is**. Both verified INERT by independent audit (no weight, no arithmetic touched): `CausalConv2d.depthwise_separable` / `pointwise_conv` referenced but never defined; `CausalResnetBlockBigGANpp.init_state` returns 5 while `forward_step` unpacks 6 (`state_se`, never read).
+- ⚠️ **AGPL-3.0, permanent label:** `RESEARCH / ARCHITECTURE EVIDENCE — NOT SHIPPABLE AS A CLOSED-PRODUCT DEPENDENCY UNDER THE CURRENT LICENCE.` Source never enters product code. A clean reimplementation answers copyright, **not patents**. **`external_agpl/` is gitignored and must stay out of any published tree.**
+- Checkpoint provenance is the weakest of any arm: Google Drive via `gdown`, no revision, no content addressing; our own sha256 `c47a1e85…f2333` is the only pin.
+
+---
+
+## 6. What Gate 4 MUST REUSE — do not re-derive
+
+**Reuse the frozen geometry and representations. Re-deriving them will silently
+disagree with Gates 2 and 3.**
+
+| quantity | where it lives | why it must be reused |
+|---|---|---|
+| per-arm **true integer hop** (`samples_per_unit`) | `gate2_matrix.json` → `samples_per_unit_measured` | Recovered exactly from `L(u) = a·u + b`. Deriving it from the measured token rate carries a padded-probe residue that once made `mimi_q8` read +7.24…+72.37 samples/chunk where the truth is 0. |
+| per-arm **frame period / atomic quantum** | `gate2_matrix.json` → `quantum_ms`, and `gate3_arms.py::Arm` | Chunk conditions must lie on the arm's own grid (amendment 1). Off-grid fragments already produced a VOID run once. |
+| **streaming labels and C1/C2** | `gate2_matrix.json` | Frozen. Gate 4 does not reclassify streaming. |
+| **§8 streamed-validity verdicts** | `gate3_matrix.json` → `stream[].streamed_gate8` | An arm whose streamed output fails §8 has **no valid streaming configuration** at that size; quality measured on it is quality of an inadmissible signal. |
+| **E3 minimum viable configuration** | `gate3_matrix.json` → `e3_min_viable_streaming_ms` | **Gate 4 should measure streamed quality at each arm's E3 condition**, not at a common chunk size that some arms cannot legally occupy. |
+| the **adapter interface** | `gate3_arms.py` (+ `_b`, `_fish`), `gate3_run_melflow.py` | Seven operations per arm, already correct for all 19. Reuse it; do not write new per-arm decode paths. |
+| **shared measurement primitives** | `gate_lib.py`, `gate3_lib.py` | R6: one definition, imported everywhere, so a fix cannot reach one arm and miss another. `gate_lib` survived 38 fuzz attacks (`fuzz_gate_lib.json`). |
+
+**Representations are cached and hashed at run time** by
+`gate3_run.py::cached_rep` — encode ONCE, cache on device, hash, and decode from
+cache. **The encoder is NEVER inside a measured region** (§11). Gate 4 must keep
+that property: quality is a property of the DECODE.
+
+---
+
+## 7. Exact frozen source / probe requirements
+
+**THE PROBE, unchanged since Gate Zero and used by every measurement in the
+study:**
+
+```
+C:\Users\User\miniconda3\envs\decbench\Lib\site-packages\audiocodecs\example.wav
+15.860 s · 16 000 Hz · mono · real speech
+```
+
+Resolved by `gate3_arms.probe()`, which tries `import audiocodecs` and falls back
+to that absolute path — **it must be the same file in every environment.**
+
+**Duration construction (`PROTOCOL` amendment 9.2):** 1 / 2 / 5 / 10 s are
+**prefixes**; **30 s exceeds the source and is the clip TILED to exactly 30.000 s,
+introducing one artificial seam at 15.860 s.** Declared, not hidden. **No quality
+claim may rest on the tiled clip** — which is a direct constraint on Gate 4: if
+Gate 4 needs 30 s of material, it needs REAL 30 s material, not the tiled probe.
+
+⚠️ **Gate 4 will almost certainly need more speech than one 15.86 s clip** —
+multiple speakers, both sexes, and enough material for any statistic over
+utterances. **Choosing that corpus is a Gate 4 design decision that must be
+pre-registered before any quality number is computed**, and the choice must be
+recorded with provenance, licence and hashes exactly as the arms were.
+
+**Per-arm exact unit counts:** `units_for(arm, seconds, cap=n)` — each duration
+cut to an exact unit count so the produced-audio denominator is exact, clamped to
+what the cache holds.
+
+---
+
+## 8. ⛔ CLAIM-BOUNDARY RULES — all of them, and none is optional
+
+1. **Measured: REPRESENTATION → WAVEFORM only.** Generator/AR timing and quality are outside this study. **A decode-only number read as end-to-end TTS performance is a failed report.** (`OPTIMIZATION.md` precedent: AR generation ~1.47 s vs decode route ~65 ms on that system.)
+2. **Route A and Route B are NEVER merged into one ranking.**
+3. **`mimi_q8` and `mimi_q32` are never merged**; n_q on every row; n_q=32 is never "Mimi 1.1 kbps".
+4. **codec targets/s = token rate × codebooks is a property of the REPRESENTATION ONLY.** It is **not** generator decisions/s and **not** Transformer evaluations per second. Generator factorisation is unmeasured.
+5. **Seam / boundary metrics compare a decoder against ITSELF.** Not a quality ranking between decoders. **QUALITY COMPARISON NOT ESTABLISHED** stands until Gate 4 earns otherwise — and when it does, it must say exactly which metric, on which corpus, with which reference.
+6. **The chunking error metric is a DETECTOR, not a severity scale.** Cross-arm severity rankings from it are withdrawn.
+7. **Evidence vocabulary, mandatory on every field:** `MEASURED` / `EXACT` / `DERIVED` / `ESTIMATE` / `NOT MEASURED` / `NOT AVAILABLE` / `NOT COMPARABLE` / `NEEDS RESOLUTION`. **A blank NEVER means unknown. A zero NEVER means unmeasured** (R1).
+8. **Vendor latency anchors (75 / 50 / 200 ms) are VENDOR-REPORTED market anchors**, from vendors' own systems and conditions. **NOT comparable to anything produced here**, and no number from this study may be compared to them as though the protocols matched.
+9. **EAGER MODE for every arm** — no `torch.compile`, no CUDA graphs, no quantisation. Any arm shipping a compiled path has an **upper-bound** number here.
+10. **Every failure is a RECORDED ROW carrying its state, never a missing row** (§12). OOM is a result.
+11. **Negative capability claims need evidence** (R13). "The API exposes no state" is a fact about the API; "the architecture cannot stream" is a different claim and is not supported by it.
+12. **Declare the domain, never enumerate the failures** (R19). **Nobody certifies their own verifier** — every consistency check in this repo is written by its own author and is a floor, not a certification.
+13. **`nanocodec` stays BLOCKED** with no manufactured number, in every output format.
+14. **Amendments append below the amendment line with a date and a statement of whether results had been seen.** `PROTOCOL.md` §1–§18 is frozen and is never edited.
+
+---
+
+## 9. Authoritative artifact paths
+
+Root: `C:\Users\User\Desktop\research\decoder-bench\`
+
+| what | path |
+|---|---|
+| **freeze record + verifier** | `GATE3_FREEZE.json` · `freeze_gate3.py --verify` |
+| **Gate 3 matrix** | `GATE3_MATRIX.md` · `gate3_matrix.json` |
+| **Gate 3 raw** | `results/raw_runs.csv` (141 281 rows) · `results/summary.csv` (366) |
+| **Gate 3 per-cell / per-rep** | `results/gate3_{raw,cells,header}_{a,b,fish,melflow}.*` |
+| **E6 control** | `results/gate3_{raw,cells,header}_e6_{decbench,fish,decbench_melflow}.*` |
+| **E1 / E3 / E4** | `gate3_matrix.json` → `E1_controlled_pair`, `arms[].e3_*`, `E4_ordering` |
+| **Gate 2 matrix** | `GATE2_MATRIX.md` · `gate2_matrix.json` |
+| **Gate 2 raw** | `gate2_repaired_{a,b,fish,melflow}.json` |
+| **Gate 2 audit trail** | `GATE2_AUDIT.md` |
+| **Gate 3 audit trail** | `GATE3_AUDIT.md` |
+| **protocol + amendments 1–10** | `PROTOCOL.md` |
+| **inventory / Gate Zero** | `AUDIT.md` · `MANIFEST.md` |
+| **candidate gate + LICENCES** | `GATE.md` |
+| **literature survey** | `FIELD_SURVEY.md` |
+| **environments / provenance** | `ENVIRONMENT.json` (4 envs, full package sets, GPU, driver) |
+| **instrument fuzz** | `fuzz_gate_lib.json` (38 attacks) |
+| **harness** | `gate_lib.py` · `gate3_lib.py` · `gate3_arms*.py` · `gate3_run*.py` · `make_gate3_matrix.py` · `render_gate3_md.py` · `check_gate3.py` · `export_gate3_csv.py` |
+
+### Environments — `transformers` is a DECLARED VARIABLE, torch is controlled
+
+| env | python | torch | transformers | purpose |
+|---|---|---|---|---|
+| `decbench` | 3.11.16 | 2.10.0+cu128 | **4.57.3** | 17 arms |
+| `decbench_melflow` | 3.11.16 | 2.10.0+cu128 | **5.17.0** | MelFlow only — AGPL isolation |
+| `fish` | 3.10.19 | 2.10.0+cu128 | **4.35.2** | Fish. **PRE-EXISTING, READ ONLY** — carries frozen production work. Never install into it. |
+| `decbench_nemo` | 3.11.16 | 2.10.0+cu128 | 4.57.6 | BLOCKED |
+
+**GPU: NVIDIA GeForce RTX 5080, sm_120, driver 610.47, CUDA 12.8, 16 303 MiB.**
+**Host: 31 860 MB RAM, 16 logical CPUs, Windows 11.**
+
+⚠️ **`decoder-bench` is NOT a git repository.** All of this sits on one disk with
+no history. Local `git init` has been offered and not yet authorised; publishing
+anywhere is a separate decision requiring explicit approval, and `external_agpl/`
+(AGPL-3.0) and any no-licence clone must stay out of a published tree.
+
+---
+
+## 10. The next phase — Gate 4: reconstruction / audio quality
+
+**NOT STARTED. Nothing about it is pre-decided here beyond what the frozen
+protocol already binds.**
+
+What it has to answer: **how good is each decoder's reconstruction, offline and
+streamed, relative to its own input** — and whether streaming costs quality.
+
+Design obligations carried in from the frozen estate:
+
+- **Pre-register before measuring.** Metrics, corpus, references, thresholds and the analysis plan are frozen BEFORE any quality number exists, exactly as Gates 2 and 3 were. Hypotheses that cannot be evaluated get replaced by estimands, not patched.
+- **Measure streamed quality at each arm's E3 condition**, not a common chunk size. Arms whose E3 is `NOT ACHIEVABLE` (`vocos_mel24`, `griffinlim`) have **no valid streaming configuration** — their streamed quality is the quality of an inadmissible signal and must be labelled that way or not measured.
+- **`melflow` has no established streaming PCM path.** Its streamed quality cannot be measured through one without first building and TESTING an overlap-add stage.
+- **A real corpus is required** — the 15.86 s probe and its tiled 30 s extension will not carry a quality result. Corpus choice, provenance, licence and hashes are pre-registered.
+- **Self-reference first.** Each decoder against its own input is a within-arm question and is clean. Cross-decoder quality comparison is a different, harder claim and needs its own justification.
+- **The instrument gets fuzzed before it is trusted** (R19), and its author does not certify it.
+
+### Later phases, in order, none of them started
+
+1. **Human listening / perceptual realism.** Objective metrics are not perception. Requires its own pre-registration, its own participants, and consent handled as the estate already handles it.
+2. **Detectorproof.** The adversarial detectability phase.
+3. **Paper gate.** `paper/` is created **only if the result earns it** (§14). Gate 4 and the later phases have not run, so no paper exists and none should.
+
+---
+
+## 11. Project purpose — the TTS Architecture Lab
+
+All of this exists to populate an **evidence-backed TTS Architecture Lab**: a
+surface where an architecture decision can be inspected rather than asserted.
+
+> **Every displayed value carries its evidence state — `MEASURED` / `DERIVED` /
+> `ESTIMATED` / `DOCUMENTED` / `NOT MEASURED` — and points to a recomputable
+> number. Nothing is invented, nothing is inferred silently, and an absence is
+> shown as an absence.**
+
+A blank never means unknown. A zero never means unmeasured. `NOT COMPARABLE` is a
+first-class state and is displayed as one. `BLOCKED` is displayed as blocked.
+
+⛔ **This project does not edit the Voice Systems Explorer.** Machine-readable
+`EVIDENCE.codecs` / `EVIDENCE.decoders` records are produced for the Explorer to
+consume **after review** (§14), and that is the boundary.

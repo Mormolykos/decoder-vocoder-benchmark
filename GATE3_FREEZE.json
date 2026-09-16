@@ -1,0 +1,263 @@
+{
+ "frozen_utc": "2026-09-11T20:41:09+00:00",
+ "declaration": "GATE 3 — COMPLETE / FROZEN / CLEARED",
+ "scope": "Gate Zero (validity), Gate 2 (streaming classification) and Gate 3 (GPU timing) are FROZEN. Their measurements are not to be modified again unless a later audit finds a CONCRETE DEFECT, in which case the defect is named, the repair is scoped to it, and this freeze record is regenerated.",
+ "cleared_by": "independent adversarial review across three rounds: the Gate 2 audit, the Gate 2 delta audit and spot-check, and the Gate 3 audit and final E1 spot-check. The final Gate 3 spot-check returned GATE 3 FINALLY CLEARED: YES.",
+ "not_started": [
+  "Gate 4 - reconstruction / audio quality",
+  "human listening / perceptual realism",
+  "Detectorproof"
+ ],
+ "n_artifacts": 56,
+ "missing": [],
+ "verify_command": "python freeze_gate3.py --verify",
+ "artifacts": {
+  "gate3_authoritative": {
+   "GATE3_MATRIX.md": {
+    "sha256": "37d72a2da5b2c297b2458f32580f21c61a22e63d2a51e8dab651583f9a29c718",
+    "bytes": 50729
+   },
+   "gate3_matrix.json": {
+    "sha256": "b3ad78d31a0d3e72cd081e03ca362cd32e1d21f0e0a241875d52f11e73f7c102",
+    "bytes": 363499
+   },
+   "results/raw_runs.csv": {
+    "sha256": "0430f550c6e619fdd3f90a86b9ce05fd120cdb52267b62b7ae32a554c36097c8",
+    "bytes": 14343490
+   },
+   "results/summary.csv": {
+    "sha256": "83538e94b7614e4588c0110ab2ecc6182576133bebf76af02dc2a310b9f123a5",
+    "bytes": 92509
+   }
+  },
+  "gate3_raw": {
+   "results/gate3_raw_a.jsonl": {
+    "sha256": "8f7bbb0ac66c0d35503cc63467d660f37a83bbf50d215da22283c45687973738",
+    "bytes": 4447980
+   },
+   "results/gate3_raw_b.jsonl": {
+    "sha256": "253da0bf888bedf9c341347fc1b8be3413bc84cc712eb1715c19f9d1495d8171",
+    "bytes": 851958
+   },
+   "results/gate3_raw_fish.jsonl": {
+    "sha256": "15721221836f43ee5559db60a77d1cfc534dfbedd1fc6d1fdd04dd0e12ccf41d",
+    "bytes": 311681
+   },
+   "results/gate3_raw_melflow.jsonl": {
+    "sha256": "c9985dc46f7ad59b016294e80927c76f58df5fc33eae5d0eb9dedafe27b53cf6",
+    "bytes": 302662
+   },
+   "results/gate3_cells_a.jsonl": {
+    "sha256": "225bbc5840cd80b89b68e7e396e6091aa0627acaa831d66939b723172e6dc804",
+    "bytes": 846035
+   },
+   "results/gate3_cells_b.jsonl": {
+    "sha256": "4249289759713be347d5c98d9e757451ee4e76b0da2d75e52dd85c9080d72f35",
+    "bytes": 129077
+   },
+   "results/gate3_cells_fish.jsonl": {
+    "sha256": "32122f82b01e6f6d50761d4b27daddec407c1d331eba3d8cb91b709ec829201e",
+    "bytes": 60063
+   },
+   "results/gate3_cells_melflow.jsonl": {
+    "sha256": "5f69fcaf1416611fb93cdcd01b123da11f2676e30ec7f93c52f6f71441d5b26e",
+    "bytes": 21732
+   },
+   "results/gate3_header_a.json": {
+    "sha256": "51604745feffca1fbde16122691c01c2513c133b6834a442c85a8ae12fbf5482",
+    "bytes": 969
+   },
+   "results/gate3_header_b.json": {
+    "sha256": "bb3d6638f9f823b60e3d18ecb3d160f11c8b31a82f84bfcbed4090c1ce7bf176",
+    "bytes": 970
+   },
+   "results/gate3_header_fish.json": {
+    "sha256": "0c77abf016007cf0f061c2cf819f5f03fd4e8b03eb602602ba19db8a48a0fb6b",
+    "bytes": 970
+   },
+   "results/gate3_header_melflow.json": {
+    "sha256": "cb5498eb131f1ffc87240bc8870c3ec7baf58565d103cf3b1b394ac2b531bec7",
+    "bytes": 1705
+   }
+  },
+  "gate3_e6_environment_control": {
+   "results/gate3_cells_e6_decbench.jsonl": {
+    "sha256": "c67f7ae037ec7baa79dec012d4447ee96d1b6485bc1de757f92a8f0f5f2ce28e",
+    "bytes": 64364
+   },
+   "results/gate3_cells_e6_fish.jsonl": {
+    "sha256": "eaa17dfb146a2b8539ddc467a2aaf09df96fed9b1ea6ad6fa3867fac310faf6c",
+    "bytes": 64569
+   },
+   "results/gate3_cells_e6_decbench_melflow.jsonl": {
+    "sha256": "8d8d91cc4a661b6c3ca17371f8e3751f7ad5ab3038719873bcc59589f26125bb",
+    "bytes": 64294
+   },
+   "results/gate3_raw_e6_decbench.jsonl": {
+    "sha256": "9c236cbf109369a9dee6fe1fe1ad167d80089df2776d1b356017c98fbcef3764",
+    "bytes": 401720
+   },
+   "results/gate3_raw_e6_fish.jsonl": {
+    "sha256": "5246e2c7702714acdf03c0a4d32fef9cc045af64820251634d8b149c46bdabf5",
+    "bytes": 409388
+   },
+   "results/gate3_raw_e6_decbench_melflow.jsonl": {
+    "sha256": "e48d8ef673045ce7c6b841282f7951777bf888bdca324dff4f6cd36bb30a355d",
+    "bytes": 401640
+   },
+   "results/gate3_header_e6_decbench.json": {
+    "sha256": "44d5c02bad1081b1b017428d57be1e59ae4e39498828db1fc2c7f4b83f9a80e0",
+    "bytes": 966
+   },
+   "results/gate3_header_e6_fish.json": {
+    "sha256": "fd9ac9dec039e5428e6e16d4327bd3f7a728c9862786eb7365c017c3cd218dfc",
+    "bytes": 966
+   },
+   "results/gate3_header_e6_decbench_melflow.json": {
+    "sha256": "2be4460e4caa27c8708c193003ac4488db864c508eea73fe7ad25ff3c36e3f46",
+    "bytes": 979
+   }
+  },
+  "gate2_authoritative_CLOSED": {
+   "GATE2_MATRIX.md": {
+    "sha256": "841fd6a4ae20fbb9d455680a2e4db6884506c3dbbe65dc70ea8f36a0825cda0a",
+    "bytes": 21435
+   },
+   "gate2_matrix.json": {
+    "sha256": "d7514fac25f7db3ad4f7c6ff7fd08a95d2cb35b5f124f357b5556f4a4249eb6d",
+    "bytes": 43816
+   },
+   "GATE2_AUDIT.md": {
+    "sha256": "1f57056e470e9848f14d2e57e9d38e4c42f9f22ca29e1b2bc4c390a59f7abf1a",
+    "bytes": 21701
+   },
+   "gate2_repaired_a.json": {
+    "sha256": "58c2f8b82bf3daad2b12da0759f5c45200a68d88a79225221b4a61fdab53b894",
+    "bytes": 82583
+   },
+   "gate2_repaired_b.json": {
+    "sha256": "a232b6f85735a3ebfd43eeff9fb031f9abd19f7ecec9ac8e21346b81a84126fb",
+    "bytes": 10133
+   },
+   "gate2_repaired_fish.json": {
+    "sha256": "3d81749db1c9403c2f3a80d45baa7eec59734df62f69c4b4442c4d957c500f02",
+    "bytes": 5709
+   },
+   "gate2_repaired_melflow.json": {
+    "sha256": "59663bd40af7ce7f4c346edbe97f445b9bd7b904c00120786f2c55afd8c05cab",
+    "bytes": 10302
+   },
+   "fuzz_gate_lib.json": {
+    "sha256": "44d48937f5f146958cf1065512e7deda0a5841d6e5dab894b51fb6cd4a9a1bbb",
+    "bytes": 5555
+   }
+  },
+  "gate1_gate0_and_protocol": {
+   "PROTOCOL.md": {
+    "sha256": "1fa00b0cc77214f03776ed7cacf7d1a127b28193093971208046f1db9238d6fb",
+    "bytes": 51643
+   },
+   "MANIFEST.md": {
+    "sha256": "f86fb67bda151e767b932ebcb8bd015ecbf4959f4c2d5a1755ecdfcb13c8240e",
+    "bytes": 29664
+   },
+   "AUDIT.md": {
+    "sha256": "44bbe703ca91eed29ac30bf66821bf0b6736b5163d90f6bcb8a494948b81b0bf",
+    "bytes": 31635
+   },
+   "GATE.md": {
+    "sha256": "a0df42ac1141c7c65a3739e1e1ce46725219f3ffd17ad81eb1bc095203f5b60d",
+    "bytes": 13119
+   },
+   "FIELD_SURVEY.md": {
+    "sha256": "50b9d066337d79f069e9f7affec9384a955d6d79a024a36499ff8b8c2d78d45a",
+    "bytes": 16157
+   },
+   "ENVIRONMENT.json": {
+    "sha256": "5e51364a4fd4d8ff393295f42784acea629beb027a704fe0c817b4b8e5c95621",
+    "bytes": 26575
+   },
+   "GATE3_AUDIT.md": {
+    "sha256": "c277178143c8344af932e68c909fc1cfa71460a4e5f13bb423629d5e0e1b643e",
+    "bytes": 19053
+   },
+   "GATE4_HANDOFF.md": {
+    "sha256": "e41a5fa3facce00ef0fd71f7e1903faeb97a08b7ce659116c70becfb64945caa",
+    "bytes": 28057
+   }
+  },
+  "harness": {
+   "gate_lib.py": {
+    "sha256": "17e730dee6321940444fb11da1699e172dacaad7d3a15e9f92f124f7f62cfa2b",
+    "bytes": 11887
+   },
+   "gate3_lib.py": {
+    "sha256": "e202b40886813e582d446e67881e0145caccaf990cde58b923b9361bea0d5013",
+    "bytes": 19025
+   },
+   "gate3_arms.py": {
+    "sha256": "753e7cbcb2d7e6db96d0df5d633e33e304b52d9aa81855de1d9a4871822cf897",
+    "bytes": 12057
+   },
+   "gate3_arms_b.py": {
+    "sha256": "cf33f0e9e51ba647116a5721f0c8c6fdf52a13d5dfc021001e095e20d29c07ad",
+    "bytes": 3273
+   },
+   "gate3_arms_fish.py": {
+    "sha256": "9fcb998deb29281be3ae39f5844ed75be360512dd0a257372efa44a0edfc44c5",
+    "bytes": 2417
+   },
+   "gate3_run.py": {
+    "sha256": "73429da138324299a22a301d0ca0e4cc6050c18c86caf969ed824a5c6cf7cffb",
+    "bytes": 25248
+   },
+   "gate3_run_melflow.py": {
+    "sha256": "0dcb7c71f9149d2e1a56884907f81983c9406ec93bea2b1487c607c083087bbd",
+    "bytes": 19214
+   },
+   "make_gate3_matrix.py": {
+    "sha256": "a81758a5b06915c81871c1394a0025f4b9b768218dc35783517ae8cf33a27cd7",
+    "bytes": 39833
+   },
+   "render_gate3_md.py": {
+    "sha256": "6409e89941402c2af20032aa22fa253afd6321fe9935cbe0f604575f93e29b0f",
+    "bytes": 20944
+   },
+   "check_gate3.py": {
+    "sha256": "48b0ee25f802641ba31018d5b80680e85b7a8fc1df0961ceb34433d0859a3835",
+    "bytes": 12788
+   },
+   "export_gate3_csv.py": {
+    "sha256": "a5689985a62ddcf071908c150ea8f580f0899d9dce1ebd16045c03055665b1a7",
+    "bytes": 6384
+   },
+   "correct_artifacts.py": {
+    "sha256": "58dacecd157290c333bbdb60578ad188a9ad423ca7c9285743112d7f5fbc67e1",
+    "bytes": 11996
+   },
+   "make_matrix.py": {
+    "sha256": "57a300a7e11604d3eab020081184a82b6f976a2d1ac48cc95232100f66de6993",
+    "bytes": 28395
+   },
+   "check_consistency.py": {
+    "sha256": "b38ee94ff7237d1afa8f061e9139fd3de1f7a23ed4d497201ce95a2de1b1af84",
+    "bytes": 8694
+   },
+   "fuzz_gate_lib.py": {
+    "sha256": "72a6279175aad2c7c3d96ac60ef3facf48fcfa9e2c5aba62b160e792c4df511d",
+    "bytes": 9288
+   }
+  }
+ },
+ "_redaction": {
+  "derivative_of": "GATE3_FREEZE.json",
+  "source_sha256": "76b982a55be7d8ba2ef62ed5c872117cc78a676df921d696b8ff3b6368b3b08f",
+  "source_status": "PRIVATE - not released, not modified",
+  "applied": {
+   "speaker_names": 0,
+   "private_paths": 0,
+   "source_filenames": 0
+  },
+  "generated_utc": "2026-09-16T13:42:33Z"
+ }
+}

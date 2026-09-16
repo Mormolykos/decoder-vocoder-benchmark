@@ -1,0 +1,213 @@
+{
+ "what": "PUBLIC derivative of GATE4_CORPUS.json. Aggregate corpus definition only.",
+ "derivation": {
+  "source_file": "GATE4_CORPUS.json",
+  "source_sha256": "4f9bc588003af670f10de9b17ae50bff4abdcc251352aab586460bb80a7c0ec1",
+  "source_status": "PRIVATE - not released. Frozen and unmodified.",
+  "generated_by": "paper/make_public_derivatives.py",
+  "generated_utc": "2026-09-16T13:29:11Z",
+  "kept": [
+   "counts",
+   "selection_rule",
+   "set_S/set_L/calibration index structure",
+   "ladder derivation and rung coverage",
+   "duration statistics",
+   "formats observed"
+  ],
+  "removed": [
+   "speaker names",
+   "source filenames",
+   "per-file rows",
+   "per-file sha256",
+   "absolute source paths"
+  ],
+  "why": "The per-file rows are an index of private, rights-cleared recordings of consented speakers. Everything needed to check the selection rule survives; nothing that maps a named person to a recording does."
+ },
+ "source_root": "PRIVATE - withheld",
+ "hashed_per_file": true,
+ "formats_observed": [
+  {
+   "sr": 48000,
+   "subtype": "FLOAT",
+   "channels": 1
+  }
+ ],
+ "selection_rule": {
+  "short_predicate": "index<= 1344; ALL 7 speakers' NEUTRAL duration in [3.0,10.0] s; predicate on NEUTRAL only, applied identically to all 6 states to preserve the parallel design",
+  "short_selection": "ALL qualifying indices are taken - no selection step, no free parameter",
+  "crossing": "an index is kept only if every speaker x state cell exists; a partial index is dropped WHOLE",
+  "long_predicate": "index> 1344; crossed over ['Neutral', 'Whisper']",
+  "rung_derivation": "the LARGEST candidate rung for which EVERY Set L recording qualifies, so crossing stays at 100%",
+  "rung_candidates_s": [
+   10.0,
+   12.0,
+   14.0,
+   16.0,
+   18.0,
+   20.0,
+   25.0,
+   30.0
+  ],
+  "calibration": "⭐ held out of Set S BY CONSTRUCTION: NEUTRAL duration in [2.0,3.0) s, which the Set S predicate excludes; first 3 fully crossed indices"
+ },
+ "counts": {
+  "distinct_recordings": 1512,
+  "measurement_cells": 1736,
+  "note": "⛔ CELLS ARE NOT RECORDINGS. Ladder cells are REPEATED MEASURES on Set L recordings already counted. The statistical unit is the RECORDING (see GATE4_PREREG.md §12)."
+ },
+ "speakers": {
+  "n": 7,
+  "identities": "pseudonymised; not published"
+ },
+ "states": [
+  "Neutral",
+  "Angry",
+  "Happy",
+  "Scared",
+  "Shouting",
+  "Whisper"
+ ],
+ "set_S": {
+  "n_indices": 31,
+  "n_recordings": 1302,
+  "states": [
+   "Neutral",
+   "Angry",
+   "Happy",
+   "Scared",
+   "Shouting",
+   "Whisper"
+  ],
+  "not_crossed": {}
+ },
+ "set_L": {
+  "n_indices": 15,
+  "n_recordings": 210,
+  "states": [
+   "Neutral",
+   "Whisper"
+  ],
+  "not_crossed": {
+   "1357": [
+    [
+     "Speaker_03",
+     "Neutral"
+    ]
+   ]
+  },
+  "top_rung_s": 14.0,
+  "rung_coverage": {
+   "10.0": {
+    "n_ok": 210,
+    "n_total": 210,
+    "fraction": 1.0
+   },
+   "12.0": {
+    "n_ok": 210,
+    "n_total": 210,
+    "fraction": 1.0
+   },
+   "14.0": {
+    "n_ok": 210,
+    "n_total": 210,
+    "fraction": 1.0
+   },
+   "16.0": {
+    "n_ok": 206,
+    "n_total": 210,
+    "fraction": 0.9809523809523809
+   },
+   "18.0": {
+    "n_ok": 189,
+    "n_total": 210,
+    "fraction": 0.9
+   },
+   "20.0": {
+    "n_ok": 157,
+    "n_total": 210,
+    "fraction": 0.7476190476190476
+   },
+   "25.0": {
+    "n_ok": 64,
+    "n_total": 210,
+    "fraction": 0.3047619047619048
+   },
+   "30.0": {
+    "n_ok": 18,
+    "n_total": 210,
+    "fraction": 0.08571428571428572
+   }
+  },
+  "duration_ladder_s": [
+   1.0,
+   2.0,
+   5.0,
+   10.0,
+   14.0
+  ],
+  "ladder_indices": [
+   1345,
+   1346,
+   1347,
+   1348
+  ],
+  "n_ladder_cells": 224
+ },
+ "calibration": {
+  "n_recordings": 126,
+  "states": [
+   "Neutral",
+   "Angry",
+   "Happy",
+   "Scared",
+   "Shouting",
+   "Whisper"
+  ],
+  "disjoint_from_set_S": true,
+  "disjoint_from_set_L": true
+ },
+ "duration_statistics": {
+  "set_S": {
+   "n": 1302,
+   "min_s": 2.545,
+   "p25_s": 4.512,
+   "median_s": 5.309,
+   "p75_s": 6.489,
+   "max_s": 13.502,
+   "total_hours": 2.0538
+  },
+  "set_L": {
+   "n": 210,
+   "min_s": 14.739,
+   "p25_s": 19.962,
+   "median_s": 22.6453,
+   "p75_s": 25.7853,
+   "max_s": 35.772,
+   "total_hours": 1.3593
+  },
+  "calibration": {
+   "n": 126,
+   "min_s": 1.8224,
+   "p25_s": 2.3873,
+   "median_s": 2.689,
+   "p75_s": 3.105,
+   "max_s": 4.96,
+   "total_hours": 0.0978
+  }
+ },
+ "absent_files": {
+  "n": 9,
+  "note": "recorded in the private canonical file"
+ },
+ "_redaction": {
+  "derivative_of": "GATE4_CORPUS_PUBLIC.json",
+  "source_sha256": "7f05b23913bf5ac9e99b647f372bbaf4dcc1bab3fb287e1ee5f9a0df24ff4cac",
+  "source_status": "PRIVATE - not released, not modified",
+  "applied": {
+   "speaker_names": 0,
+   "private_paths": 0,
+   "source_filenames": 0
+  },
+  "generated_utc": "2026-09-16T13:42:33Z"
+ }
+}

@@ -1,0 +1,30 @@
+Attribution 4.0 International (CC BY 4.0)
+
+Copyright (c) 2026 Panagiotis Gkilis
+
+This licence applies to the PAPER, DOCUMENTATION, TABLES and DATA FILES in this
+repository.
+
+IT DOES NOT APPLY TO THE SOURCE CODE (*.py). The source code carries no separate
+licence designation; no grant is made for it here. Creative Commons licences are
+not intended for software. See README.md.
+
+You are free to:
+  Share  - copy and redistribute the material in any medium or format
+  Adapt  - remix, transform, and build upon the material for any purpose,
+           even commercially.
+
+Under the following terms:
+  Attribution - You must give appropriate credit, provide a link to the licence,
+  and indicate if changes were made. You may do so in any reasonable manner, but
+  not in any way that suggests the licensor endorses you or your use.
+
+No additional restrictions - You may not apply legal terms or technological
+measures that legally restrict others from doing anything the licence permits.
+
+Notices:
+  The source audio, speaker embeddings and reconstructed audio described in the
+  paper are NOT part of this release and are not licensed here.
+
+Full licence text: https://creativecommons.org/licenses/by/4.0/legalcode
+Human-readable summary: https://creativecommons.org/licenses/by/4.0/

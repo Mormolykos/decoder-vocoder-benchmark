@@ -1,0 +1,438 @@
+{
+ "what": "Canonical publication manifest for the Gate 1-4 + Q5 decoder/vocoder study. Assembled from frozen artifacts; no scientific value is computed or altered here.",
+ "status": "SCIENTIFIC STUDY CLOSED - PUBLICATION SNAPSHOT FROZEN",
+ "generated_utc": "2026-09-15T22:58:37Z",
+ "rule": "No scientific artifact may change without opening a NEW study revision. A change here is a new study, not an edit.",
+ "freezes": {
+  "q5_spec_sha256": "fd429fd1e27dd7f90b86ddae84823dad3da2c8b1af0701a4f3328c8290f42ea4",
+  "q5_spec_frozen_utc": "2026-09-14T21:16:18Z",
+  "q5_revisions": 6,
+  "q5_superseded_revisions": 5,
+  "q5_implementation": {
+   "q5_lib.py": "5556e28d0e73f42cf571b9ffe3a4cff275c42ea287aa1bcd7fe51e403b65f6af",
+   "q5_calibration.py": "dad76ff183ae0691ebbdb20d7bd344352709d5a3938199b7d17200d674faa1c7",
+   "q5_fuzz.py": "213983736457fa10e606f0f0b3f36a21a352584991dbc5b80199efd444afe0d4",
+   "q5_run.py": "3c71543df2ccd3640480f302e53a683574e9cae8bef586ffea55aaaf1aeae24f",
+   "q5_analyze.py": "33437c1753f7e082209f11e82d7ef3809aa33a4e9445288a7a3ea8d0fb234404",
+   "q5_report.py": "c526806e5c9257153ee1a54105b32f20bef7772ce870e5bf6bd3c1e0121e55fd",
+   "freeze_q5.py": "73481d9787cbd60495fa5f8e1fb8560ece54db9c2caab6fccd1ff199092b19d5"
+  },
+  "q5_evidence": {
+   "Q5_CELLS.jsonl": {
+    "sha256": "f066ea73bc9208ef5a519202063ded9d6a9890323ac95cf75adc099f7112245d",
+    "bytes": 205075382,
+    "rows": 177072
+   },
+   "Q5_EMBEDDINGS.npz": {
+    "sha256": "7d7e6a3161b890b714a0b36ffa7206c0938199897780459c32223b83aa6a1f5e",
+    "bytes": 253062067,
+    "arrays": 188958
+   },
+   "Q5_CALIBRATION.json": {
+    "sha256": "ee622fa3bc778668fbd815e3adc43a82207112c804ba4debf433f3192acd14d6",
+    "bytes": 23235,
+    "encoders": 3
+   },
+   "Q5_FUZZ.json": {
+    "sha256": "c7fb1b525c876d40c0c441bef4490afbb160bcf437babc7628c9a326925bb920",
+    "bytes": 9416,
+    "sections": [
+     "F1",
+     "F2"
+    ]
+   },
+   "Q5_RESULTS.json": {
+    "sha256": "4249195922c057834e03ebc0b849ded428e50c8303c62fc0232a009ce083071d",
+    "bytes": 1473095,
+    "arms": 18,
+    "labels": 540
+   },
+   "Q5_TABLES.md": {
+    "sha256": "db2a3f0120cd7bb345aa736ddcef224b9e99b5848357a3b46303a34b9a71b3f8",
+    "bytes": 346309,
+    "lines": 2241
+   }
+  },
+  "q5_evidence_frozen_utc": "2026-09-15T19:45:36Z",
+  "q5_evidence_archive": [
+   {
+    "stamp": "2026-09-15T06:57:57Z",
+    "recoverable": false,
+    "archived_files": 0,
+    "unrecoverable": [
+     "Q5_CELLS.jsonl",
+     "Q5_EMBEDDINGS.npz",
+     "Q5_RESULTS.json",
+     "Q5_TABLES.md"
+    ]
+   },
+   {
+    "stamp": "2026-09-15T07:02:35Z",
+    "recoverable": false,
+    "archived_files": 0,
+    "unrecoverable": [
+     "Q5_CELLS.jsonl",
+     "Q5_EMBEDDINGS.npz",
+     "Q5_RESULTS.json",
+     "Q5_TABLES.md"
+    ]
+   },
+   {
+    "stamp": "2026-09-15T18:21:08Z",
+    "recoverable": true,
+    "archived_files": 6,
+    "unrecoverable": []
+   }
+  ]
+ },
+ "artifact_hashes": {
+  "frozen_records": {
+   "Q5_SPEC_FREEZE.json": {
+    "sha256": "b8d11fe615116714100aa5668ad5ac1aa7785bf94879ed4ff9338bea9076660c",
+    "bytes": 21025
+   },
+   "GATE3_FREEZE.json": {
+    "sha256": "76b982a55be7d8ba2ef62ed5c872117cc78a676df921d696b8ff3b6368b3b08f",
+    "bytes": 9884
+   },
+   "GATE4_FREEZE.json": {
+    "sha256": "9ccace92bec31e8c27d6ba5c4c2cabf62af8069dcb4ea515f79a4cd66df3ec40",
+    "bytes": 24131
+   },
+   "GATE4_STAGE2_FREEZE.json": {
+    "sha256": "71ed76f03a15a53963a97a09851f62a9038b793c2f353397d10e23929625dfac",
+    "bytes": 4889
+   }
+  },
+  "specifications": {
+   "GATE4_PREREG.md": {
+    "sha256": "4a99938667a1656698a801fe0346b8f4804c19558a93f33a13205ed2c84d9ce6",
+    "bytes": 134964
+   },
+   "GATE4_STAGE2_SPEC.md": {
+    "sha256": "ead10f0d659d20e43fa1e16152c6c1adae77662a7c8cf7d309ef40c9dec98a24",
+    "bytes": 19823
+   },
+   "Q5_SPEC.md": {
+    "sha256": "fd429fd1e27dd7f90b86ddae84823dad3da2c8b1af0701a4f3328c8290f42ea4",
+    "bytes": 38797
+   },
+   "PROTOCOL.md": {
+    "sha256": "1fa00b0cc77214f03776ed7cacf7d1a127b28193093971208046f1db9238d6fb",
+    "bytes": 51643
+   },
+   "GATE4_HANDOFF.md": {
+    "sha256": "e41a5fa3facce00ef0fd71f7e1903faeb97a08b7ce659116c70becfb64945caa",
+    "bytes": 28057
+   },
+   "FIELD_SURVEY.md": {
+    "sha256": "50b9d066337d79f069e9f7affec9384a955d6d79a024a36499ff8b8c2d78d45a",
+    "bytes": 16157
+   }
+  },
+  "tables_and_figures": {
+   "GATE2_MATRIX.md": {
+    "sha256": "841fd6a4ae20fbb9d455680a2e4db6884506c3dbbe65dc70ea8f36a0825cda0a",
+    "bytes": 21435
+   },
+   "GATE3_MATRIX.md": {
+    "sha256": "37d72a2da5b2c297b2458f32580f21c61a22e63d2a51e8dab651583f9a29c718",
+    "bytes": 50729
+   },
+   "GATE4_STAGE2_TABLES.md": {
+    "sha256": "395dabbe6dd60934d5e683f77358f0eacd3e4c047d4d64d40e57b591231a1ed6",
+    "bytes": 8498
+   },
+   "Q5_TABLES.md": {
+    "sha256": "db2a3f0120cd7bb345aa736ddcef224b9e99b5848357a3b46303a34b9a71b3f8",
+    "bytes": 346309
+   },
+   "GATE4_STAGE2_EVIDENCE.md": {
+    "sha256": "4e7e5902ff2641c359f642d07eadf142b74c4a6bc0d6cbf2ffe5a4a662060692",
+    "bytes": 29445
+   },
+   "MANIFEST.md": {
+    "sha256": "f86fb67bda151e767b932ebcb8bd015ecbf4959f4c2d5a1755ecdfcb13c8240e",
+    "bytes": 29664
+   }
+  },
+  "machine_readable_results": {
+   "gate2_matrix.json": {
+    "sha256": "d7514fac25f7db3ad4f7c6ff7fd08a95d2cb35b5f124f357b5556f4a4249eb6d",
+    "bytes": 43816
+   },
+   "gate3_matrix.json": {
+    "sha256": "b3ad78d31a0d3e72cd081e03ca362cd32e1d21f0e0a241875d52f11e73f7c102",
+    "bytes": 363499
+   },
+   "GATE4_RESULTS.json": {
+    "sha256": "9ed3df16d932ba3a3464fca62ed52077cc48d867a98ba4dc0927ffdda2b4c34b",
+    "bytes": 438497
+   },
+   "Q5_RESULTS.json": {
+    "sha256": "4249195922c057834e03ebc0b849ded428e50c8303c62fc0232a009ce083071d",
+    "bytes": 1473095
+   },
+   "Q5_CALIBRATION.json": {
+    "sha256": "ee622fa3bc778668fbd815e3adc43a82207112c804ba4debf433f3192acd14d6",
+    "bytes": 23235
+   },
+   "Q5_FUZZ.json": {
+    "sha256": "c7fb1b525c876d40c0c441bef4490afbb160bcf437babc7628c9a326925bb920",
+    "bytes": 9416
+   },
+   "GATE4_CORPUS.json": {
+    "sha256": "4f9bc588003af670f10de9b17ae50bff4abdcc251352aab586460bb80a7c0ec1",
+    "bytes": 633901
+   },
+   "ENVIRONMENT.json": {
+    "sha256": "5e51364a4fd4d8ff393295f42784acea629beb027a704fe0c817b4b8e5c95621",
+    "bytes": 26575
+   }
+  },
+  "primary_evidence": {
+   "Q5_CELLS.jsonl": {
+    "sha256": "f066ea73bc9208ef5a519202063ded9d6a9890323ac95cf75adc099f7112245d",
+    "bytes": 205075382
+   },
+   "Q5_EMBEDDINGS.npz": {
+    "sha256": "7d7e6a3161b890b714a0b36ffa7206c0938199897780459c32223b83aa6a1f5e",
+    "bytes": 253062067
+   }
+  },
+  "audit_trail": {
+   "AUDIT.md": {
+    "sha256": "44bbe703ca91eed29ac30bf66821bf0b6736b5163d90f6bcb8a494948b81b0bf",
+    "bytes": 31635
+   },
+   "GATE2_AUDIT.md": {
+    "sha256": "1f57056e470e9848f14d2e57e9d38e4c42f9f22ca29e1b2bc4c390a59f7abf1a",
+    "bytes": 21701
+   },
+   "GATE3_AUDIT.md": {
+    "sha256": "c277178143c8344af932e68c909fc1cfa71460a4e5f13bb423629d5e0e1b643e",
+    "bytes": 19053
+   },
+   "STAGE1_STATE.md": {
+    "sha256": "90f09f30a26553d6b034e9c06cf2a2c9561fccabd8c836de72b0e9366dc0690b",
+    "bytes": 4997
+   },
+   "STAGE2_STATE.md": {
+    "sha256": "9887f5f8622c493eefc11b42d78ae27938659d7c8e8adbe27924062aec952b84",
+    "bytes": 19785
+   },
+   "STORAGE_LEDGER.md": {
+    "sha256": "0b7be71185ee3dc6ea0454ed881bc1c9864570ca3097390ca62e9dd439090830",
+    "bytes": 12813
+   }
+  }
+ },
+ "arms": {
+  "offline": [
+   "bigvgan22",
+   "dac44",
+   "dualcodec_12hz_v1",
+   "dualcodec_25hz_v1",
+   "encodec24_q8",
+   "encodec_vocos",
+   "fish_modified_dac",
+   "focalcodec_12_5hz",
+   "focalcodec_25hz",
+   "focalcodec_50hz",
+   "focalcodec_50hz_2k_causal",
+   "focalcodec_50hz_4k_causal",
+   "focalcodec_50hz_65k_causal",
+   "griffinlim",
+   "mimi_q32",
+   "mimi_q8",
+   "qwen3_tts_tokenizer_12hz",
+   "vocos_mel24"
+  ],
+  "streamed": [
+   "bigvgan22",
+   "dac44",
+   "dualcodec_12hz_v1",
+   "dualcodec_25hz_v1",
+   "encodec24_q8",
+   "encodec_vocos",
+   "fish_modified_dac",
+   "focalcodec_12_5hz",
+   "focalcodec_25hz",
+   "focalcodec_50hz",
+   "focalcodec_50hz_2k_causal",
+   "focalcodec_50hz_4k_causal",
+   "focalcodec_50hz_65k_causal",
+   "mimi_q32",
+   "mimi_q8",
+   "qwen3_tts_tokenizer_12hz"
+  ],
+  "n_offline": 18,
+  "n_streamed": 16,
+  "no_streamed_output": [
+   "griffinlim",
+   "vocos_mel24"
+  ],
+  "excluded": {
+   "melflow": "NOT ADMISSIBLE - Stage 1 adapter not established",
+   "nanocodec": "BLOCKED - PLATFORM"
+  }
+ },
+ "corpus": {
+  "source": "<PRIVATE_SOURCE_ROOT>",
+  "source_decision": "OWNER DECISION 2026-09-12. D: is the Gate 4 source. No other tree is read by this script.",
+  "hashed_per_file": true,
+  "counts": {
+   "distinct_recordings": 1512,
+   "measurement_cells": 1736,
+   "note": "⛔ CELLS ARE NOT RECORDINGS. Ladder cells are REPEATED MEASURES on Set L recordings already counted. The statistical unit is the RECORDING (see GATE4_PREREG.md §12)."
+  },
+  "set_S": {
+   "n_indices": 31,
+   "n_recordings": 1302,
+   "states": [
+    "Neutral",
+    "Angry",
+    "Happy",
+    "Scared",
+    "Shouting",
+    "Whisper"
+   ]
+  },
+  "set_L": {
+   "n_indices": 15,
+   "n_recordings": 210,
+   "states": [
+    "Neutral",
+    "Whisper"
+   ],
+   "top_rung_s": 14.0,
+   "duration_ladder_s": [
+    1.0,
+    2.0,
+    5.0,
+    10.0,
+    14.0
+   ]
+  },
+  "calibration": {
+   "n_recordings": 126,
+   "states": [
+    "Neutral",
+    "Angry",
+    "Happy",
+    "Scared",
+    "Shouting",
+    "Whisper"
+   ]
+  },
+  "speakers": 7,
+  "note": "Source audio is private and rights-cleared. It is NOT published and is not part of any release."
+ },
+ "results_summary": {
+  "gate4_stage2": {
+   "ranking_metric": "mcd (sole ranking metric; everything else is a DETECTOR and may never rank)",
+   "verdicts": "see GATE4_RESULTS.json / GATE4_STAGE2_TABLES.md"
+  },
+  "q5": {
+   "labels": {
+    "NOT ESTABLISHED": 314,
+    "PRESERVED + CONSISTENT": 19,
+    "CROSS-STATE CONSISTENT": 23,
+    "INCONSISTENT / DRIFTING": 152,
+    "STABLE OFFSET": 8,
+    "CROSS-STATE DRIFTING": 24
+   },
+   "n_labels": 540,
+   "encoders": [
+    "ecapa",
+    "redimnet_M_vb2_ptn",
+    "redimnet_b6_lm"
+   ],
+   "streaming_detector_arms": 18,
+   "cross_pairing_check": true
+  }
+ },
+ "admissibility_and_refusal_rules": {
+  "q5_minimum_duration_s": 2.0,
+  "q5_states": [
+   "MEASURED",
+   "INADMISSIBLE - BELOW ENCODER MINIMUM",
+   "UNKNOWN",
+   "NOT MEASURED"
+  ],
+  "both_sides_must_be_admissible": true,
+  "support_state": "COVARIATE, never an exclusion (Q5 SECTION 4)",
+  "gate4_support_domain": "retention over 250 Hz bands at 16 kHz; 0.05 <= retention <= 1.25; contiguous run from 0 Hz must reach 4500 Hz; outside it NOT COMPARABLE - OUTSIDE VALIDATED SUPPORT",
+  "duration_rungs_cross_arm": [
+   5.0,
+   10.0,
+   14.0
+  ],
+  "duration_rungs_excluded": {
+   "1s": "inadmissible everywhere (below 2.00 s)",
+   "2s": "admissible in 11 arms, inadmissible in 7 (realised length 1.9199-2.0434 s) - per-arm only, never cross-arm"
+  },
+  "no_hypothesis_tests": "intervals and effect sizes only; no p-values"
+ },
+ "audit_status": {
+  "gate4_apparatus": "five rounds of independent adversarial review: BLOCKING none, MAJOR none, READY TO FREEZE yes",
+  "gate4_stage2_results": "independent audit; findings dispositioned; verdicts unchanged across four revisions",
+  "q5_offline": "independent audit found 1 MAJOR (CROSS reference pairing) - repaired in revision 6",
+  "q5_evidence_integrity": "independent audit found evidence hashing and archive-completeness defects - repaired and negative-tested",
+  "q5_final": "Q5 FINAL INDEPENDENT AUDIT PASSED - GENERATED GATE 4 WAVS SAFE TO DELETE",
+  "outstanding_minor": "NPZ self-test coverage in the built-in suite; the real CRC failure path was exercised independently and passed. Non-blocking; the study is NOT reopened for it."
+ },
+ "known_limitations": [
+  "PERCEPTUAL QUALITY IS NOT MEASURED. No listening test was run. Which decoder SOUNDS best is not established and no sentence may imply it (GATE4_PREREG SECTION 5.5, SECTION 2036).",
+  "mcd is gain-invariant by construction and blind to a pure level error; a mcd ranking never implies level fidelity.",
+  "Q9 FIRES: griffinlim, the zero-parameter floor, scores BEST on mcd in all six states. A metric cannot rank decoders on a quantity one of them optimises. Route A has no zero-parameter control, so the same validity check is NOT ESTABLISHED there.",
+  "Q5 measures SPEAKER-EMBEDDING RETENTION, not perceptual identity and not cloning quality. Cosine values are encoder-specific and are never averaged across encoders.",
+  "51,060 of 93,744 offline cells and 78,441 of 83,328 streamed cells fall outside mcd's validated support; support is carried as a covariate, never an exclusion.",
+  "Every FocalCodec DRIFT verdict rests on out-of-support cells (0-6 in-support cells per stratum, 50 strata with zero), so identity dispersion and band-limiting CANNOT be separated for that family.",
+  "ECAPA's own human cross-state ceiling sits near its impostor floor, so a cross-state APPROACHES IMPOSTOR RANGE marker on ECAPA or redimnet_b6_lm is an ENCODER BASELINE LIMITATION, not decoder drift.",
+  "7 speakers, one studio, one recording chain, English. Absolute values are not comparable to VoxCeleb-scale benchmarks.",
+  "Arms were driven streamed with chunked context several were not designed for; the claim is about streamed behaviour, not defect.",
+  "redimnet_b6_lm runs on CPU because it failed an exact-zero cross-process determinism probe on CUDA; CPU-vs-GPU cosine difference is <= 2.5e-04, ~100x below the smallest decision bound."
+ ],
+ "retained_downstream_dependencies": {
+  "gate4_wavs_offline": {
+   "path": "C:\\Users\\User\\Desktop\\research\\decoder-bench\\results\\gate4_wavs_offline",
+   "files": 31248,
+   "bytes": 20257101312,
+   "gb": 18.87,
+   "status": "RETAINED - live dependency"
+  },
+  "gate4_wavs_streamed": {
+   "path": "<PRIVATE_STREAMED_ROOT>",
+   "files": 27776,
+   "bytes": 18014470720,
+   "gb": 16.78,
+   "status": "RETAINED - live dependency"
+  },
+  "consumers": [
+   "Human listening / perceptual realism - declared later phase, NOT STARTED (GATE4_HANDOFF SECTION 'Later phases')",
+   "Detectorproof adversarial detectability - declared later phase, NOT STARTED"
+  ],
+  "deletion_clearance": "VALID but DEFERRED. Astra cleared deletion with respect to Gate 4/Q5 only.",
+  "regeneration_cost": "~10.5 h GPU decode; requires four conda environments, the 3.29 GB external_agpl checkpoints and the frozen runner. gate4_retro_sha verified 216/216 sample bit-identity, with one measured exception (fish_modified_dac cold start, max|d| 4.82e-02)."
+ },
+ "not_published": [
+  "<PRIVATE_SOURCE_ROOT> - private, rights-cleared source audio",
+  "<PRIVATE_MASTERS_ROOT> - masters",
+  "Q5_EMBEDDINGS.npz / Q5_CELLS.jsonl - derived from private audio; release only with explicit owner permission",
+  "the retained Gate 4 WAV stores",
+  "talent contracts and consent documents"
+ ],
+ "manifest_sha256": "1e93e28b9adb3b1fe5a69d71bbf6a36fe13caad766a8cbdb28ea1199b58c5163",
+ "_redaction": {
+  "derivative_of": "PUBLICATION_MANIFEST.json",
+  "source_sha256": "507fbe5b6a9151f707255dbf6945785201d1687d9e95f1fbf0ef13add59cf34e",
+  "source_status": "PRIVATE - not released, not modified",
+  "applied": {
+   "speaker_names": 0,
+   "private_paths": 4,
+   "source_filenames": 0
+  },
+  "generated_utc": "2026-09-16T13:42:33Z"
+ }
+}

@@ -1,0 +1,958 @@
+{
+ "frozen_utc": "2026-09-12T11:11:53Z",
+ "scope": "The Gate 4 APPARATUS: pre-registration, instrument code, instrument artifacts and corpus SELECTION. No decoder has run and no quality number exists.",
+ "not_started": [
+  "Stage 1 decode",
+  "Stage 2 metrics",
+  "Q5 speaker identity",
+  "Q6 intelligibility",
+  "human listening",
+  "Detectorproof"
+ ],
+ "ranking_metrics": [
+  "mcd"
+ ],
+ "instrument_floors": {
+  "mcd": {
+   "per_state": {
+    "Neutral": {
+     "mildest_rung": 257.60249118177046,
+     "n_draws": 16,
+     "fractions_min": 0.025456513400877838,
+     "fractions_max": 0.3740317016601815,
+     "quantile": 0.95,
+     "floor_fraction_of_rung": 0.36908157433339406,
+     "floor_absolute": 95.0763329975721,
+     "draws": [
+      {
+       "draw": 0,
+       "delay": 7,
+       "reported": 0,
+       "residual": 7,
+       "value": 15.240689079523552,
+       "fraction_of_rung": 0.059163593525845826
+      },
+      {
+       "draw": 1,
+       "delay": 40,
+       "reported": 19,
+       "residual": 21,
+       "value": 44.799148629147474,
+       "fraction_of_rung": 0.1739080566481639
+      },
+      {
+       "draw": 2,
+       "delay": 100,
+       "reported": 92,
+       "residual": 8,
+       "value": 17.428356447275,
+       "fraction_of_rung": 0.06765600894355146
+      },
+      {
+       "draw": 3,
+       "delay": 333,
+       "reported": 312,
+       "residual": 21,
+       "value": 44.75280115635292,
+       "fraction_of_rung": 0.1737281380744656
+      },
+      {
+       "draw": 4,
+       "delay": 1000,
+       "reported": 986,
+       "residual": 14,
+       "value": 30.47600689402385,
+       "fraction_of_rung": 0.11830633606923954
+      },
+      {
+       "draw": 5,
+       "delay": 7,
+       "reported": 0,
+       "residual": 7,
+       "value": 15.240689079523552,
+       "fraction_of_rung": 0.059163593525845826
+      },
+      {
+       "draw": 6,
+       "delay": 40,
+       "reported": 0,
+       "residual": 40,
+       "value": 81.91077218277243,
+       "fraction_of_rung": 0.31797352505016824
+      },
+      {
+       "draw": 7,
+       "delay": 100,
+       "reported": 57,
+       "residual": 43,
+       "value": 87.65030036852052,
+       "fraction_of_rung": 0.34025408669931057
+      },
+      {
+       "draw": 8,
+       "delay": 333,
+       "reported": 301,
+       "residual": 32,
+       "value": 66.55585409969109,
+       "fraction_of_rung": 0.2583665002398121
+      },
+      {
+       "draw": 9,
+       "delay": 1000,
+       "reported": 952,
+       "residual": 48,
+       "value": 96.35149812861951,
+       "fraction_of_rung": 0.3740317016601815
+      },
+      {
+       "draw": 10,
+       "delay": 7,
+       "reported": 0,
+       "residual": 7,
+       "value": 15.240689079523552,
+       "fraction_of_rung": 0.059163593525845826
+      },
+      {
+       "draw": 11,
+       "delay": 40,
+       "reported": 19,
+       "residual": 21,
+       "value": 44.799148629147474,
+       "fraction_of_rung": 0.1739080566481639
+      },
+      {
+       "draw": 12,
+       "delay": 100,
+       "reported": 97,
+       "residual": 3,
+       "value": 6.557661268868255,
+       "fraction_of_rung": 0.025456513400877838
+      },
+      {
+       "draw": 13,
+       "delay": 333,
+       "reported": 286,
+       "residual": 47,
+       "value": 94.65127795388963,
+       "fraction_of_rung": 0.3674315318911316
+      },
+      {
+       "draw": 14,
+       "delay": 1000,
+       "reported": 992,
+       "residual": 8,
+       "value": 17.92016583434749,
+       "fraction_of_rung": 0.06956518841156156
+      },
+      {
+       "draw": 15,
+       "delay": 7,
+       "reported": 0,
+       "residual": 7,
+       "value": 15.240689079523552,
+       "fraction_of_rung": 0.059163593525845826
+      }
+     ]
+    },
+    "Angry": {
+     "mildest_rung": 144.60680736752792,
+     "n_draws": 16,
+     "fractions_min": 0.039804569094093856,
+     "fractions_max": 0.6325252055075156,
+     "quantile": 0.95,
+     "floor_fraction_of_rung": 0.4660316006303765,
+     "floor_absolute": 67.39134189953757,
+     "draws": [
+      {
+       "draw": 0,
+       "delay": 7,
+       "reported": 0,
+       "residual": 7,
+       "value": 20.070524356908592,
+       "fraction_of_rung": 0.13879377272950924
+      },
+      {
+       "draw": 1,
+       "delay": 40,
+       "reported": 24,
+       "residual": 16,
+       "value": 45.4835232266792,
+       "fraction_of_rung": 0.31453237959316654
+      },
+      {
+       "draw": 2,
+       "delay": 100,
+       "reported": 116,
+       "residual": -16,
+       "value": 45.69064369485581,
+       "fraction_of_rung": 0.3159646805473685
+      },
+      {
+       "draw": 3,
+       "delay": 333,
+       "reported": 325,
+       "residual": 8,
+       "value": 23.011853361082487,
+       "fraction_of_rung": 0.15913395627770355
+      },
+      {
+       "draw": 4,
+       "delay": 1000,
+       "reported": 979,
+       "residual": 21,
+       "value": 59.36597235007297,
+       "fraction_of_rung": 0.41053373233799684
+      },
+      {
+       "draw": 5,
+       "delay": 7,
+       "reported": 16,
+       "residual": -9,
+       "value": 25.877622930893313,
+       "fraction_of_rung": 0.17895162338466955
+      },
+      {
+       "draw": 6,
+       "delay": 40,
+       "reported": 7,
+       "residual": 33,
+       "value": 91.4674505479313,
+       "fraction_of_rung": 0.6325252055075156
+      },
+      {
+       "draw": 7,
+       "delay": 100,
+       "reported": 84,
+       "residual": 16,
+       "value": 45.405240972625855,
+       "fraction_of_rung": 0.31399103402667194
+      },
+      {
+       "draw": 8,
+       "delay": 333,
+       "reported": 326,
+       "residual": 7,
+       "value": 20.15681216574203,
+       "fraction_of_rung": 0.13939047913914684
+      },
+      {
+       "draw": 9,
+       "delay": 1000,
+       "reported": 982,
+       "residual": 18,
+       "value": 51.08199658229235,
+       "fraction_of_rung": 0.35324752348943034
+      },
+      {
+       "draw": 10,
+       "delay": 7,
+       "reported": 0,
+       "residual": 7,
+       "value": 20.070524356908592,
+       "fraction_of_rung": 0.13879377272950924
+      },
+      {
+       "draw": 11,
+       "delay": 40,
+       "reported": 28,
+       "residual": 12,
+       "value": 34.263021247734784,
+       "fraction_of_rung": 0.23693919996900983
+      },
+      {
+       "draw": 12,
+       "delay": 100,
+       "reported": 102,
+       "residual": -2,
+       "value": 5.756011655337086,
+       "fraction_of_rung": 0.039804569094093856
+      },
+      {
+       "draw": 13,
+       "delay": 333,
+       "reported": 328,
+       "residual": 5,
+       "value": 14.472789704237554,
+       "fraction_of_rung": 0.1000837371884851
+      },
+      {
+       "draw": 14,
+       "delay": 1000,
+       "reported": 982,
+       "residual": 18,
+       "value": 51.08199658229235,
+       "fraction_of_rung": 0.35324752348943034
+      },
+      {
+       "draw": 15,
+       "delay": 7,
+       "reported": 0,
+       "residual": 7,
+       "value": 20.070524356908592,
+       "fraction_of_rung": 0.13879377272950924
+      }
+     ]
+    },
+    "Happy": {
+     "mildest_rung": 240.05792597152103,
+     "n_draws": 16,
+     "fractions_min": 0.05425818891451198,
+     "fractions_max": 0.3532249290805955,
+     "quantile": 0.95,
+     "floor_fraction_of_rung": 0.34155047231360525,
+     "floor_absolute": 81.99189799819749,
+     "draws": [
+      {
+       "draw": 0,
+       "delay": 7,
+       "reported": 2,
+       "residual": 5,
+       "value": 13.02510829778872,
+       "fraction_of_rung": 0.05425818891451198
+      },
+      {
+       "draw": 1,
+       "delay": 40,
+       "reported": 12,
+       "residual": 28,
+       "value": 67.14480029530307,
+       "fraction_of_rung": 0.27970249273614367
+      },
+      {
+       "draw": 2,
+       "delay": 100,
+       "reported": 78,
+       "residual": 22,
+       "value": 54.28771918314718,
+       "fraction_of_rung": 0.22614424815778644
+      },
+      {
+       "draw": 3,
+       "delay": 333,
+       "reported": 307,
+       "residual": 26,
+       "value": 63.054107070543445,
+       "fraction_of_rung": 0.2626620504836978
+      },
+      {
+       "draw": 4,
+       "delay": 1000,
+       "reported": 994,
+       "residual": 6,
+       "value": 15.723486498024526,
+       "fraction_of_rung": 0.06549871842136078
+      },
+      {
+       "draw": 5,
+       "delay": 7,
+       "reported": 0,
+       "residual": 7,
+       "value": 18.130589078426194,
+       "fraction_of_rung": 0.07552589236556635
+      },
+      {
+       "draw": 6,
+       "delay": 40,
+       "reported": 61,
+       "residual": -21,
+       "value": 50.94762627825483,
+       "fraction_of_rung": 0.2122305525721277
+      },
+      {
+       "draw": 7,
+       "delay": 100,
+       "reported": 114,
+       "residual": -14,
+       "value": 35.40780802856631,
+       "fraction_of_rung": 0.14749693385573476
+      },
+      {
+       "draw": 8,
+       "delay": 333,
+       "reported": 321,
+       "residual": 12,
+       "value": 30.79002061711902,
+       "fraction_of_rung": 0.1282607957746488
+      },
+      {
+       "draw": 9,
+       "delay": 1000,
+       "reported": 963,
+       "residual": 37,
+       "value": 84.79444387652536,
+       "fraction_of_rung": 0.3532249290805955
+      },
+      {
+       "draw": 10,
+       "delay": 7,
+       "reported": 0,
+       "residual": 7,
+       "value": 18.130589078426194,
+       "fraction_of_rung": 0.07552589236556635
+      },
+      {
+       "draw": 11,
+       "delay": 40,
+       "reported": 28,
+       "residual": 12,
+       "value": 30.688048917865554,
+       "fraction_of_rung": 0.12783601621846133
+      },
+      {
+       "draw": 12,
+       "delay": 100,
+       "reported": 88,
+       "residual": 12,
+       "value": 30.67472814849195,
+       "fraction_of_rung": 0.12778052640566015
+      },
+      {
+       "draw": 13,
+       "delay": 333,
+       "reported": 312,
+       "residual": 21,
+       "value": 52.04874092635365,
+       "fraction_of_rung": 0.2168174231936353
+      },
+      {
+       "draw": 14,
+       "delay": 1000,
+       "reported": 965,
+       "residual": 35,
+       "value": 81.05771603875486,
+       "fraction_of_rung": 0.3376589867246085
+      },
+      {
+       "draw": 15,
+       "delay": 7,
+       "reported": -13,
+       "residual": 20,
+       "value": 49.10326286387971,
+       "fraction_of_rung": 0.204547559365755
+      }
+     ]
+    },
+    "Scared": {
+     "mildest_rung": 146.68118955544787,
+     "n_draws": 16,
+     "fractions_min": 0.0,
+     "fractions_max": 0.8236167430245491,
+     "quantile": 0.95,
+     "floor_fraction_of_rung": 0.716341915525252,
+     "floor_absolute": 105.07388429767211,
+     "draws": [
+      {
+       "draw": 0,
+       "delay": 7,
+       "reported": -29,
+       "residual": 36,
+       "value": 90.64251188601666,
+       "fraction_of_rung": 0.6179559366864306
+      },
+      {
+       "draw": 1,
+       "delay": 40,
+       "reported": 65,
+       "residual": -25,
+       "value": 64.95119969603483,
+       "fraction_of_rung": 0.4428052423960076
+      },
+      {
+       "draw": 2,
+       "delay": 100,
+       "reported": 69,
+       "residual": 31,
+       "value": 79.5529679518528,
+       "fraction_of_rung": 0.5423528960527041
+      },
+      {
+       "draw": 3,
+       "delay": 333,
+       "reported": 307,
+       "residual": 26,
+       "value": 67.80722990555044,
+       "fraction_of_rung": 0.4622762476296813
+      },
+      {
+       "draw": 4,
+       "delay": 1000,
+       "reported": 1007,
+       "residual": -7,
+       "value": 19.852382180169688,
+       "fraction_of_rung": 0.13534374953146372
+      },
+      {
+       "draw": 5,
+       "delay": 7,
+       "reported": 8,
+       "residual": -1,
+       "value": 2.819651030409172,
+       "fraction_of_rung": 0.01922298993452939
+      },
+      {
+       "draw": 6,
+       "delay": 40,
+       "reported": 48,
+       "residual": -8,
+       "value": 22.200556194148408,
+       "fraction_of_rung": 0.15135244172366244
+      },
+      {
+       "draw": 7,
+       "delay": 100,
+       "reported": 100,
+       "residual": 0,
+       "value": 0.0,
+       "fraction_of_rung": 0.0
+      },
+      {
+       "draw": 8,
+       "delay": 333,
+       "reported": 283,
+       "residual": 50,
+       "value": 120.80908360462449,
+       "fraction_of_rung": 0.8236167430245491
+      },
+      {
+       "draw": 9,
+       "delay": 1000,
+       "reported": 989,
+       "residual": 11,
+       "value": 31.231776443241444,
+       "fraction_of_rung": 0.21292284673922232
+      },
+      {
+       "draw": 10,
+       "delay": 7,
+       "reported": -1,
+       "residual": 8,
+       "value": 22.443654132574714,
+       "fraction_of_rung": 0.15300976355997337
+      },
+      {
+       "draw": 11,
+       "delay": 40,
+       "reported": 0,
+       "residual": 40,
+       "value": 99.82881786202132,
+       "fraction_of_rung": 0.680583639692153
+      },
+      {
+       "draw": 12,
+       "delay": 100,
+       "reported": 86,
+       "residual": 14,
+       "value": 38.450235322501506,
+       "fraction_of_rung": 0.26213473887847555
+      },
+      {
+       "draw": 13,
+       "delay": 333,
+       "reported": 327,
+       "residual": 6,
+       "value": 17.08118531146461,
+       "fraction_of_rung": 0.11645109617145315
+      },
+      {
+       "draw": 14,
+       "delay": 1000,
+       "reported": 1012,
+       "residual": -12,
+       "value": 33.601568864359315,
+       "fraction_of_rung": 0.22907892256803233
+      },
+      {
+       "draw": 15,
+       "delay": 7,
+       "reported": 23,
+       "residual": -16,
+       "value": 43.07115947629457,
+       "fraction_of_rung": 0.2936379204915908
+      }
+     ]
+    },
+    "Shouting": {
+     "mildest_rung": 255.22156457358994,
+     "n_draws": 16,
+     "fractions_min": 0.031546531508661345,
+     "fractions_max": 0.3477615499031883,
+     "quantile": 0.95,
+     "floor_fraction_of_rung": 0.3154482424335657,
+     "floor_absolute": 80.50919397588373,
+     "draws": [
+      {
+       "draw": 0,
+       "delay": 7,
+       "reported": 3,
+       "residual": 4,
+       "value": 10.532082414994411,
+       "fraction_of_rung": 0.041266428377989266
+      },
+      {
+       "draw": 1,
+       "delay": 40,
+       "reported": 27,
+       "residual": 13,
+       "value": 33.08203637442533,
+       "fraction_of_rung": 0.12962085092494816
+      },
+      {
+       "draw": 2,
+       "delay": 100,
+       "reported": 68,
+       "residual": 32,
+       "value": 73.8621325823487,
+       "fraction_of_rung": 0.28940396437798455
+      },
+      {
+       "draw": 3,
+       "delay": 333,
+       "reported": 330,
+       "residual": 3,
+       "value": 8.0513551285106,
+       "fraction_of_rung": 0.031546531508661345
+      },
+      {
+       "draw": 4,
+       "delay": 1000,
+       "reported": 1010,
+       "residual": -10,
+       "value": 25.84245702536762,
+       "fraction_of_rung": 0.10125499022209884
+      },
+      {
+       "draw": 5,
+       "delay": 7,
+       "reported": -3,
+       "residual": 10,
+       "value": 25.796876526395483,
+       "fraction_of_rung": 0.10107639834234021
+      },
+      {
+       "draw": 6,
+       "delay": 40,
+       "reported": 0,
+       "residual": 40,
+       "value": 88.7562468648283,
+       "fraction_of_rung": 0.3477615499031883
+      },
+      {
+       "draw": 7,
+       "delay": 100,
+       "reported": 87,
+       "residual": 13,
+       "value": 33.059847968293305,
+       "fraction_of_rung": 0.12953391310615883
+      },
+      {
+       "draw": 8,
+       "delay": 333,
+       "reported": 320,
+       "residual": 13,
+       "value": 33.169549723392166,
+       "fraction_of_rung": 0.12996374259679042
+      },
+      {
+       "draw": 9,
+       "delay": 1000,
+       "reported": 975,
+       "residual": 25,
+       "value": 60.07381700987321,
+       "fraction_of_rung": 0.2353790797820757
+      },
+      {
+       "draw": 10,
+       "delay": 7,
+       "reported": 22,
+       "residual": -15,
+       "value": 37.76032927442105,
+       "fraction_of_rung": 0.14795117073084682
+      },
+      {
+       "draw": 11,
+       "delay": 40,
+       "reported": 9,
+       "residual": 31,
+       "value": 71.98705753252551,
+       "fraction_of_rung": 0.282057112426207
+      },
+      {
+       "draw": 12,
+       "delay": 100,
+       "reported": 72,
+       "residual": 28,
+       "value": 66.00077341059847,
+       "fraction_of_rung": 0.25860186822719666
+      },
+      {
+       "draw": 13,
+       "delay": 333,
+       "reported": 299,
+       "residual": 34,
+       "value": 77.76017634623554,
+       "fraction_of_rung": 0.30467713994369144
+      },
+      {
+       "draw": 14,
+       "delay": 1000,
+       "reported": 987,
+       "residual": 13,
+       "value": 33.2330748131787,
+       "fraction_of_rung": 0.13021264433004587
+      },
+      {
+       "draw": 15,
+       "delay": 7,
+       "reported": -7,
+       "residual": 14,
+       "value": 35.431091467679465,
+       "fraction_of_rung": 0.1388248345192765
+      }
+     ]
+    },
+    "Whisper": {
+     "mildest_rung": 86.73467670864109,
+     "n_draws": 16,
+     "fractions_min": 0.03300251853667043,
+     "fractions_max": 1.000428757526432,
+     "quantile": 0.95,
+     "floor_fraction_of_rung": 0.9753154858850386,
+     "floor_absolute": 84.59367335717002,
+     "draws": [
+      {
+       "draw": 0,
+       "delay": 7,
+       "reported": 8,
+       "residual": -1,
+       "value": 2.862462775849045,
+       "fraction_of_rung": 0.03300251853667043
+      },
+      {
+       "draw": 1,
+       "delay": 40,
+       "reported": 24,
+       "residual": 16,
+       "value": 45.457847058983646,
+       "fraction_of_rung": 0.5241023404247592
+      },
+      {
+       "draw": 2,
+       "delay": 100,
+       "reported": 98,
+       "residual": 2,
+       "value": 5.805112902083679,
+       "fraction_of_rung": 0.06692955023726208
+      },
+      {
+       "draw": 3,
+       "delay": 333,
+       "reported": 332,
+       "residual": 1,
+       "value": 2.921619484499796,
+       "fraction_of_rung": 0.03368456072435818
+      },
+      {
+       "draw": 4,
+       "delay": 1000,
+       "reported": 969,
+       "residual": 31,
+       "value": 86.77186485408255,
+       "fraction_of_rung": 1.000428757526432
+      },
+      {
+       "draw": 5,
+       "delay": 7,
+       "reported": 2,
+       "residual": 5,
+       "value": 14.307404249139234,
+       "fraction_of_rung": 0.16495598752504295
+      },
+      {
+       "draw": 6,
+       "delay": 40,
+       "reported": 15,
+       "residual": 25,
+       "value": 70.35027607569211,
+       "fraction_of_rung": 0.8110974611920511
+      },
+      {
+       "draw": 7,
+       "delay": 100,
+       "reported": 91,
+       "residual": 9,
+       "value": 25.738989296486366,
+       "fraction_of_rung": 0.29675546474853093
+      },
+      {
+       "draw": 8,
+       "delay": 333,
+       "reported": 323,
+       "residual": 10,
+       "value": 28.67177178012064,
+       "fraction_of_rung": 0.3305687283119159
+      },
+      {
+       "draw": 9,
+       "delay": 1000,
+       "reported": 998,
+       "residual": 2,
+       "value": 6.055879248686838,
+       "fraction_of_rung": 0.06982073927628431
+      },
+      {
+       "draw": 10,
+       "delay": 7,
+       "reported": 13,
+       "residual": -6,
+       "value": 17.150231018371286,
+       "fraction_of_rung": 0.19773211441119795
+      },
+      {
+       "draw": 11,
+       "delay": 40,
+       "reported": 10,
+       "residual": 30,
+       "value": 83.86760952486586,
+       "fraction_of_rung": 0.9669443953379075
+      },
+      {
+       "draw": 12,
+       "delay": 100,
+       "reported": 92,
+       "residual": 8,
+       "value": 22.88555022616278,
+       "fraction_of_rung": 0.26385698424910103
+      },
+      {
+       "draw": 13,
+       "delay": 333,
+       "reported": 326,
+       "residual": 7,
+       "value": 20.130636191555304,
+       "fraction_of_rung": 0.2320944396804301
+      },
+      {
+       "draw": 14,
+       "delay": 1000,
+       "reported": 990,
+       "residual": 10,
+       "value": 28.927781791054123,
+       "fraction_of_rung": 0.33352037372812554
+      },
+      {
+       "draw": 15,
+       "delay": 7,
+       "reported": 0,
+       "residual": 7,
+       "value": 20.017030086595867,
+       "fraction_of_rung": 0.23078462785809445
+      }
+     ]
+    }
+   },
+   "worst_state_fraction": 0.9753154858850386,
+   "state_aware": true,
+   "construction": "N=16 deterministic phase draws x 6 states, delays (7, 40, 100, 333, 1000), production alignment path, held-out calibration only, no decoder; floor = the 0.95 quantile of the residual cost distribution IN THAT STATE"
+  }
+ },
+ "canonical_corpus_selection_sha256": "7703f8b437c0b6f84bfeafd0c3dc5af6c6735c8913c6f20db4f907b507d068b7",
+ "canonical_note": "GATE4_CORPUS.json embeds generated_utc and is NOT byte-reproducible. The CANONICAL hash above covers the selection content and every per-file sha256, and IS what a deterministic re-run must reproduce.",
+ "missing": [],
+ "n_artifacts": 18,
+ "verify_command": "python freeze_gate4.py --verify",
+ "artifacts": {
+  "preregistration": {
+   "GATE4_PREREG.md": {
+    "sha256": "4a99938667a1656698a801fe0346b8f4804c19558a93f33a13205ed2c84d9ce6",
+    "bytes": 134964
+   }
+  },
+  "instrument_code": {
+   "gate4_lib.py": {
+    "sha256": "67b45f171d6ae4efd68b89185002251365c77355c3de5215a3b78b8691e87ad1",
+    "bytes": 41964
+   },
+   "fuzz_gate4_lib.py": {
+    "sha256": "a66946ea48328098d1bbf0e6f833e0f957f2016d8dfb502d673153eb1f9f0fd7",
+    "bytes": 48602
+   },
+   "gate4_corpus.py": {
+    "sha256": "6515e48c19f2ca22c863f4a32ae3339b314260185adb6fd682694653819260e9",
+    "bytes": 12585
+   },
+   "gate4_source_gate.py": {
+    "sha256": "6504ea94fe8754c6e9f5b6b8195e752f2e59ee94006f982358e0d0e0b2d60804",
+    "bytes": 10267
+   },
+   "gate4_length_policy.py": {
+    "sha256": "cd1c68a36ad345d5a74ee7e5dc3b1f0b3a48378cd120987214e44487bb13208b",
+    "bytes": 3506
+   },
+   "gate4_support.py": {
+    "sha256": "4143976f067234e13b1fe84dc61ecc1d994eafa062d3b761c4cc6200d919b18b",
+    "bytes": 22971
+   },
+   "freeze_gate4.py": {
+    "sha256": "283639cfa880244bf67cc46dabed89342e43184c9abc159780605fef357c73b2",
+    "bytes": 6389
+   }
+  },
+  "instrument_artifacts": {
+   "fuzz_gate4_lib.json": {
+    "sha256": "25d548438792f82912023606ecfb958d70954cae683be28ffbcaad0550c50517",
+    "bytes": 339686
+   },
+   "gate4_source_gate.json": {
+    "sha256": "f16b97cbcf5c0602fa3cdda7296a61ab186a535ab0348a28ca535db9fefa83fb",
+    "bytes": 1089729
+   },
+   "gate4_support_calibration.json": {
+    "sha256": "e68f8467f10d4f379c318da203e2ec1b98738360a66c6698551e7cb6084fafb6",
+    "bytes": 7968503
+   }
+  },
+  "corpus": {
+   "GATE4_CORPUS.json": {
+    "sha256": "4f9bc588003af670f10de9b17ae50bff4abdcc251352aab586460bb80a7c0ec1",
+    "bytes": 633901
+   }
+  },
+  "inherited_frozen": {
+   "gate2_matrix.json": {
+    "sha256": "d7514fac25f7db3ad4f7c6ff7fd08a95d2cb35b5f124f357b5556f4a4249eb6d",
+    "bytes": 43816
+   },
+   "gate3_matrix.json": {
+    "sha256": "b3ad78d31a0d3e72cd081e03ca362cd32e1d21f0e0a241875d52f11e73f7c102",
+    "bytes": 363499
+   },
+   "gate_lib.py": {
+    "sha256": "17e730dee6321940444fb11da1699e172dacaad7d3a15e9f92f124f7f62cfa2b",
+    "bytes": 11887
+   },
+   "gate3_lib.py": {
+    "sha256": "e202b40886813e582d446e67881e0145caccaf990cde58b923b9361bea0d5013",
+    "bytes": 19025
+   },
+   "gate3_arms.py": {
+    "sha256": "753e7cbcb2d7e6db96d0df5d633e33e304b52d9aa81855de1d9a4871822cf897",
+    "bytes": 12057
+   },
+   "GATE3_FREEZE.json": {
+    "sha256": "76b982a55be7d8ba2ef62ed5c872117cc78a676df921d696b8ff3b6368b3b08f",
+    "bytes": 9884
+   }
+  }
+ },
+ "_redaction": {
+  "derivative_of": "GATE4_FREEZE.json",
+  "source_sha256": "9ccace92bec31e8c27d6ba5c4c2cabf62af8069dcb4ea515f79a4cd66df3ec40",
+  "source_status": "PRIVATE - not released, not modified",
+  "applied": {
+   "speaker_names": 0,
+   "private_paths": 0,
+   "source_filenames": 0
+  },
+  "generated_utc": "2026-09-16T13:42:33Z"
+ }
+}

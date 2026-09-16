@@ -1,0 +1,100 @@
+{
+ "what": "DIAGNOSTIC ONLY. CPU vs GPU equivalence on SOURCE audio. Not part of the frozen implementation; assigns no verdict; no reconstruction opened; nothing cached.",
+ "n_items": 42,
+ "states": [
+  "Neutral",
+  "Shouting",
+  "Whisper"
+ ],
+ "set": "S",
+ "determinism": {
+  "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+  "use_deterministic_algorithms": true,
+  "cudnn_benchmark": false,
+  "cudnn_deterministic": true,
+  "tf32_matmul": false,
+  "tf32_cudnn": false
+ },
+ "encoders": {
+  "redimnet_M_vb2_ptn": {
+   "device_pair": "cpu vs cuda",
+   "identical_input": {
+    "cos_cpu_gpu_median": 0.9999999993289581,
+    "cos_cpu_gpu_min": 0.9999999899728914,
+    "emb_max_abs_diff_median": 2.1979212760925293e-07,
+    "emb_max_abs_diff_max": 2.980232238769531e-07
+   },
+   "genuine_pairs": {
+    "n_pairs": 63,
+    "cos_cpu_median": 0.5404818445804538,
+    "cos_gpu_median": 0.5404818703341243,
+    "abs_delta_median": 6.508438676888773e-08,
+    "abs_delta_max": 3.1855205803732467e-07
+   },
+   "impostor_pairs": {
+    "n_pairs": 756,
+    "cos_cpu_median": 0.18220396179734227,
+    "cos_gpu_median": 0.18220389854939506,
+    "abs_delta_median": 8.714336829918068e-08,
+    "abs_delta_max": 4.967066797867403e-07
+   }
+  },
+  "ecapa": {
+   "device_pair": "cpu vs cuda",
+   "identical_input": {
+    "cos_cpu_gpu_median": 0.999999822874126,
+    "cos_cpu_gpu_min": 0.9999992426203876,
+    "emb_max_abs_diff_median": 0.00013364851474761963,
+    "emb_max_abs_diff_max": 0.00026023760437965393
+   },
+   "genuine_pairs": {
+    "n_pairs": 63,
+    "cos_cpu_median": 0.39640023182945683,
+    "cos_gpu_median": 0.3964000844816552,
+    "abs_delta_median": 5.113874106887906e-05,
+    "abs_delta_max": 0.00014047429997021688
+   },
+   "impostor_pairs": {
+    "n_pairs": 756,
+    "cos_cpu_median": 0.09320153045193305,
+    "cos_gpu_median": 0.09312594062484414,
+    "abs_delta_median": 4.5406381171335386e-05,
+    "abs_delta_max": 0.00022902054985385334
+   }
+  },
+  "redimnet_b6_lm": {
+   "device_pair": "cpu vs cuda",
+   "identical_input": {
+    "cos_cpu_gpu_median": 0.9999998752045656,
+    "cos_cpu_gpu_min": 0.9999996595951053,
+    "emb_max_abs_diff_median": 0.0001034934539347887,
+    "emb_max_abs_diff_max": 0.00020109117031097412
+   },
+   "genuine_pairs": {
+    "n_pairs": 63,
+    "cos_cpu_median": 0.5770509562231066,
+    "cos_gpu_median": 0.5771154926195328,
+    "abs_delta_median": 3.117764951193758e-05,
+    "abs_delta_max": 0.00016813607799359698
+   },
+   "impostor_pairs": {
+    "n_pairs": 756,
+    "cos_cpu_median": 0.13019182223501252,
+    "cos_gpu_median": 0.1300831930373752,
+    "abs_delta_median": 4.2230352275005045e-05,
+    "abs_delta_max": 0.00024467895114413385
+   }
+  }
+ },
+ "_redaction": {
+  "derivative_of": "Q5_DEVICE_EQUIVALENCE.json",
+  "source_sha256": "a1693994dd5544ec0469109996d925c9c5c1690807d854c358aea28e21b740f0",
+  "source_status": "PRIVATE - not released, not modified",
+  "applied": {
+   "speaker_names": 0,
+   "private_paths": 0,
+   "source_filenames": 0
+  },
+  "generated_utc": "2026-09-16T13:42:33Z"
+ }
+}

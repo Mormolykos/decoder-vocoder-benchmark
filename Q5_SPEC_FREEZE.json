@@ -1,0 +1,415 @@
+{
+ "what": "Gate 4 Q5 SPEAKER-IDENTITY LAYER (retention + dispersion). NOT the frozen Gate 4 apparatus, NOT Stage 2, NOT Q8.",
+ "superseded": [
+  {
+   "spec_frozen_utc": "2026-09-13T14:09:22Z",
+   "implementation_frozen_utc": null,
+   "spec": {
+    "Q5_SPEC.md": "19eec7fc151146373ed5492d991d5a970af819c8b868fa95f6c093ba91815308"
+   },
+   "implementation": null,
+   "revision_note": null,
+   "guard_no_results_present": {
+    "checked": [
+     "Q5_CELLS.jsonl",
+     "Q5_RESULTS.json",
+     "Q5_CALIBRATION.json",
+     "Q5_EMBEDDINGS.npz",
+     "Q5_FUZZ.json",
+     "results\\q5_cells.jsonl",
+     "results\\q5_embeddings"
+    ],
+    "found": [],
+    "result": "PASS - no Q5 result artifact existed at spec-freeze time"
+   }
+  },
+  {
+   "spec_frozen_utc": "2026-09-13T14:20:41Z",
+   "implementation_frozen_utc": "2026-09-13T18:01:11Z",
+   "spec": {
+    "Q5_SPEC.md": "eaf159417c1e9001310c17fa493bfc4b4bec3e73c99618ec06cf8df7e8fa2a7a"
+   },
+   "implementation": {
+    "q5_lib.py": "43ef0f8ec519b4ee8d4b4509b92190de645409eec424bebbb8548eea03b2a44d",
+    "q5_calibration.py": "27a40c73f3706cf9fd27d4e766f689f7aa9080770e31f3842dda2d1b3d2bf141",
+    "q5_fuzz.py": "213983736457fa10e606f0f0b3f36a21a352584991dbc5b80199efd444afe0d4",
+    "q5_run.py": "deda4251e0bd6fb9ec6b4bb149e4568656aea95094689c2e269a300b5ee03210",
+    "q5_analyze.py": "bf4397f01f921865aa2ec97fcd0c10b197d68f42d8ae0e0b78d109359d51b57c",
+    "q5_report.py": "41eda263634b1a6ef203e3a1d9c331bdb873a9ebd23c7320f1c7b3cae486442d",
+    "freeze_q5.py": "09b1573cd9c47ed915cc4bb9aaa8eca491caa37a4e64d29af28563b9ed9c700b"
+   },
+   "revision_note": "Revision 2: resolved the fuzz/calibration circularity (F1 mechanics -> source calibration -> F2 calibrated gates); replaced the result-dependent tier test with 0.10 x G(e) where G is measured on source only; made all four labels inequalities on named estimands; separated CROSS-stratum vocabulary; both-sides-admissible rule; pre-declared device retry; withdrew the 'all three pairwise ESTABLISHED' overclaim.",
+   "guard_no_results_present": {
+    "checked": [
+     "Q5_CELLS.jsonl",
+     "Q5_RESULTS.json",
+     "Q5_CALIBRATION.json",
+     "Q5_EMBEDDINGS.npz",
+     "Q5_FUZZ.json",
+     "results\\q5_cells.jsonl",
+     "results\\q5_embeddings"
+    ],
+    "found": [],
+    "result": "PASS - no Q5 result artifact existed at spec-freeze time"
+   }
+  },
+  {
+   "spec_frozen_utc": "2026-09-13T19:18:16Z",
+   "implementation_frozen_utc": "2026-09-13T19:25:24Z",
+   "spec": {
+    "Q5_SPEC.md": "a5b182d7849e04f17b9428972a994ed51ec53987099c24d1d6ccdc1fe0effa48"
+   },
+   "implementation": {
+    "q5_lib.py": "35770b2535e0779bc6b0ff064e8fde732224a66256388dcefe3151cd7ed3aff1",
+    "q5_calibration.py": "87f9ec51f824a1b86d4b5219d234ea0b90195d733a499cc48630dbeb5dfaef81",
+    "q5_fuzz.py": "213983736457fa10e606f0f0b3f36a21a352584991dbc5b80199efd444afe0d4",
+    "q5_run.py": "16f0b646f614d22d73527d05add7bb62b7d98848d43ae44e70e7a9cd0edf0429",
+    "q5_analyze.py": "bf4397f01f921865aa2ec97fcd0c10b197d68f42d8ae0e0b78d109359d51b57c",
+    "q5_report.py": "41eda263634b1a6ef203e3a1d9c331bdb873a9ebd23c7320f1c7b3cae486442d",
+    "freeze_q5.py": "09b1573cd9c47ed915cc4bb9aaa8eca491caa37a4e64d29af28563b9ed9c700b"
+   },
+   "revision_note": "Revision 3, provenance only: the embedding cache identity must record the EXECUTION DEVICE. No change to the panel, device assignments, thresholds, label rules, bootstrap, admissibility or interpretation.",
+   "guard_no_results_present": {
+    "checked": [
+     "Q5_CELLS.jsonl",
+     "Q5_RESULTS.json",
+     "Q5_CALIBRATION.json",
+     "Q5_EMBEDDINGS.npz",
+     "Q5_FUZZ.json",
+     "results\\q5_cells.jsonl",
+     "results\\q5_embeddings"
+    ],
+    "found": [],
+    "result": "PASS - no Q5 result artifact existed at spec-freeze time"
+   }
+  },
+  {
+   "spec_frozen_utc": "2026-09-14T16:02:27Z",
+   "implementation_frozen_utc": "2026-09-14T17:18:33Z",
+   "spec": {
+    "Q5_SPEC.md": "e64c695e8f4b9896bf374431bbbb82d67e3bacab90ff2f0146d6e478d7cabf27"
+   },
+   "implementation": {
+    "q5_lib.py": "ee49ba3d89fd8f85ce2b1460b77414caa120650a54a465be466238399672c3bc",
+    "q5_calibration.py": "be407cbb11b0db1d92f67a9799c20f527ff346d360ee5878997978858181d89b",
+    "q5_fuzz.py": "213983736457fa10e606f0f0b3f36a21a352584991dbc5b80199efd444afe0d4",
+    "q5_run.py": "3c71543df2ccd3640480f302e53a683574e9cae8bef586ffea55aaaf1aeae24f",
+    "q5_analyze.py": "510eddcd1c82a06bf482d5298c27474fbb48312685e0e5708eeecea4d35f0f3d",
+    "q5_report.py": "41eda263634b1a6ef203e3a1d9c331bdb873a9ebd23c7320f1c7b3cae486442d",
+    "freeze_q5.py": "cb3a1fdf51c7b83f4ba14ead6636a3af44dd79482816cf2e64bbb948ce2f4794"
+   },
+   "revision_note": "Revision 4, defect correction to calibration/selection/analysis ONLY. (1) Set L label cells are its 14 s top-rung cells, one per recording - revision 3's analysis selected on rung_s is None and would have silently dropped all of Set L. (2) The Set L ceiling and floor are recomputed on 14 s source prefixes, matching the regime Q5 measures; the full-length ceiling was inflated by +0.020 to +0.055 cosine. (3) offline_length_state for fish_modified_dac is read from gate4_stage1_fish.jsonl at analysis time. (4) Cross-arm duration comparison uses 5/10/14 s only. NO label had been computed when these defects were found. Revision 4 CONSUMES the frozen revision 3 measurement rows and must not trigger re-embedding.",
+   "guard_no_results_present": {
+    "checked": [
+     "Q5_CELLS.jsonl",
+     "Q5_RESULTS.json",
+     "Q5_CALIBRATION.json",
+     "Q5_EMBEDDINGS.npz",
+     "Q5_FUZZ.json",
+     "results\\q5_cells.jsonl",
+     "results\\q5_embeddings"
+    ],
+    "found": [
+     "Q5_CELLS.jsonl",
+     "Q5_CALIBRATION.json",
+     "Q5_EMBEDDINGS.npz",
+     "Q5_FUZZ.json"
+    ],
+    "result": "OVERRIDDEN - artifacts existed at spec-freeze time",
+    "override_reason": "Revision 4 is a defect correction to calibration/selection/analysis made BEFORE any label was computed. The frozen revision-3 measurement artifacts (Q5_CELLS.jsonl, Q5_EMBEDDINGS.npz, Q5_CALIBRATION.json, Q5_FUZZ.json) exist and are CONSUMED, not regenerated. No measured R, embedding, admissibility state, device, threshold, inequality or bootstrap rule is changed.",
+    "what_this_costs": "This spec was frozen while measured artifacts existed. It is therefore NOT blind to them, and no claim of blindness is made for this revision. The artifacts present are listed in `found`."
+   }
+  },
+  {
+   "spec_frozen_utc": "2026-09-14T18:28:14Z",
+   "implementation_frozen_utc": "2026-09-14T20:02:35Z",
+   "spec": {
+    "Q5_SPEC.md": "a0f9fed250a846a8ae46849019ce3513f23be64411cd488fdd1b9b8c52ebc1b9"
+   },
+   "implementation": {
+    "q5_lib.py": "5556e28d0e73f42cf571b9ffe3a4cff275c42ea287aa1bcd7fe51e403b65f6af",
+    "q5_calibration.py": "be407cbb11b0db1d92f67a9799c20f527ff346d360ee5878997978858181d89b",
+    "q5_fuzz.py": "213983736457fa10e606f0f0b3f36a21a352584991dbc5b80199efd444afe0d4",
+    "q5_run.py": "3c71543df2ccd3640480f302e53a683574e9cae8bef586ffea55aaaf1aeae24f",
+    "q5_analyze.py": "f7fb89db76c0b5e63880caa8fb5898b015bde202eb41f485850be92d71c850e7",
+    "q5_report.py": "c526806e5c9257153ee1a54105b32f20bef7772ce870e5bf6bd3c1e0121e55fd",
+    "freeze_q5.py": "cb3a1fdf51c7b83f4ba14ead6636a3af44dd79482816cf2e64bbb948ce2f4794"
+   },
+   "revision_note": "Revision 5, narrow correction forced by a measured defect: the aggregation group of a PAIR was taken from its lower-indexed member, which is not order-invariant for CROSS strata. Permuting row order moved CROSS medians by up to 0.089 and interval bounds by up to 0.079 - several times the interval width, enough to flip a label. The pair group is now the COMPONENTS THE TWO MEMBERS SHARE: (speaker, state) within a state, (speaker,) across states. Within-state quantities are unchanged by construction. No other Q5 rule is touched. No label had been accepted.",
+   "guard_no_results_present": {
+    "checked": [
+     "Q5_CELLS.jsonl",
+     "Q5_RESULTS.json",
+     "Q5_CALIBRATION.json",
+     "Q5_EMBEDDINGS.npz",
+     "Q5_FUZZ.json",
+     "results\\q5_cells.jsonl",
+     "results\\q5_embeddings"
+    ],
+    "found": [
+     "Q5_CELLS.jsonl",
+     "Q5_CALIBRATION.json",
+     "Q5_EMBEDDINGS.npz",
+     "Q5_FUZZ.json"
+    ],
+    "result": "OVERRIDDEN - artifacts existed at spec-freeze time",
+    "override_reason": "Revision 5 corrects a measured order-dependence defect in the pair aggregation group, found before any label was accepted. The revision-3 measurement artifacts are consumed unchanged; only the CROSS-stratum grouping changes, and within-state quantities are unchanged by construction.",
+    "what_this_costs": "This spec was frozen while measured artifacts existed. It is therefore NOT blind to them, and no claim of blindness is made for this revision. The artifacts present are listed in `found`."
+   }
+  }
+ ],
+ "revision_note": "Revision 6, implementation-defect record found by INDEPENDENT AUDIT. The normative rule did NOT change: SECTION 3 rule 4 and SECTION 8.2 already required the reference to use the estimator's pairing rules. q5_calibration.py did not implement it for C_cross or F_src, so the cross-state ceiling admitted SAME-SCRIPT-LINE pairs (excess 3255 Set S, 105 Set L) and was inflated toward DRIFTING; 8 of 108 CROSS labels turned on it. Also corrected: three stale prose statements and F_rec declared NOT COMPUTED rather than invented. No measurement row, embedding, R, D, threshold, bootstrap, inequality, encoder or device changes.",
+ "revisions": 6,
+ "spec_frozen_utc": "2026-09-14T21:16:18Z",
+ "spec": {
+  "Q5_SPEC.md": "fd429fd1e27dd7f90b86ddae84823dad3da2c8b1af0701a4f3328c8290f42ea4"
+ },
+ "guard_no_results_present": {
+  "checked": [
+   "Q5_CELLS.jsonl",
+   "Q5_RESULTS.json",
+   "Q5_CALIBRATION.json",
+   "Q5_EMBEDDINGS.npz",
+   "Q5_FUZZ.json",
+   "results\\q5_cells.jsonl",
+   "results\\q5_embeddings"
+  ],
+  "found": [
+   "Q5_CELLS.jsonl",
+   "Q5_RESULTS.json",
+   "Q5_CALIBRATION.json",
+   "Q5_EMBEDDINGS.npz",
+   "Q5_FUZZ.json"
+  ],
+  "result": "OVERRIDDEN - artifacts existed at spec-freeze time",
+  "override_reason": "Revision 6 records an implementation defect found by independent audit: C_cross and F_src omitted the different-text constraint that SECTION 3 rule 4 and SECTION 8.2 already required. Found before the result was published; the normative rule is unchanged. Measurement artifacts are consumed unchanged.",
+  "what_this_costs": "This spec was frozen while measured artifacts existed. It is therefore NOT blind to them, and no claim of blindness is made for this revision. The artifacts present are listed in `found`."
+ },
+ "what_this_establishes": "The specification is fixed, hashed and auditable; it did not move between --freeze-spec and --freeze; and no Q5 result artifact existed on disk when it was frozen.",
+ "what_this_does_NOT_establish": "IT IS NOT A PROOF THAT THE SPEC PRECEDED THE IMPLEMENTATION, and no such claim is made: no implementation hash is taken here, both timestamps are local and unanchored, this tree is not a git repository, and this file is plainly rewritable. The same claim was measurably FALSE for one file in GATE4_STAGE2_FREEZE.json (audit 3, M5).",
+ "not_blind": "The author has read Stage 2's results and EXP_SPK's ECAPA figures. Freezing makes the decisions declared, fixed and auditable before any Q5 number exists. It does not make them blind, and nothing later can. R19: the author is not the certifier.",
+ "authority": "GATE4_PREREG.md wins on every point it already fixes. Where Q5_SPEC.md differs, the prereg is right and the spec is defective.",
+ "implementation_frozen_utc": "2026-09-15T22:20:05Z",
+ "implementation": {
+  "q5_lib.py": "5556e28d0e73f42cf571b9ffe3a4cff275c42ea287aa1bcd7fe51e403b65f6af",
+  "q5_calibration.py": "dad76ff183ae0691ebbdb20d7bd344352709d5a3938199b7d17200d674faa1c7",
+  "q5_fuzz.py": "213983736457fa10e606f0f0b3f36a21a352584991dbc5b80199efd444afe0d4",
+  "q5_run.py": "3c71543df2ccd3640480f302e53a683574e9cae8bef586ffea55aaaf1aeae24f",
+  "q5_analyze.py": "33437c1753f7e082209f11e82d7ef3809aa33a4e9445288a7a3ea8d0fb234404",
+  "q5_report.py": "c526806e5c9257153ee1a54105b32f20bef7772ce870e5bf6bd3c1e0121e55fd",
+  "freeze_q5.py": "73481d9787cbd60495fa5f8e1fb8560ece54db9c2caab6fccd1ff199092b19d5"
+ },
+ "evidence_frozen_utc": "2026-09-15T19:45:36Z",
+ "evidence": {
+  "Q5_CELLS.jsonl": {
+   "sha256": "f066ea73bc9208ef5a519202063ded9d6a9890323ac95cf75adc099f7112245d",
+   "bytes": 205075382,
+   "rows": 177072
+  },
+  "Q5_EMBEDDINGS.npz": {
+   "sha256": "7d7e6a3161b890b714a0b36ffa7206c0938199897780459c32223b83aa6a1f5e",
+   "bytes": 253062067,
+   "arrays": 188958
+  },
+  "Q5_CALIBRATION.json": {
+   "sha256": "ee622fa3bc778668fbd815e3adc43a82207112c804ba4debf433f3192acd14d6",
+   "bytes": 23235,
+   "encoders": 3
+  },
+  "Q5_FUZZ.json": {
+   "sha256": "c7fb1b525c876d40c0c441bef4490afbb160bcf437babc7628c9a326925bb920",
+   "bytes": 9416,
+   "sections": [
+    "F1",
+    "F2"
+   ]
+  },
+  "Q5_RESULTS.json": {
+   "sha256": "4249195922c057834e03ebc0b849ded428e50c8303c62fc0232a009ce083071d",
+   "bytes": 1473095,
+   "arms": 18,
+   "labels": 540
+  },
+  "Q5_TABLES.md": {
+   "sha256": "db2a3f0120cd7bb345aa736ddcef224b9e99b5848357a3b46303a34b9a71b3f8",
+   "bytes": 346309,
+   "lines": 2241
+  }
+ },
+ "evidence_note": "The canonical offline-Q5 evidence set. --verify reports INSTRUMENT drift and EVIDENCE drift separately and fails closed on either. SECTION 10 makes drift 0 a precondition for deleting the WAVs; before this block existed, that check could not see the evidence it was protecting (independent audit, 2026-09-15).",
+ "evidence_label": "OFFLINE + STREAMED evidence set, revision 6, with the repaired archiver: the superseded set's FILES are copied, not only hashed.",
+ "evidence_superseded": [
+  {
+   "evidence_frozen_utc": "2026-09-15T06:57:57Z",
+   "note": "OFFLINE-ONLY EVIDENCE SNAPSHOT, revision 6, re-audited 20/20. Recorded before the streamed pass extends the set.",
+   "evidence": {
+    "Q5_CELLS.jsonl": {
+     "sha256": "d66ea01bed9b16da9cdbb722e948c9ea33171a53330ed84f11592612a023e8c2",
+     "bytes": 107864848,
+     "rows": 93744
+    },
+    "Q5_EMBEDDINGS.npz": {
+     "sha256": "5b70cdd9a64316a4c3051fc0f1a192bc2959831a19d9d36097e1d28be1e556cd",
+     "bytes": 145747221,
+     "arrays": 108822
+    },
+    "Q5_CALIBRATION.json": {
+     "sha256": "ee622fa3bc778668fbd815e3adc43a82207112c804ba4debf433f3192acd14d6",
+     "bytes": 23235,
+     "encoders": 3
+    },
+    "Q5_FUZZ.json": {
+     "sha256": "c7fb1b525c876d40c0c441bef4490afbb160bcf437babc7628c9a326925bb920",
+     "bytes": 9416,
+     "sections": [
+      "F1",
+      "F2"
+     ]
+    },
+    "Q5_RESULTS.json": {
+     "sha256": "3058a549e2fb6a2cef516f87ff8da28c7f6e462995fc33197f79cabd68a5f271",
+     "bytes": 1456845,
+     "arms": 18,
+     "labels": 540
+    },
+    "Q5_TABLES.md": {
+     "sha256": "89ad3913fa51d628d60f55b1e0f5a9a182b8deb93589540ef73ce1f8141acf13",
+     "bytes": 342477,
+     "lines": 2187
+    }
+   },
+   "archived_files": {},
+   "NOT_ARCHIVED": {
+    "Q5_CELLS.jsonl": "bytes no longer on disk (current sha f066ea73bc9208ef)",
+    "Q5_EMBEDDINGS.npz": "bytes no longer on disk (current sha 7d7e6a3161b890b7)",
+    "Q5_RESULTS.json": "bytes no longer on disk (current sha 4249195922c05783)",
+    "Q5_TABLES.md": "bytes no longer on disk (current sha db2a3f0120cd7bb3)"
+   },
+   "recoverable": false,
+   "audit_note": "⛔ Recorded 2026-09-15 after an independent audit. This snapshot was retained as HASHES AND COUNTS ONLY. The author described it as 'recoverable by hash', which was WRONG: a hash proves identity, never recovery. The artifacts listed in NOT_ARCHIVED were overwritten and their bytes are gone. Scientific reproducibility of the labels is established separately, by reconstructing them from the unchanged measurement rows; byte-for-byte recovery of this snapshot is NOT possible and is not claimed. freeze_q5.py now copies the files themselves into Q5_EVIDENCE_ARCHIVE before any set is superseded."
+  },
+  {
+   "evidence_frozen_utc": "2026-09-15T07:02:35Z",
+   "note": "OFFLINE + STREAMED evidence set, revision 6. Streamed pass added 83,328 rows additively; the offline-only snapshot is retained under evidence_superseded.",
+   "evidence": {
+    "Q5_CELLS.jsonl": {
+     "sha256": "d66ea01bed9b16da9cdbb722e948c9ea33171a53330ed84f11592612a023e8c2",
+     "bytes": 107864848,
+     "rows": 93744
+    },
+    "Q5_EMBEDDINGS.npz": {
+     "sha256": "5b70cdd9a64316a4c3051fc0f1a192bc2959831a19d9d36097e1d28be1e556cd",
+     "bytes": 145747221,
+     "arrays": 108822
+    },
+    "Q5_CALIBRATION.json": {
+     "sha256": "ee622fa3bc778668fbd815e3adc43a82207112c804ba4debf433f3192acd14d6",
+     "bytes": 23235,
+     "encoders": 3
+    },
+    "Q5_FUZZ.json": {
+     "sha256": "c7fb1b525c876d40c0c441bef4490afbb160bcf437babc7628c9a326925bb920",
+     "bytes": 9416,
+     "sections": [
+      "F1",
+      "F2"
+     ]
+    },
+    "Q5_RESULTS.json": {
+     "sha256": "3058a549e2fb6a2cef516f87ff8da28c7f6e462995fc33197f79cabd68a5f271",
+     "bytes": 1456845,
+     "arms": 18,
+     "labels": 540
+    },
+    "Q5_TABLES.md": {
+     "sha256": "89ad3913fa51d628d60f55b1e0f5a9a182b8deb93589540ef73ce1f8141acf13",
+     "bytes": 342477,
+     "lines": 2187
+    }
+   },
+   "archived_files": {},
+   "NOT_ARCHIVED": {
+    "Q5_CELLS.jsonl": "bytes no longer on disk (current sha f066ea73bc9208ef)",
+    "Q5_EMBEDDINGS.npz": "bytes no longer on disk (current sha 7d7e6a3161b890b7)",
+    "Q5_RESULTS.json": "bytes no longer on disk (current sha 4249195922c05783)",
+    "Q5_TABLES.md": "bytes no longer on disk (current sha db2a3f0120cd7bb3)"
+   },
+   "recoverable": false,
+   "audit_note": "⛔ Recorded 2026-09-15 after an independent audit. This snapshot was retained as HASHES AND COUNTS ONLY. The author described it as 'recoverable by hash', which was WRONG: a hash proves identity, never recovery. The artifacts listed in NOT_ARCHIVED were overwritten and their bytes are gone. Scientific reproducibility of the labels is established separately, by reconstructing them from the unchanged measurement rows; byte-for-byte recovery of this snapshot is NOT possible and is not claimed. freeze_q5.py now copies the files themselves into Q5_EVIDENCE_ARCHIVE before any set is superseded."
+  },
+  {
+   "evidence_frozen_utc": "2026-09-15T18:21:08Z",
+   "note": "OFFLINE + STREAMED evidence set, revision 6, with the repaired archiver: the superseded set's FILES are copied, not only hashed.",
+   "evidence": {
+    "Q5_CELLS.jsonl": {
+     "sha256": "f066ea73bc9208ef5a519202063ded9d6a9890323ac95cf75adc099f7112245d",
+     "bytes": 205075382,
+     "rows": 177072
+    },
+    "Q5_EMBEDDINGS.npz": {
+     "sha256": "7d7e6a3161b890b714a0b36ffa7206c0938199897780459c32223b83aa6a1f5e",
+     "bytes": 253062067,
+     "arrays": 188958
+    },
+    "Q5_CALIBRATION.json": {
+     "sha256": "ee622fa3bc778668fbd815e3adc43a82207112c804ba4debf433f3192acd14d6",
+     "bytes": 23235,
+     "encoders": 3
+    },
+    "Q5_FUZZ.json": {
+     "sha256": "c7fb1b525c876d40c0c441bef4490afbb160bcf437babc7628c9a326925bb920",
+     "bytes": 9416,
+     "sections": [
+      "F1",
+      "F2"
+     ]
+    },
+    "Q5_RESULTS.json": {
+     "sha256": "4249195922c057834e03ebc0b849ded428e50c8303c62fc0232a009ce083071d",
+     "bytes": 1473095,
+     "arms": 18,
+     "labels": 540
+    },
+    "Q5_TABLES.md": {
+     "sha256": "db2a3f0120cd7bb345aa736ddcef224b9e99b5848357a3b46303a34b9a71b3f8",
+     "bytes": 346309,
+     "lines": 2241
+    }
+   },
+   "archived_files": {
+    "Q5_CELLS.jsonl": "Q5_EVIDENCE_ARCHIVE\\2026-09-15T182108Z\\Q5_CELLS.jsonl",
+    "Q5_EMBEDDINGS.npz": "Q5_EVIDENCE_ARCHIVE\\2026-09-15T182108Z\\Q5_EMBEDDINGS.npz",
+    "Q5_CALIBRATION.json": "Q5_EVIDENCE_ARCHIVE\\2026-09-15T182108Z\\Q5_CALIBRATION.json",
+    "Q5_FUZZ.json": "Q5_EVIDENCE_ARCHIVE\\2026-09-15T182108Z\\Q5_FUZZ.json",
+    "Q5_RESULTS.json": "Q5_EVIDENCE_ARCHIVE\\2026-09-15T182108Z\\Q5_RESULTS.json",
+    "Q5_TABLES.md": "Q5_EVIDENCE_ARCHIVE\\2026-09-15T182108Z\\Q5_TABLES.md"
+   },
+   "NOT_ARCHIVED": {},
+   "recoverable": true,
+   "inventory_fingerprint": {
+    "count": 6,
+    "names": [
+     "Q5_CALIBRATION.json",
+     "Q5_CELLS.jsonl",
+     "Q5_EMBEDDINGS.npz",
+     "Q5_FUZZ.json",
+     "Q5_RESULTS.json",
+     "Q5_TABLES.md"
+    ],
+    "sha256": "e22b98629915adfbbfe086ba45027750dfbb56aa6a95ab936d6600a016d4e9f5"
+   },
+   "fingerprint_backfilled": "Computed 2026-09-16, AFTER the fingerprint check was added. Legitimate because every archived file for this snapshot verified clean at that moment - present, readable, hash, size and counts matching, NPZ fully read. It does NOT retroactively prove the inventory was untampered before that point; it protects it from here on."
+  }
+ ],
+ "_redaction": {
+  "derivative_of": "Q5_SPEC_FREEZE.json",
+  "source_sha256": "b8d11fe615116714100aa5668ad5ac1aa7785bf94879ed4ff9338bea9076660c",
+  "source_status": "PRIVATE - not released, not modified",
+  "applied": {
+   "speaker_names": 0,
+   "private_paths": 0,
+   "source_filenames": 0
+  },
+  "generated_utc": "2026-09-16T13:42:33Z"
+ }
+}

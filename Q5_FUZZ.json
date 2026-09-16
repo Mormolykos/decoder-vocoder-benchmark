@@ -1,0 +1,338 @@
+{
+ "spec": {
+  "spec_sha256": "a5b182d7849e04f17b9428972a994ed51ec53987099c24d1d6ccdc1fe0effa48",
+  "spec_frozen_utc": "2026-09-13T19:18:16Z",
+  "revisions": 3
+ },
+ "determinism": {
+  "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+  "use_deterministic_algorithms": true,
+  "cudnn_benchmark": false,
+  "cudnn_deterministic": true,
+  "tf32_matmul": false,
+  "tf32_cudnn": false
+ },
+ "F1": {
+  "what": "SECTION 9.1 metric mechanics. Calibration recordings only; no reconstruction opened.",
+  "generated_utc": "2026-09-13T19:48:57Z",
+  "reconstructions_opened": false,
+  "encoders": {
+   "redimnet_M_vb2_ptn": {
+    "device_declared": "cuda",
+    "probes": {
+     "identity": {
+      "required": "cos == 1.0 (atol 1e-6) and max_abs_err == 0.0 exactly",
+      "cos_median": 0.9999999996424489,
+      "cos_min": 0.9999999843470604,
+      "max_abs_err_max": 0.0,
+      "pass": true
+     },
+     "nan_inf": {
+      "required": "UNKNOWN",
+      "got": "UNKNOWN",
+      "pass": true
+     },
+     "all_zero": {
+      "required": "UNKNOWN",
+      "got": "UNKNOWN",
+      "pass": true
+     },
+     "truncated_1p99s": {
+      "required": "INADMISSIBLE - BELOW ENCODER MINIMUM",
+      "got": "INADMISSIBLE - BELOW ENCODER MINIMUM",
+      "pass": true
+     },
+     "cold_start": {
+      "required": "max_abs_err == 0.0 exactly",
+      "max_abs_err": 0.0,
+      "pass": true
+     }
+    },
+    "verdict": "OK",
+    "n_probe_files": 124,
+    "encoder_meta": {
+     "encoder": "redimnet_M_vb2_ptn",
+     "device": "cuda",
+     "dim": 192,
+     "source": "torch.hub IDRnD/ReDimNet M/ptn/vb2",
+     "training_corpus": "VoxBlink2",
+     "checkpoint": "C:\\Users\\User/.cache\\torch\\hub\\checkpoints\\M-vb2-ptn.pt",
+     "checkpoint_sha256": "42c13ce2bcf1ce466afdbe461c8dbe9471fc23204a1480fb4f306f48152f9af3",
+     "torch": "2.10.0+cu128",
+     "torchaudio": "2.10.0+cu128",
+     "pooling": "model-native-utterance-pooling+l2"
+    },
+    "recorded": {
+     "shift1": 0.00044134256670103067,
+     "shift4": 0.0010102233564470153,
+     "shift16": 0.002318660689009211,
+     "shift256": 0.007338475280209034,
+     "scale_0p5": 8.240080839883035e-11,
+     "scale_2p0": 3.747957499911081e-11,
+     "bandlimit_8k": 3.575511553499666e-10,
+     "bandlimit_4k": 0.2434261987313835,
+     "note": "1 - cos, median over probe recordings. shift = k-sample delay."
+    },
+    "hard_failures": [],
+    "seconds": 712.6
+   },
+   "ecapa": {
+    "device_declared": "cuda",
+    "probes": {
+     "identity": {
+      "required": "cos == 1.0 (atol 1e-6) and max_abs_err == 0.0 exactly",
+      "cos_median": 1.0000000000028537,
+      "cos_min": 0.9999999848625438,
+      "max_abs_err_max": 0.0,
+      "pass": true
+     },
+     "nan_inf": {
+      "required": "UNKNOWN",
+      "got": "UNKNOWN",
+      "pass": true
+     },
+     "all_zero": {
+      "required": "UNKNOWN",
+      "got": "UNKNOWN",
+      "pass": true
+     },
+     "truncated_1p99s": {
+      "required": "INADMISSIBLE - BELOW ENCODER MINIMUM",
+      "got": "INADMISSIBLE - BELOW ENCODER MINIMUM",
+      "pass": true
+     },
+     "cold_start": {
+      "required": "max_abs_err == 0.0 exactly",
+      "max_abs_err": 0.0,
+      "pass": true
+     }
+    },
+    "verdict": "OK",
+    "n_probe_files": 124,
+    "encoder_meta": {
+     "encoder": "ecapa",
+     "device": "cuda",
+     "dim": 192,
+     "source": "speechbrain/spkrec-ecapa-voxceleb",
+     "training_corpus": "VoxCeleb2",
+     "checkpoint": "C:\\Users\\User\\Desktop\\greek_tts\\pretrained_spkrec\\embedding_model.ckpt",
+     "checkpoint_sha256": "0575cb64845e6b9a10db9bcb74d5ac32b326b8dc90352671d345e2ee3d0126a2",
+     "torch": "2.10.0+cu128",
+     "torchaudio": "2.10.0+cu128",
+     "pooling": "model-native-utterance-pooling+l2"
+    },
+    "recorded": {
+     "shift1": 0.0005611518407429017,
+     "shift4": 0.0027369964223084575,
+     "shift16": 0.005690994118622672,
+     "shift256": 0.012286376282511113,
+     "scale_0p5": 1.602430682590139e-08,
+     "scale_2p0": 1.767674367991745e-08,
+     "bandlimit_8k": -2.8537172624965024e-12,
+     "bandlimit_4k": 0.371377290318127,
+     "note": "1 - cos, median over probe recordings. shift = k-sample delay."
+    },
+    "hard_failures": [],
+    "seconds": 13.5
+   },
+   "redimnet_b6_lm": {
+    "device_declared": "cpu",
+    "probes": {
+     "identity": {
+      "required": "cos == 1.0 (atol 1e-6) and max_abs_err == 0.0 exactly",
+      "cos_median": 1.000000000655947,
+      "cos_min": 0.9999999888977383,
+      "max_abs_err_max": 0.0,
+      "pass": true
+     },
+     "nan_inf": {
+      "required": "UNKNOWN",
+      "got": "UNKNOWN",
+      "pass": true
+     },
+     "all_zero": {
+      "required": "UNKNOWN",
+      "got": "UNKNOWN",
+      "pass": true
+     },
+     "truncated_1p99s": {
+      "required": "INADMISSIBLE - BELOW ENCODER MINIMUM",
+      "got": "INADMISSIBLE - BELOW ENCODER MINIMUM",
+      "pass": true
+     },
+     "cold_start": {
+      "required": "max_abs_err == 0.0 exactly",
+      "max_abs_err": 0.0,
+      "pass": true
+     }
+    },
+    "verdict": "OK",
+    "n_probe_files": 124,
+    "encoder_meta": {
+     "encoder": "redimnet_b6_lm",
+     "device": "cpu",
+     "dim": 192,
+     "source": "torch.hub IDRnD/ReDimNet b6/ft_lm/vox2",
+     "training_corpus": "VoxCeleb2",
+     "checkpoint": "C:\\Users\\User/.cache\\torch\\hub\\checkpoints\\b6-vox2-ft_lm.pt",
+     "checkpoint_sha256": "e0f3034320c9cceaa8ed7c917a36e0affb501a922631d55c1007660eb1bbedea",
+     "torch": "2.10.0+cu128",
+     "torchaudio": "2.10.0+cu128",
+     "pooling": "model-native-utterance-pooling+l2"
+    },
+    "recorded": {
+     "shift1": 0.00031697500159966197,
+     "shift4": 0.001033275977569359,
+     "shift16": 0.003231715340898389,
+     "shift256": 0.003820013171071779,
+     "scale_0p5": 0.0007260690757287525,
+     "scale_2p0": 0.00028967574307381394,
+     "bandlimit_8k": -6.559470744349483e-10,
+     "bandlimit_4k": 0.239739656871505,
+     "note": "1 - cos, median over probe recordings. shift = k-sample delay."
+    },
+    "hard_failures": [],
+    "seconds": 487.4,
+    "retry": {
+     "first_device": "cuda",
+     "first_cold_start": {
+      "required": "max_abs_err == 0.0 exactly",
+      "max_abs_err": 9.031593799591064e-05,
+      "pass": false
+     },
+     "rule": "SECTION 9.1 device rule: one retry on CPU with deterministic algorithms and one thread"
+    }
+   }
+  }
+ },
+ "F2": {
+  "what": "SECTION 9.3 calibrated tier gates + SECTION 9.2 separability, carried from Q5_CALIBRATION.json.",
+  "generated_utc": "2026-09-14T21:49:15Z",
+  "reconstructions_opened": false,
+  "encoders": {
+   "redimnet_M_vb2_ptn": {
+    "G": 0.38235604250713395,
+    "bound": 0.0382356042507134,
+    "tier_fraction": 0.1,
+    "gates": {
+     "tier_test": {
+      "rule": "shift1 > 0.10 x G(e)",
+      "shift1": 0.00044134256670103067,
+      "bound": 0.0382356042507134,
+      "demote": false
+     },
+     "scale_invariance": {
+      "rule": "max(scale response) > 0.10 x G(e)",
+      "scale_response": 8.240080839883035e-11,
+      "bound": 0.0382356042507134,
+      "demote": false
+     }
+    },
+    "verdict": "OK",
+    "reason": "both SECTION 9.3 gates inside 0.10 x G"
+   },
+   "ecapa": {
+    "G": 0.2663365231649747,
+    "bound": 0.02663365231649747,
+    "tier_fraction": 0.1,
+    "gates": {
+     "tier_test": {
+      "rule": "shift1 > 0.10 x G(e)",
+      "shift1": 0.0005611518407429017,
+      "bound": 0.02663365231649747,
+      "demote": false
+     },
+     "scale_invariance": {
+      "rule": "max(scale response) > 0.10 x G(e)",
+      "scale_response": 1.767674367991745e-08,
+      "bound": 0.02663365231649747,
+      "demote": false
+     }
+    },
+    "verdict": "OK",
+    "reason": "both SECTION 9.3 gates inside 0.10 x G"
+   },
+   "redimnet_b6_lm": {
+    "G": 0.4056301313321279,
+    "bound": 0.04056301313321279,
+    "tier_fraction": 0.1,
+    "gates": {
+     "tier_test": {
+      "rule": "shift1 > 0.10 x G(e)",
+      "shift1": 0.00031697500159966197,
+      "bound": 0.04056301313321279,
+      "demote": false
+     },
+     "scale_invariance": {
+      "rule": "max(scale response) > 0.10 x G(e)",
+      "scale_response": 0.0007260690757287525,
+      "bound": 0.04056301313321279,
+      "demote": false
+     }
+    },
+    "verdict": "OK",
+    "reason": "both SECTION 9.3 gates inside 0.10 x G"
+   }
+  },
+  "separability": {
+   "redimnet_M_vb2_ptn": {
+    "S": {
+     "Neutral": true,
+     "Angry": true,
+     "Happy": true,
+     "Scared": true,
+     "Shouting": true,
+     "Whisper": true
+    },
+    "L": {
+     "Neutral": true,
+     "Whisper": true
+    }
+   },
+   "ecapa": {
+    "S": {
+     "Neutral": true,
+     "Angry": true,
+     "Happy": true,
+     "Scared": true,
+     "Shouting": true,
+     "Whisper": true
+    },
+    "L": {
+     "Neutral": true,
+     "Whisper": true
+    }
+   },
+   "redimnet_b6_lm": {
+    "S": {
+     "Neutral": true,
+     "Angry": true,
+     "Happy": true,
+     "Scared": true,
+     "Shouting": true,
+     "Whisper": true
+    },
+    "L": {
+     "Neutral": true,
+     "Whisper": true
+    }
+   }
+  },
+  "spec": {
+   "spec_sha256": "fd429fd1e27dd7f90b86ddae84823dad3da2c8b1af0701a4f3328c8290f42ea4",
+   "spec_frozen_utc": "2026-09-14T21:16:18Z",
+   "revisions": 6
+  }
+ },
+ "_redaction": {
+  "derivative_of": "Q5_FUZZ.json",
+  "source_sha256": "c7fb1b525c876d40c0c441bef4490afbb160bcf437babc7628c9a326925bb920",
+  "source_status": "PRIVATE - not released, not modified",
+  "applied": {
+   "speaker_names": 0,
+   "private_paths": 0,
+   "source_filenames": 0
+  },
+  "generated_utc": "2026-09-16T13:42:33Z"
+ }
+}
