@@ -9,7 +9,9 @@ Twenty neural audio decoders measured under one frozen protocol on identical
 audio, with each gate pre-registered before it was measured and each instrument
 attacked before it was trusted.
 
-Read the paper: [`PAPER.pdf`](PAPER.pdf) · source [`PAPER.md`](PAPER.md)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22798416.svg)](https://doi.org/10.5281/zenodo.22798416)
+
+Read the paper: [`PAPER.pdf`](PAPER.pdf) · source [`PAPER.md`](PAPER.md) · archived at [10.5281/zenodo.22798416](https://doi.org/10.5281/zenodo.22798416)
 
 ---
 
