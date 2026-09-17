@@ -3,9 +3,14 @@
 **Panagiotis Gkilis** · BedVibe Studios, Oslo
 ORCID 0009-0007-3805-170X
 
-**Status: review draft.** Publication manifest `1e93e28b9adb3b1f`. Every numeric
-value is generated from a frozen artifact by `paper/make_paper_tables.py`; the
-prose cites the generated tables and adds no number of its own.
+**Version 1.0.1 — corrected.** Supersedes v1.0.0 (DOI 10.5281/zenodo.22798416),
+which remains permanently available. An independent post-publication adversarial
+review found reporting and public-reproducibility defects; `CORRECTIONS_v1.0.1.md`
+lists every one, with the original wording beside the corrected wording.
+**No measurement changed** — the corrections are to prose, to release packaging
+and to claims that outran their evidence. Publication manifest `1e93e28b9adb3b1f`.
+Every numeric value is generated from a frozen artifact by `make_paper_tables.py`;
+the prose cites the generated tables and adds no number of its own.
 
 ---
 
@@ -15,8 +20,11 @@ Choosing a neural audio decoder for a streaming text-to-speech product requires
 four separate answers — does it run, does it truly stream, how fast is it, and
 what does it cost the signal — and the literature answers them with figures that
 are rarely comparable. We benchmarked **twenty decoder arms** under one frozen
-protocol on identical audio, with each gate pre-registered before it was
-measured and each instrument attacked before it was trusted.
+protocol on identical audio, with each gate's protocol pre-registered before it
+was measured and each instrument attacked before it was trusted. Two later
+freezes — Gate 4's analysis layer, and revisions 4–6 of the Q5 specification —
+were **post-measurement repairs** rather than prospective pre-registrations;
+§3 and §9 say which, why, and what changed as a result.
 
 Three results stand out, and two of them are negative.
 
@@ -38,9 +46,13 @@ finding is reported as a property of the metric, not as a decoder ranking.
 **Third, a second measurement with no shared code path reached the same verdict
 on the same three arms.** Measuring speaker-embedding retention with three
 separately calibrated speaker encoders, the three causal configurations show
-**no measured loss** under that metric when streamed (offline-vs-streamed cosine
-0.9999, retention delta −0.0000) while the other thirteen lose between −0.078
-and −0.742. ⚠️ The two measurements are independent in *construction* — a
+**near-zero median additional change** when streamed, under the tested encoders,
+supported recordings and imposed chunking regime: offline-vs-streamed cosine
+**0.999866–0.999946**, and a paired retention delta of **−3.9×10⁻⁵ to
+−5.3×10⁻⁶** — small, and strictly negative. The other thirteen lose between **−0.078** and
+**−0.742** *on the retention delta*; that is a different quantity from the
+cosine and the two are never quoted as one range. ⚠️ The two measurements are
+independent in *construction* — a
 spectral distance and three speaker encoders, sharing no implementation — but
 **not** in *data*: both run on the same reconstructions of the same corpus, so a
 corpus-level or reconstruction-level artefact would move both. What their
@@ -49,10 +61,13 @@ same three survivors.
 
 We also report what we could not establish: perceptual quality was never
 measured, and the identity result is a statement about speaker-encoder
-representations rather than about how the audio sounds. The study passed four
-rounds of independent adversarial audit, which found three real defects before
-publication; those defects and their repairs are reported here because the
-corrections changed conclusions.
+representations rather than about how the audio sounds. The study went through
+**six rounds of independent adversarial audit**: four before publication, which
+found three defects that changed conclusions; a fifth against the published
+package, which found that its advertised reproduction commands did not run and
+that four claims outran their evidence; and a sixth against the correction
+itself. All are reported here, and in `CORRECTIONS_v1.0.1.md`, because the
+repairs changed what the paper is entitled to say.
 
 ---
 
@@ -123,10 +138,32 @@ source audio is private, rights-cleared and consented, and is **not published**.
 used 30 warm repetitions plus 3 cold, 5 warm-ups discarded, block-randomised,
 one GPU process at a time.
 
-**Freeze discipline.** Each gate's apparatus was frozen and hashed before the
-data it governs existed; `--verify` reports drift, and drift was 0 at every
-checkpoint. Superseded revisions are retained, never discarded. Gate 4's
-analysis layer and the Q5 layer each carry their own frozen specification.
+**Freeze discipline.** Every gate's apparatus is frozen and hashed, `--verify`
+reports drift, drift was 0 at every checkpoint, and superseded revisions are
+retained rather than discarded. **Not every freeze is prospective, and the
+records say which are which** — this is stated here because an earlier version
+of this paper claimed uniformly that each apparatus was frozen before the data
+it governs existed, which the freeze records do not support.
+
+The protocol and the gate definitions were written before any decoder ran.
+`GATE4_FREEZE.json` seals the Gate 4 corpus, instrument and selection rule and
+records that at that moment "no decoder has run and no quality number exists".
+`GATE3_FREEZE.json` is a different kind of record: it seals Gate 3 on
+completion, after its measurements existed. Gate 4's **analysis** layer was
+likewise frozen once quality numbers existed, and its own record says so
+without hedging — freezing "does NOT make them blind, and nothing later can".
+
+The Q5 specification went through six revisions. Revisions 1–3 were frozen with
+no Q5 artifact of any kind on disk. **Revisions 4–6 were post-measurement
+repairs**: measured artifacts already existed when each was frozen, and each
+carries `OVERRIDDEN — artifacts existed at spec-freeze time` together with the
+sentence "no claim of blindness is made for this revision". The guards record
+`Q5_CELLS.jsonl`, `Q5_EMBEDDINGS.npz`, `Q5_CALIBRATION.json` and `Q5_FUZZ.json`
+present at all three, and by revision 6 the aggregated `Q5_RESULTS.json` as
+well. **No blindness is claimed for any of them.** What they changed, and what
+changed in the labels as a result, is in §9. What freezing establishes throughout is that the decisions were
+declared, fixed and auditable; it does not establish that the analyst was blind
+to the data, and for revisions 4–6 they demonstrably were not.
 
 **Statistics.** The experimental unit is the **recording**, never the cell.
 Intervals are 95% percentile intervals from a cluster bootstrap over recordings,
@@ -198,19 +235,26 @@ environment.** Its numbers stand within its own environment. This says nothing
 about whether the incumbent is fast or slow; it says the comparison does not
 exist.
 
-At the ~80 ms chunk anchor, first-audio latency spans **1.37 ms**
-(`vocos_mel24`) to **375.91 ms** steady-state p50 (`melflow`, in eager mode and
-therefore an upper bound, since its upstream recommends CUDA graphs). Real-time
-margin spans **64×** down to **0.2×**. Seventeen arms show zero underrun at the
-anchor; `qwen3_tts_tokenizer_12hz` shows 0.0013 with a p99 of 17.39 ms against a
-**max of 208.10 ms** — a tail that a p50 hides completely.
+At the ~80 ms chunk anchor, **first-audio latency (TTFA) spans 1.37 ms**
+(`vocos_mel24`) **to 27.64 ms** (`bigvgan22`) across the arms that have a
+numerical TTFA at all. `melflow` is not in that range: its TTFA is **NOT
+ESTABLISHED**, because it emits spectrogram frames and producing PCM from a
+partial stream needs an overlap-add stage this study records as not
+established. Its **375.91 ms is a steady-state p50**, a different quantity, and
+the two are never mixed — in eager mode and therefore an upper bound, since its
+upstream recommends CUDA graphs. Real-time margin spans **64×** down to
+**0.2×**. Seventeen arms show zero underrun at the anchor;
+`qwen3_tts_tokenizer_12hz` shows 0.0013 with a p99 of 17.39 ms against a **max
+of 208.10 ms** — a tail that a p50 hides completely.
 
-**Speed does not imply validity, and Gate 3 refuses to let it.** Three arms
+**Speed does not imply validity, and Gate 3 refuses to let it.** **Two** arms
 produce streamed output that fails the study's own §8 validity gate at every
-chunk size tested: `vocos_mel24` (0/7 conditions), `griffinlim` (0/6) — both on
-`duration_ok` — and `focalcodec_12_5hz` at the anchor (2/5, on `energy_ok`),
-whose minimum viable configuration is therefore **640.8 ms**, not 80 ms. Their
-timing numbers are real; what they timed is not a valid streaming configuration.
+chunk size tested: `vocos_mel24` (0/7 conditions) and `griffinlim` (0/6), both
+on `duration_ok`. A third, `focalcodec_12_5hz`, fails **at the anchor** but not
+everywhere: it passes **2 of 5** tested conditions, failing on `energy_ok` at
+the smaller sizes, so its minimum viable configuration is **640.8 ms**, not
+80 ms. Their timing numbers are real; what they timed at the anchor is not a
+valid streaming configuration.
 `vocos_mel24` is the sharpest illustration: the **fastest** first-audio in the
 study, and no achievable streaming configuration at all.
 
@@ -244,12 +288,28 @@ in every other state.
 A proposed explanation was tested and **refuted**. The hypothesis that the
 metric's low-level frame floor favours a magnitude-matching algorithm failed:
 splitting each cell at its own median energy, Griffin-Lim leads in **both**
-halves and by *more* in the loud half (21.4 versus 16.0). What remains is
-structural and was foreseeable — mel-cepstral distance is a distance on the mel
-magnitude spectrum, Griffin-Lim iteratively minimises exactly that quantity and
-has no other objective, and it carries phase error the metric cannot see.
+halves and by *more* in the loud half (21.4 versus 16.0).
 
-**A metric cannot rank decoders on a quantity one of them is an optimiser for.**
+What remains is an explanation **consistent with** the result rather than a
+demonstrated mechanism, and it is worth stating the difference. Mel-cepstral
+distance as implemented here is derived from the magnitude spectrum — mel
+filtering of the power spectrum, a logarithm, a cepstral transform, and removal
+of coefficient zero — and it is blind to phase by construction. Griffin-Lim
+iterates toward consistency of the **linear STFT magnitude** and optimises
+nothing else, accepting whatever phase error that leaves. The two objectives
+are aligned in domain but are **not the same quantity**, and this package does
+not demonstrate that Griffin-Lim minimises the released cepstral distance
+exactly. That alignment is the most plausible account of a zero-parameter
+algorithm winning six states of six; it is not established here, and no claim
+in this paper rests on it.
+
+**What is established is narrower and does not depend on the mechanism: a
+metric whose ranking puts an untrained phase-retrieval algorithm first is not,
+on its own, a sufficient authority for cross-decoder quality.** That is the
+pre-registered consequence, and it fired on the evidence rather than on the
+explanation. It does not follow that optimising a related quantity
+automatically disqualifies a metric — the disqualifying observation here is the
+ranking itself.
 Two scope limits travel with this finding: the instrument exists only in Route B,
 so the same check is `NOT ESTABLISHED` — not "passed" — in Route A; and no new
 metric was introduced after seeing the data, because choosing a ruler once you
@@ -295,10 +355,15 @@ separability gates pass.
 
 ### 8.1 Retention
 
-Retention (T4) orders the arms consistently across all three encoders, from
-**0.9952** (`griffinlim`, `ecapa`) down to **0.4316** (`focalcodec_12_5hz`).
-Per-encoder spread reaches 0.1193, which is why a bare cosine without its
-encoder name is not a result.
+Retention (T4) runs from **0.9952** (`griffinlim`, `ecapa`) down to **0.4316**
+(`focalcodec_12_5hz`). **The three encoders show broadly similar ordering, with
+some pairwise reversals** — `encodec24_q8` sits above `dualcodec_12hz_v1` under
+`ecapa` (0.8781 versus 0.8621) and below it under both ReDimNet encoders, and
+`encodec_vocos` leads `mimi_q32` under `ecapa` and `redimnet_M_vb2_ptn` but
+trails it under `redimnet_b6_lm` (0.8546 versus 0.8581). Per-encoder spread
+reaches 0.1193, which is why a bare cosine without its encoder name is not a
+result, and why neighbouring arms should not be read as ranked against each
+other at all.
 
 **Griffin-Lim has the highest speaker-embedding retention of the eighteen arms.**
 That sentence is the whole claim. It is not a statement that Griffin-Lim is the
@@ -338,18 +403,37 @@ The streaming detector (T6) compares each arm against **its own offline decode**
 on the same recording, so no ceiling or floor enters and no cross-arm ranking is
 implied.
 
-**The three explicitly causal FocalCodec configurations lose nothing:** S1 =
-0.9999, S2 = −0.0000. Every other arm degrades, from **−0.078** (`bigvgan22`) to
-**−0.742** (`dualcodec_25hz_v1`), and for `focalcodec_25hz` under
-`redimnet_b6_lm` the offline-versus-streamed similarity reaches **−0.013** — the
-streamed output bears no relation to that arm's own offline decode.
+**The three explicitly causal FocalCodec configurations show near-zero median
+additional change under the tested encoders, supported recordings and imposed
+chunking regime.** Across all three arms and all three encoders, S1 runs from
+**0.999866 to 0.999946** and the S2 median additional change runs from
+**−3.9×10⁻⁵ to −5.3×10⁻⁶** — small, and consistently negative. That is the
+whole claim. ⚠️ **This study establishes no minimum detectable streaming change
+and no equivalence threshold**, so "near-zero median" must not be read as
+"below the instrument's resolution": the calibrated quantity G, the separation
+between the same-speaker and different-speaker reference distributions, is not
+a detection limit for a paired within-arm change and is not used as one here.
+Nothing is claimed to be lost, and nothing is claimed to be preserved.
 
-This reproduces Gate 4's Q1 detector, which found streamed-versus-offline error
-at 105–225% of peak for every arm **except** the same three causal
-configurations at **0.69–0.74%**. Two measurements sharing no implementation,
-the same three survivors. ⚠️ They share their input: the same reconstructions of
-the same corpus. The agreement rules out an implementation error in either, not
-an artefact of the material both were computed on.
+Every other arm degrades by an amount orders of magnitude larger,
+from **−0.078** (`bigvgan22`, `ecapa`) to **−0.742** (`dualcodec_25hz_v1`,
+`ecapa`); S2 is a paired retention delta, not a cosine, and the two are reported
+separately in T6. For `focalcodec_25hz` under `redimnet_b6_lm` the
+offline-versus-streamed cosine itself reaches **−0.013**: the streamed output is
+essentially orthogonal to that arm's own offline decode *in this embedding
+space*. That is a statement about speaker-embedding similarity only — it does
+not establish the absence of waveform, linguistic or spectral relationships,
+which were not measured here.
+
+This agrees with Gate 4's Q1 detector, an aligned maximum-error detector on the
+waveform, which found streamed-versus-offline error at 105–225% of peak for
+every arm **except** the same three causal configurations at **0.69–0.74%**. Two
+measurements sharing no implementation, the same three survivors. ⚠️ They also
+share their input: the same reconstructions of the same corpus. The agreement is
+**corroborating evidence** — it makes an independent implementation error in
+both less likely — but agreement between two implementations cannot rule out an
+error in either, and it says nothing about an artefact of the material both were
+computed on.
 
 **The claim is about streamed behaviour, not defect.** Thirteen of these arms
 were driven with chunked context they were never designed for. What the result
@@ -357,7 +441,9 @@ establishes is the cost of streaming a decoder that was not built to stream.
 
 ## 9. Audit history, and why it is in the paper
 
-Four rounds of independent adversarial audit ran against this study. They are
+Six rounds of independent adversarial audit ran against this study — four
+before publication, one against the published package, and one against the
+correction itself. They are
 reported because **three of the defects they found changed conclusions**, and a
 methods section that hides them would misrepresent how the numbers were
 obtained.
@@ -388,6 +474,36 @@ The pattern is worth naming because it recurred three times in different
 disguises: **verification that checks what is present rather than what is
 required.** The estimator without its reference; the instrument without its
 evidence; the manifest without its inventory.
+
+**A fifth round ran after v1.0.0 was published**, against the published package
+rather than the private tree, and it found the same pattern a fourth time — in
+the release itself. The advertised public reproduction commands did not run:
+the scripts resolved artifacts relative to their location in the *private* tree,
+where they sat one directory above the data, and the release ships them flat.
+The claim audit additionally required a withheld file unconditionally, and the
+verifier being advertised was the manifest of the private tree, which cannot
+verify a sanitised package and reported 26 of 32 artifacts as drift. Alongside
+that, four claims outran their evidence — a first-audio range that borrowed a
+steady-state number for its upper end, a chunk-failure count of three where two
+arms fail everywhere and a third fails only at the anchor, a mechanism asserted
+for Griffin-Lim that this package does not demonstrate, and three sentences
+claiming more than their evidence could carry — that the causal arms lost
+*nothing*, when their medians are small but non-zero; that one arm's streamed
+output bore *no relation* to its own offline decode, when what was measured was
+a single embedding distance; and that agreement between two instruments
+*excluded* an implementation error in either, which agreement cannot do. Every
+one is corrected in v1.0.1 and itemised in
+`CORRECTIONS_v1.0.1.md`. **No measurement changed.**
+
+**A sixth round then attacked the correction itself**, before any of it was
+published, and found five more defects — including two claims in the repair that
+outran their evidence, a privacy scanner that still listed roots instead of
+declaring its domain, and a package verifier that printed its own integrity
+fingerprint without ever comparing it. Those are corrected too, and recorded in
+place rather than rewritten. The lesson generalises the one above three times
+over: a package that verifies its own private origin has not verified what it
+shipped; a verifier that prints a value has not compared it; and a correction
+is not exempt from the discipline that produced it.
 
 ## 10. Limitations
 
@@ -424,11 +540,14 @@ evidence; the manifest without its inventory.
 **For a product decision.** If the requirement is genuine streaming, the
 candidate set is far smaller than the literature suggests: three arms in twenty
 reproduce full-context output from partial input with load-bearing state, and
-the same three are the only ones showing **no measured loss under our
-speaker-embedding metric** when streamed. That is a representation-level result
-measured with three encoders, not a claim that those decoders preserve identity
-as a listener would judge it. Everything else is a chunking strategy whose cost
-we have now measured rather than assumed.
+the same three are the only ones showing **near-zero median additional change
+under our speaker-embedding metric** when streamed — under the tested encoders,
+supported recordings and imposed chunking regime. That is a representation-level
+result measured with three encoders, not a claim that those decoders preserve
+identity as a listener would judge it, and not a claim that the change is below
+any established detection threshold, because this study establishes none.
+Everything else is a chunking strategy whose cost we have now measured rather
+than assumed.
 
 **For measurement practice.** Two measurements ranked a zero-parameter
 phase-blind algorithm first. Neither was wrong about what it measured — a
@@ -452,6 +571,27 @@ speakers. Derived **speaker embeddings are also withheld** — an embedding of a
 named human is biometric data, and publishing it is a different act from the
 research use the consent covers.
 
-Every published number regenerates from the released artifacts. The frozen
-records carry SHA-256 for each artifact, and a verification tool reports
-instrument, evidence and archive drift separately, failing closed on any of them.
+**What the public package can and cannot do is worth stating exactly**, because
+v1.0.0 of this paper claimed more than it delivered.
+
+*Regenerates from the released artifacts.* Every table in §§5–8 and every
+headline number in the prose is recomputed from the published aggregate
+artifacts by `make_paper_tables.py`, and re-traced to its source artifact by
+`claim_audit.py`. `make_public_manifest.py --verify` re-hashes the released
+bytes. All three run from the release package with no private input.
+
+*Does not.* One claim — the support-domain cell counts, **17,020 of 31,248
+offline and 26,147 of 27,776 streamed** — is computed from `Q5_CELLS.jsonl`,
+the per-recording rows, which are withheld. The public claim audit reports it
+`WITHHELD`, not `PASS`. More generally, the published aggregates and their
+confidence intervals **cannot be independently reconstructed from the public
+package**: that needs the withheld per-recording rows and embeddings.
+Recomputing a table from a published aggregate is a consistency check, and this
+paper does not represent it as more than one.
+
+`PUBLICATION_MANIFEST.json` is the frozen manifest of the **private canonical
+tree** and is published as a historical record; it does not describe the
+sanitised public package and will report drift against it. `PUBLIC_MANIFEST.json`
+is the integrity record for the released bytes. The frozen records carry SHA-256
+for each artifact, and the private verification tool reports instrument,
+evidence and archive drift separately, failing closed on any of them.

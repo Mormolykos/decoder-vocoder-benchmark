@@ -7,7 +7,7 @@ resumed.**
 ## VERIFY FIRST — two commands, expect drift 0 on both
 
 ```
-cd C:\Users\User\Desktop\research\decoder-bench
+cd <PRIVATE_HOME>\Desktop\research\decoder-bench
 python freeze_gate3.py --verify      # expect: 56 artifacts, drift: 0
 python freeze_gate4.py --verify      # expect: 18 artifacts, drift: 0
 ```
@@ -33,15 +33,15 @@ RESULT, never a reason to change the method.
 cells by manifest key and re-runs nothing:
 
 ```
-"C:\Users\User\miniconda3\envs\fish\python.exe"     gate4_run.py --env fish
-"C:\Users\User\miniconda3\envs\decbench\python.exe" gate4_run.py --env decbench
+"<PRIVATE_HOME>\miniconda3\envs\fish\python.exe"     gate4_run.py --env fish
+"<PRIVATE_HOME>\miniconda3\envs\decbench\python.exe" gate4_run.py --env decbench
 ```
 
 ⛔ **ONE GPU PROCESS AT A TIME (§7.4).** Never run two environments at once.
 
 ## OUTPUT LOCATIONS
 
-- offline → `C:\Users\User\Desktop\research\decoder-bench\results\gate4_wavs_offline\`
+- offline → `<PRIVATE_HOME>\Desktop\research\decoder-bench\results\gate4_wavs_offline\`
 - streamed → `<PRIVATE_STREAMED_ROOT>\`
 - manifests → `results\gate4_stage1_<env>.jsonl` (one JSON row per cell, with
   absolute path + sha256 for every waveform)

@@ -17,7 +17,7 @@ mistake this file exists to prevent.
 
 | pile | path | files | size | arms |
 |---|---|---|---|---|
-| **offline** (whole-file decode) | `C:\Users\User\Desktop\research\decoder-bench\results\gate4_wavs_offline` | 31,248 | **18.87 GB** | 18 |
+| **offline** (whole-file decode) | `<PRIVATE_HOME>\Desktop\research\decoder-bench\results\gate4_wavs_offline` | 31,248 | **18.87 GB** | 18 |
 | **streamed** (chunk-fed decode) | `<PRIVATE_STREAMED_ROOT>` | 27,776 | **16.78 GB** | 16 |
 
 **Total 35.65 GB.** The streamed store is on **H:**, by owner decision recorded at

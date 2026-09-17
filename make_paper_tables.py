@@ -10,13 +10,31 @@ import json
 import os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.dirname(HERE)
+# Two layouts have to work from one source. The private tree keeps this script
+# in `paper/` and the frozen artifacts one level up; the public release tree is
+# flat, script and artifacts together. Resolving to the parent unconditionally
+# is what made every advertised public command fail in v1.0.0: `j()` swallowed
+# the miss, returned {}, and the error surfaced later as a TypeError.
+ROOT = HERE if os.path.isfile(os.path.join(HERE, "Q5_RESULTS.json")) \
+    else os.path.dirname(HERE)
 OUT = os.path.join(HERE, "TABLES_GENERATED.md")
 
 
-def j(name):
-    p = os.path.join(ROOT, name)
-    return json.load(open(p, encoding="utf-8")) if os.path.isfile(p) else {}
+def j(name, *alts):
+    """Load the first of `name`/`alts` that exists.
+
+    A missing artifact is fatal and says so. Returning `{}` for an absent file
+    was the v1.0.0 defect: it turned "the artifact is not here" into a
+    `TypeError` forty lines away, which read like a code bug rather than a
+    packaging one. `alts` exists for artifacts whose public derivative carries
+    a different filename (`GATE4_RESULTS_PUBLIC.json`).
+    """
+    for n in (name,) + alts:
+        p = os.path.join(ROOT, n)
+        if os.path.isfile(p):
+            return json.load(open(p, encoding="utf-8"))
+    raise SystemExit("MISSING ARTIFACT: none of [%s] found in %s"
+                     % (", ".join((name,) + alts), ROOT))
 
 
 L = []
@@ -160,7 +178,7 @@ W("| cross-state pair counts, reference = estimator | Set S 97,650 · Set L 1,47
 W("")
 
 # ---------------------------------------------------------------- T-Q9
-g4 = j("GATE4_RESULTS.json")
+g4 = j("GATE4_RESULTS.json", "GATE4_RESULTS_PUBLIC.json")
 mv = g4.get("metric_validity", {})
 W("## T-Q9 — The metric-validity instrument (Gate 4 §5, Route B)\n")
 W("**Pre-registered consequence, written before any quality number existed:** "

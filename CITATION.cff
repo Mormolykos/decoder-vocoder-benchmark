@@ -15,8 +15,10 @@ abstract: >-
   quality metric failed its own validity instrument: a zero-parameter
   phase-retrieval algorithm scores best on it in six states of six. A second
   measurement sharing no implementation, speaker-embedding retention across
-  three separately calibrated encoders, identifies the same three arms as
-  losing nothing to streaming. Perceptual quality was not measured.
+  three separately calibrated encoders, finds a near-zero median additional
+  change for the same three arms when streamed, under the tested encoders,
+  supported recordings and imposed chunking regime. Perceptual quality was not
+  measured.
 keywords:
   - neural audio codec
   - speech synthesis
@@ -28,14 +30,20 @@ keywords:
   - real-time factor
   - audio reconstruction
   - benchmark
+version: 1.0.1
 license: CC-BY-4.0
 repository-code: https://github.com/Mormolykos/decoder-vocoder-benchmark
-doi: 10.5281/zenodo.22798416
+# The concept DOI, which always resolves to the most recent version. Version
+# DOIs are listed below.
+doi: 10.5281/zenodo.22798415
 identifiers:
-  - type: doi
-    value: 10.5281/zenodo.22798416
-    description: This version
   - type: doi
     value: 10.5281/zenodo.22798415
     description: All versions (concept DOI)
+  - type: doi
+    value: 10.5281/zenodo.22798416
+    description: >-
+      Version 1.0.0 — superseded by 1.0.1, which corrects reporting and
+      public-reproducibility defects. No measurement changed. See
+      CORRECTIONS_v1.0.1.md.
 date-released: 2026-09-16

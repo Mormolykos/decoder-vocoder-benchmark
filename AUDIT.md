@@ -437,9 +437,9 @@ LOCATE**, and the 24 kHz checkpoint is **not** substituted for it.
 
 ### 6.3 HiFi-GAN — NOT AVAILABLE, and I have to contradict an assumption here
 The instruction was to verify HiFi-GAN "using the exact weights/path you already
-showed Claude". The path supplied was `E:\BedVibe\src\TTS`. Verified today:
+showed Claude". The path supplied was `<PRIVATE_LOCAL_PROJECT>`. Verified today:
 
-- `E:\BedVibe\src\TTS` — Coqui TTS 0.22.0 **source**. `hifigan_generator.py` is
+- `<PRIVATE_LOCAL_PROJECT>` — Coqui TTS 0.22.0 **source**. `hifigan_generator.py` is
   there. **The only checkpoint in the whole tree is `tests\data\dummy_speakers.pth`.**
 - `AppData\Local\tts\` — **zero `vocoder_models` entries**. Two TTS models:
   `xtts_v2`, and `tts_models--en--ljspeech--vits` whose folder is **empty**.

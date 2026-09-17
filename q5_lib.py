@@ -78,7 +78,7 @@ def configure_determinism() -> dict:
 configure_determinism()
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-GREEK_TTS = r"C:\Users\User\Desktop\greek_tts"
+GREEK_TTS = r"<PRIVATE_HOME>\Desktop\greek_tts"
 SRC_ROOT = r"<PRIVATE_SOURCE_ROOT>"
 OFFLINE_ROOT = os.path.join(HERE, "results", "gate4_wavs_offline")
 STREAM_ROOT = r"<PRIVATE_STREAMED_ROOT>"

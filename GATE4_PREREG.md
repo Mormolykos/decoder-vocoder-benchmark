@@ -166,8 +166,7 @@ predicate is DURATION-BASED, and duration is LINEAGE-DEPENDENT.** Denoising and
 normalisation do not change duration; **trimming does.** Therefore:
 
 > **The Set S index list is NOT WELL-DEFINED until the canonical lineage is
-> declared.** It was derived from one processed tree (`H:\clean 2 after Spectral
-> Denoise`) whose role in the lineage had **not been established**. If that tree
+> declared.** It was derived from one processed tree (`<PRIVATE_DENOISED_TREE>`) whose role in the lineage had **not been established**. If that tree
 > is not the canonical Gate 4 source, the qualifying set can change for no
 > reason but a trim.
 
@@ -185,7 +184,7 @@ and that is luck, not method.**
 not as an objection:**
 
 > **SOURCE IS A PROCESSED LINEAGE.** `<PRIVATE_SOURCE_ROOT>` was measured to
-> agree with `H:\clean 2 after Spectral Denoise` on **duration, peak and RMS to
+> agree with `<PRIVATE_DENOISED_TREE>` on **duration, peak and RMS to
 > five decimals, on n = 3 files** (indices 0902, 1345, 1350; `Speaker_06 / English /
 > Neutral`). ⚠️ **D15: that is the whole sample, no artifact records it, and no
 > content hash was taken across trees** — although every `D:` file now carries a
@@ -200,7 +199,7 @@ not as an objection:**
 > no decision. `gate4_corpus.py` writes per-file sha256 for every Gate 4 file, so
 > the source's own content is content-addressed even though the cross-tree
 > comparison is not. Relative to
-> `H:\datasetsoriginal` it is **trimmed** (0.23–1.66 s shorter), **peak-normalised**
+> `<PRIVATE_ORIGINAL_TREE>` it is **trimmed** (0.23–1.66 s shorter), **peak-normalised**
 > (every file at ≈0.6827 where the unprocessed tree spans 0.58–0.95) and
 > **denoised**.
 >
@@ -237,7 +236,7 @@ not as an objection:**
 > between states are unaffected, because that relationship is measured and
 > preserved.
 >
-> **`H:\datasetsoriginal` is NOT used as an input.** It remains available as the
+> **`<PRIVATE_ORIGINAL_TREE>` is NOT used as an input.** It remains available as the
 > reference for the §3.5.1 processing control, which is the only place the
 > unprocessed lineage is read.
 
@@ -261,8 +260,8 @@ canonical.**
 
 | path | what was observed | role |
 |---|---|---|
-| `H:\clean 2 after Spectral Denoise\{Female,Male}\<Speaker>\English\<State>\` | 48 kHz / 32-bit float / mono; 7 speakers × 6 states × 1 360 | ⛔ **NOT the Gate 4 source. THREE processing stages MEASURED: trimmed (0.23–1.66 s shorter), peak-normalised (every file pinned to ≈0.6827 where originals span 0.58–0.95), and denoised.** Retained only as the §3.5.1 processing condition. |
-| `H:\datasetsoriginal\<PRIVATE_SOURCE_CORPUS>\` | 7 speakers × 6 states × 1 360 | ⛔ **NOT THE GATE 4 SOURCE. NOT AN INPUT. NOT READ.** An earlier draft marked this row "CANONICAL GATE 4 SOURCE — decided by measurement", contradicting §3.0 and §3.2 in the same document. **That marking is WITHDRAWN (B1).** The source is `D:` by owner decision; this row is lineage HISTORY only. |
+| `<PRIVATE_DENOISED_TREE>\{Female,Male}\<Speaker>\English\<State>\` | 48 kHz / 32-bit float / mono; 7 speakers × 6 states × 1 360 | ⛔ **NOT the Gate 4 source. THREE processing stages MEASURED: trimmed (0.23–1.66 s shorter), peak-normalised (every file pinned to ≈0.6827 where originals span 0.58–0.95), and denoised.** Retained only as the §3.5.1 processing condition. |
+| `<PRIVATE_ORIGINAL_TREE>\<PRIVATE_SOURCE_CORPUS>\` | 7 speakers × 6 states × 1 360 | ⛔ **NOT THE GATE 4 SOURCE. NOT AN INPUT. NOT READ.** An earlier draft marked this row "CANONICAL GATE 4 SOURCE — decided by measurement", contradicting §3.0 and §3.2 in the same document. **That marking is WITHDRAWN (B1).** The source is `D:` by owner decision; this row is lineage HISTORY only. |
 | `<PRIVATE_SOURCE_ROOT>\` | owner-reported 74 375 files, 26.63 GB | ⛔ **NOT A MASTER — MEASURED IDENTICAL to the denoised tree** (duration, peak and RMS agree to 5 decimals on every file compared). It is a second copy of the processed version, not its predecessor. |
 | `<PRIVATE_MASTERS_ROOT>\` | 6 non-empty WAVs; **three simultaneous microphone channels of the same performance** (`414.L`, `414.R`, `87`) | ⚠️ **NOT ESTABLISHED.** ⛔ **Mic channels of one performance are NOT independent recordings and must never be counted as such.** |
 | `Legacy\valle_training\A metadata tokenizer\references\<spk>_<state>\` | 1 360 WAV + 1 360 `.lab` per speaker-state | ⚠️ **NOT ESTABLISHED** — appears to be a derived training copy |
@@ -643,13 +642,13 @@ whisper results would measure the denoiser rather than the codec.
 >
 > As written it compared "the `H:` denoised copy against the `D:` pre-denoise
 > master". **`D:` IS NOT A PRE-DENOISE MASTER.** §3.0 measured `D:` to be
-> identical to `H:\clean 2 after Spectral Denoise` on every file compared. The
+> identical to `<PRIVATE_DENOISED_TREE>` on every file compared. The
 > control therefore compared **two copies of the same processing stage**, and was
 > **guaranteed to return zero and to "dismiss" the whisper-denoise concern for
 > the wrong reason.** A control that cannot fail is not a control (R1).
 >
 > **Disposition: `NOT MEASURED`.** The only un-denoised tree is
-> `H:\datasetsoriginal`, and reading it would reopen the dataset archaeology
+> `<PRIVATE_ORIGINAL_TREE>`, and reading it would reopen the dataset archaeology
 > this document has closed. **The concern is therefore carried as a DECLARED,
 > UNQUANTIFIED scope limit, not as a measured and dismissed one:**
 >

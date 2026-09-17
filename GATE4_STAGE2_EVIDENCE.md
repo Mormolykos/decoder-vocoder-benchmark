@@ -145,9 +145,9 @@ floor-fragile.**
 non-re-derivable from the stated commands (SPEC S11.1).**
 
 ```text
-cd C:\Users\User\Desktop\research\decoder-bench
-set PY=C:\Users\User\miniconda3\envs\decbench\python.exe
-set FISH=C:\Users\User\miniconda3\envs\fish\python.exe
+cd <PRIVATE_HOME>\Desktop\research\decoder-bench
+set PY=<PRIVATE_HOME>\miniconda3\envs\decbench\python.exe
+set FISH=<PRIVATE_HOME>\miniconda3\envs\fish\python.exe
 
 REM --- the frozen apparatus, and the frozen analysis layer ---
 %PY%   freeze_gate3.py --verify            REM 56 artifacts, drift 0

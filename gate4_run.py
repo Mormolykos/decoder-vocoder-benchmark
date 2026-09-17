@@ -61,9 +61,9 @@ import gate4_lib as G4          # noqa: E402  frozen: the one resampler
 import gate4_length_policy as LP  # noqa: E402  frozen: tolerances from Gate 2
 
 SRC_ROOT = r"<PRIVATE_SOURCE_ROOT>"
-OFFLINE_ROOT = r"C:\Users\User\Desktop\research\decoder-bench\results\gate4_wavs_offline"
+OFFLINE_ROOT = r"<PRIVATE_HOME>\Desktop\research\decoder-bench\results\gate4_wavs_offline"
 STREAM_ROOT = r"<PRIVATE_STREAMED_ROOT>"
-SMOKE_ROOT = r"C:\Users\User\Desktop\research\decoder-bench\results\_NON_STUDY_SMOKE_TEST"
+SMOKE_ROOT = r"<PRIVATE_HOME>\Desktop\research\decoder-bench\results\_NON_STUDY_SMOKE_TEST"
 
 SEX = {"Speaker_01": "Female", "Speaker_02": "Female", "Speaker_04": "Female",
        "Speaker_05": "Female", "Speaker_07": "Female", "Speaker_03": "Male", "Speaker_06": "Male"}

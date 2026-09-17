@@ -31,7 +31,7 @@
    "dim": 192,
    "source": "torch.hub IDRnD/ReDimNet M/ptn/vb2",
    "training_corpus": "VoxBlink2",
-   "checkpoint": "C:\\Users\\User/.cache\\torch\\hub\\checkpoints\\M-vb2-ptn.pt",
+   "checkpoint": "<PRIVATE_HOME>/.cache\\torch\\hub\\checkpoints\\M-vb2-ptn.pt",
    "checkpoint_sha256": "42c13ce2bcf1ce466afdbe461c8dbe9471fc23204a1480fb4f306f48152f9af3",
    "torch": "2.10.0+cu128",
    "torchaudio": "2.10.0+cu128",
@@ -43,7 +43,7 @@
    "dim": 192,
    "source": "speechbrain/spkrec-ecapa-voxceleb",
    "training_corpus": "VoxCeleb2",
-   "checkpoint": "C:\\Users\\User\\Desktop\\greek_tts\\pretrained_spkrec\\embedding_model.ckpt",
+   "checkpoint": "<PRIVATE_HOME>\\Desktop\\greek_tts\\pretrained_spkrec\\embedding_model.ckpt",
    "checkpoint_sha256": "0575cb64845e6b9a10db9bcb74d5ac32b326b8dc90352671d345e2ee3d0126a2",
    "torch": "2.10.0+cu128",
    "torchaudio": "2.10.0+cu128",
@@ -55,7 +55,7 @@
    "dim": 192,
    "source": "torch.hub IDRnD/ReDimNet b6/ft_lm/vox2",
    "training_corpus": "VoxCeleb2",
-   "checkpoint": "C:\\Users\\User/.cache\\torch\\hub\\checkpoints\\b6-vox2-ft_lm.pt",
+   "checkpoint": "<PRIVATE_HOME>/.cache\\torch\\hub\\checkpoints\\b6-vox2-ft_lm.pt",
    "checkpoint_sha256": "e0f3034320c9cceaa8ed7c917a36e0affb501a922631d55c1007660eb1bbedea",
    "torch": "2.10.0+cu128",
    "torchaudio": "2.10.0+cu128",
@@ -827,9 +827,9 @@
   "source_status": "PRIVATE - not released, not modified",
   "applied": {
    "speaker_names": 0,
-   "private_paths": 1,
+   "private_paths": 4,
    "source_filenames": 0
   },
-  "generated_utc": "2026-09-16T13:42:33Z"
+  "generated_utc": "2026-09-17T09:58:11Z"
  }
 }

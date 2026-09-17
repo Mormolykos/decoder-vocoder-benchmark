@@ -34,8 +34,8 @@
    "env": "decbench",
    "purpose": "FocalCodec x6, Mimi x2, EnCodec, Descript DAC, DualCodec x2, Qwen, Vocos-mel, Vocos-EnCodec, BigVGAN, Griffin-Lim",
    "python": "3.11.16",
-   "executable": "C:\\Users\\User\\miniconda3\\envs\\decbench\\python.exe",
-   "prefix": "C:\\Users\\User\\miniconda3\\envs\\decbench",
+   "executable": "<PRIVATE_HOME>\\miniconda3\\envs\\decbench\\python.exe",
+   "prefix": "<PRIVATE_HOME>\\miniconda3\\envs\\decbench",
    "platform": "Windows-10-10.0.26200-SP0",
    "machine": "AMD64",
    "processor": "AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD",
@@ -232,8 +232,8 @@
    "env": "decbench_melflow",
    "purpose": "MelFlow only - AGPL-3.0 kept physically separate",
    "python": "3.11.16",
-   "executable": "C:\\Users\\User\\miniconda3\\envs\\decbench_melflow\\python.exe",
-   "prefix": "C:\\Users\\User\\miniconda3\\envs\\decbench_melflow",
+   "executable": "<PRIVATE_HOME>\\miniconda3\\envs\\decbench_melflow\\python.exe",
+   "prefix": "<PRIVATE_HOME>\\miniconda3\\envs\\decbench_melflow",
    "platform": "Windows-10-10.0.26200-SP0",
    "machine": "AMD64",
    "processor": "AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD",
@@ -397,8 +397,8 @@
    "env": "decbench_nemo",
    "purpose": "BLOCKED - NanoCodec / NeMo tooling not runnable in this Windows-native environment",
    "python": "3.11.16",
-   "executable": "C:\\Users\\User\\miniconda3\\envs\\decbench_nemo\\python.exe",
-   "prefix": "C:\\Users\\User\\miniconda3\\envs\\decbench_nemo",
+   "executable": "<PRIVATE_HOME>\\miniconda3\\envs\\decbench_nemo\\python.exe",
+   "prefix": "<PRIVATE_HOME>\\miniconda3\\envs\\decbench_nemo",
    "platform": "Windows-10-10.0.26200-SP0",
    "machine": "AMD64",
    "processor": "AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD",
@@ -568,8 +568,8 @@
    "env": "fish",
    "purpose": "Fish ModifiedDAC. Pre-existing; READ, never modified - carries frozen production work",
    "python": "3.10.19",
-   "executable": "C:\\Users\\User\\miniconda3\\envs\\fish\\python.exe",
-   "prefix": "C:\\Users\\User\\miniconda3\\envs\\fish",
+   "executable": "<PRIVATE_HOME>\\miniconda3\\envs\\fish\\python.exe",
+   "prefix": "<PRIVATE_HOME>\\miniconda3\\envs\\fish",
    "platform": "Windows-10-10.0.26200-SP0",
    "machine": "AMD64",
    "processor": "AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD",
@@ -789,9 +789,9 @@
   "source_status": "PRIVATE - not released, not modified",
   "applied": {
    "speaker_names": 0,
-   "private_paths": 0,
+   "private_paths": 8,
    "source_filenames": 0
   },
-  "generated_utc": "2026-09-16T13:42:33Z"
+  "generated_utc": "2026-09-17T09:58:11Z"
  }
 }
