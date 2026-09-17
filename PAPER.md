@@ -3,7 +3,8 @@
 **Panagiotis Gkilis** · BedVibe Studios, Oslo
 ORCID 0009-0007-3805-170X
 
-**Version 1.0.1 — corrected.** Supersedes v1.0.0 (DOI 10.5281/zenodo.22798416),
+**Version 1.0.1 — corrected.** DOI 10.5281/zenodo.22811349 (all versions:
+10.5281/zenodo.22798415). Supersedes v1.0.0 (DOI 10.5281/zenodo.22798416),
 which remains permanently available. An independent post-publication adversarial
 review found reporting and public-reproducibility defects; `CORRECTIONS_v1.0.1.md`
 lists every one, with the original wording beside the corrected wording.

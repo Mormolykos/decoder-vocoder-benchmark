@@ -38,6 +38,9 @@ repository-code: https://github.com/Mormolykos/decoder-vocoder-benchmark
 doi: 10.5281/zenodo.22798415
 identifiers:
   - type: doi
+    value: 10.5281/zenodo.22811349
+    description: Version 1.0.1 — this version
+  - type: doi
     value: 10.5281/zenodo.22798415
     description: All versions (concept DOI)
   - type: doi
@@ -46,4 +49,5 @@ identifiers:
       Version 1.0.0 — superseded by 1.0.1, which corrects reporting and
       public-reproducibility defects. No measurement changed. See
       CORRECTIONS_v1.0.1.md.
-date-released: 2026-09-16
+url: https://ai.bedvibe.studio/decoder-benchmark/
+date-released: 2026-09-17

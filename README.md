@@ -11,17 +11,22 @@ instrument attacked before it was trusted. Two later freezes — Gate 4's analys
 layer and Q5 specification revisions 4–6 — were post-measurement repairs rather
 than prospective pre-registrations, and the paper says which.
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22798416.svg)](https://doi.org/10.5281/zenodo.22798416)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22811349.svg)](https://doi.org/10.5281/zenodo.22811349)
 
-Read the paper: [`PAPER.pdf`](PAPER.pdf) · source [`PAPER.md`](PAPER.md) · archived at [10.5281/zenodo.22798416](https://doi.org/10.5281/zenodo.22798416)
+Read the paper: [`PAPER.pdf`](PAPER.pdf) · source [`PAPER.md`](PAPER.md) · article [ai.bedvibe.studio/decoder-benchmark](https://ai.bedvibe.studio/decoder-benchmark/)
 
-> **Version 1.0.1 — corrected.** An independent review after publication found
-> reporting and reproducibility defects in v1.0.0: the advertised public
-> commands did not run, a first-audio range borrowed a steady-state number for
-> its upper end, and several sentences claimed more than the measurements
-> support. All are corrected here and itemised in
+**Cite this version:** [10.5281/zenodo.22811349](https://doi.org/10.5281/zenodo.22811349) · **all versions:** [10.5281/zenodo.22798415](https://doi.org/10.5281/zenodo.22798415)
+
+> **Version 1.0.1 — corrected, and this is the current release.** An
+> independent review after publication found reporting and reproducibility
+> defects in v1.0.0: the advertised public commands did not run, a first-audio
+> range borrowed a steady-state number for its upper end, and several sentences
+> claimed more than the measurements support. A further round then found five
+> more in the correction itself. All are corrected here and itemised in
 > [`CORRECTIONS_v1.0.1.md`](CORRECTIONS_v1.0.1.md). **No measurement changed.**
-> v1.0.0 remains permanently available at tag `v1.0.0`.
+> v1.0.0 remains permanently available at tag
+> [`v1.0.0`](https://github.com/Mormolykos/decoder-vocoder-benchmark/releases/tag/v1.0.0)
+> and at [10.5281/zenodo.22798416](https://doi.org/10.5281/zenodo.22798416).
 
 ---
 
